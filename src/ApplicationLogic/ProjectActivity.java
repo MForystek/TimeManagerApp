@@ -8,8 +8,8 @@ public class ProjectActivity extends Activity {
     private short lengthOfSegmentInSec;
     Date deadline;
 
-    public ProjectActivity(int valueInClocks, String name, String description, int lengthInSec, short importance, short lengthOfSegmentInSec, Date deadline) {
-        super(valueInClocks, name, description, lengthInSec, importance);
+    public ProjectActivity(String name, String description, int lengthInSec, int valueInClocks, short importance, short lengthOfSegmentInSec, Date deadline) {
+        super(name, description, lengthInSec, valueInClocks, importance);
         this.lengthOfSegmentInSec = lengthOfSegmentInSec;
         this.deadline = deadline;
     }

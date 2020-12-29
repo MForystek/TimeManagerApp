@@ -8,7 +8,7 @@ public abstract class Activity {
     private short importance;
     private int lengthInSec;
 
-    public Activity(int valueInClocks, String name, String description, int lengthInSec, short importance) {
+    public Activity(String name, String description, int lengthInSec, int valueInClocks, short importance) {
         this.valueInClocks = valueInClocks;
         this.name = name;
         this.description = description;

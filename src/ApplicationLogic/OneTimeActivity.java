@@ -6,8 +6,8 @@ public class OneTimeActivity extends Activity {
     //variable lengthInSec for this class is its whole length
     Date deadline;
 
-    public OneTimeActivity(int valueInClocks, String name, String description, int lengthInSec, short importance, Date deadline) {
-        super(valueInClocks, name, description, lengthInSec, importance);
+    public OneTimeActivity(String name, String description, int lengthInSec, int valueInClocks, short importance, Date deadline) {
+        super(name, description, valueInClocks, lengthInSec, importance);
         this.deadline = deadline;
     }
 
