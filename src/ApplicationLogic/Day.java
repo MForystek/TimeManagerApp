@@ -19,15 +19,16 @@ public class Day {
     }
 
     public void delActivity(String activityName) {
-
+        activities.remove(activityName);
     }
+
 
     public Map<String, Short> getUsage() {
         return new HashMap<String, Short>();
     }
 
     public boolean isEnoughSecondsInTheDay() {
-        int sum_of_seconds = activities.stream().mapToInt(Activity::getLengthInSec).sum();
+        int sum_of_seconds = activities.stream().mapToInt(Activity::getRepetitionLengthInSec).sum();
         return sum_of_seconds <= SECONDS_IN_THE_DAY;
     }
 }

@@ -5,27 +5,27 @@ import java.util.Date;
 public class ProjectActivity extends Activity {
     // variable lengthInSec for this class is length of whole project
 
-    private short lengthOfSegmentInSec;
+    private short totalLengthInSec;
     Date deadline;
 
-    public ProjectActivity(String name, String description, int lengthInSec, int valueInClocks, short importance, short lengthOfSegmentInSec, Date deadline) {
-        super(name, description, lengthInSec, valueInClocks, importance);
-        this.lengthOfSegmentInSec = lengthOfSegmentInSec;
+    public ProjectActivity(String name, String description, int repetitionLengthInSec, int valueInClocks, short importance, short totalLengthInSec, Date deadline) {
+        super(name, description, repetitionLengthInSec, valueInClocks, importance);
+        this.totalLengthInSec = totalLengthInSec;
         this.deadline = deadline;
     }
 
     public ActivitySegment getNextSegment(){
-        float factor = (float)lengthOfSegmentInSec/(float)getLengthInSec();
-        return new ActivitySegment(lengthOfSegmentInSec, (int)(factor*getValueInClocks()));
+        float factor = (float) totalLengthInSec /(float) getRepetitionLengthInSec();
+        return new ActivitySegment(totalLengthInSec, (int)(factor*getValueInClocks()));
     }
 
     //getters & setters
-    public short getLengthOfSegmentInSec() {
-        return lengthOfSegmentInSec;
+    public short getTotalLengthInSec() {
+        return totalLengthInSec;
     }
 
-    public void setLengthOfSegmentInSec(short lengthOfSegmentInSec) {
-        this.lengthOfSegmentInSec = lengthOfSegmentInSec;
+    public void setTotalLengthInSec(short totalLengthInSec) {
+        this.totalLengthInSec = totalLengthInSec;
     }
 
     public Date getDeadline() {

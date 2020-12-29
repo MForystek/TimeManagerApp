@@ -6,13 +6,13 @@ public class OneTimeActivity extends Activity {
     //variable lengthInSec for this class is its whole length
     Date deadline;
 
-    public OneTimeActivity(String name, String description, int lengthInSec, int valueInClocks, short importance, Date deadline) {
-        super(name, description, valueInClocks, lengthInSec, importance);
+    public OneTimeActivity(String name, String description, int repetitionLengthInSec, int valueInClocks, short importance, Date deadline) {
+        super(name, description, valueInClocks, repetitionLengthInSec, importance);
         this.deadline = deadline;
     }
 
     public ActivitySegment getNextSegment(){
-        return new ActivitySegment(getLengthInSec(), getValueInClocks());
+        return new ActivitySegment(getRepetitionLengthInSec(), getValueInClocks());
     }
 
     //getters & setters

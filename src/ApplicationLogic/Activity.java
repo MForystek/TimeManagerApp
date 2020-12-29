@@ -6,13 +6,13 @@ public abstract class Activity {
     private String name;
     private String description;
     private short importance;
-    private int lengthInSec;
+    private int repetitionLengthInSec;
 
-    public Activity(String name, String description, int lengthInSec, int valueInClocks, short importance) {
+    public Activity(String name, String description, int repetitionLengthInSec, int valueInClocks, short importance) {
         this.valueInClocks = valueInClocks;
         this.name = name;
         this.description = description;
-        this.lengthInSec = lengthInSec;
+        this.repetitionLengthInSec = repetitionLengthInSec;
         this.importance = importance;
     }
 
@@ -42,12 +42,12 @@ public abstract class Activity {
         this.description = description;
     }
 
-    public int getLengthInSec() {
-        return lengthInSec;
+    public int getRepetitionLengthInSec() {
+        return repetitionLengthInSec;
     }
 
-    public void setLengthInSec(int lengthInSec) {
-        this.lengthInSec = lengthInSec;
+    public void setRepetitionLengthInSec(int repetitionLengthInSec) {
+        this.repetitionLengthInSec = repetitionLengthInSec;
     }
 
     public short getImportance() {
