@@ -1,10 +1,13 @@
 package ApplicationLogic;
 
 public class PeriodicActivity extends Activity {
-    private short lengthOfSegmentSec;
+    //variable lengthInSec for this class is length of each repetition
 
-    public PeriodicActivity(int valueInClocks, String name, String description, int totalLengthInSec, short importance, boolean mustHappen, short lengthOfSegmentSec) {
-        super(valueInClocks, name, description, totalLengthInSec, importance, mustHappen);
-        this.lengthOfSegmentSec = lengthOfSegmentSec;
+    public PeriodicActivity(int valueInClocks, String name, String description, int lengthInSec, short importance) {
+        super(valueInClocks, name, description, lengthInSec, importance);
+    }
+
+    public ActivitySegment getNextSegment(){
+        return new ActivitySegment(getLengthInSec(), getValueInClocks());
     }
 }

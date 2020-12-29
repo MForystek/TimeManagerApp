@@ -27,7 +27,7 @@ public class Day {
     }
 
     public boolean isEnoughSecondsInTheDay() {
-        int sum_of_seconds = activities.stream().mapToInt(Activity::getTotalLengthInSec).sum();
+        int sum_of_seconds = activities.stream().mapToInt(Activity::getLengthInSec).sum();
         return sum_of_seconds <= SECONDS_IN_THE_DAY;
     }
 }

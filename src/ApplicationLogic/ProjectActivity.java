@@ -3,12 +3,36 @@ package ApplicationLogic;
 import java.util.Date;
 
 public class ProjectActivity extends Activity {
-    private short lengthOfSegmentSec;
+    // variable lengthInSec for this class is length of whole project
+
+    private short lengthOfSegmentInSec;
     Date deadline;
 
-    public ProjectActivity(int valueInClocks, String name, String description, int totalLengthInSec, short importance, boolean mustHappen, short lengthOfSegmentSec, Date deadline) {
-        super(valueInClocks, name, description, totalLengthInSec, importance, mustHappen);
-        this.lengthOfSegmentSec = lengthOfSegmentSec;
+    public ProjectActivity(int valueInClocks, String name, String description, int lengthInSec, short importance, short lengthOfSegmentInSec, Date deadline) {
+        super(valueInClocks, name, description, lengthInSec, importance);
+        this.lengthOfSegmentInSec = lengthOfSegmentInSec;
+        this.deadline = deadline;
+    }
+
+    public ActivitySegment getNextSegment(){
+        float factor = (float)lengthOfSegmentInSec/(float)getLengthInSec();
+        return new ActivitySegment(lengthOfSegmentInSec, (int)(factor*getValueInClocks()));
+    }
+
+    //getters & setters
+    public short getLengthOfSegmentInSec() {
+        return lengthOfSegmentInSec;
+    }
+
+    public void setLengthOfSegmentInSec(short lengthOfSegmentInSec) {
+        this.lengthOfSegmentInSec = lengthOfSegmentInSec;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
         this.deadline = deadline;
     }
 }

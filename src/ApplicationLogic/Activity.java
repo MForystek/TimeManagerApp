@@ -5,17 +5,15 @@ public abstract class Activity {
     private int valueInClocks;
     private String name;
     private String description;
-    private int totalLengthInSec;
     private short importance;
-    private boolean mustHappen;
+    private int lengthInSec;
 
-    public Activity(int valueInClocks, String name, String description, int totalLengthInSec, short importance, boolean mustHappen) {
+    public Activity(int valueInClocks, String name, String description, int lengthInSec, short importance) {
         this.valueInClocks = valueInClocks;
         this.name = name;
         this.description = description;
-        this.totalLengthInSec = totalLengthInSec;
+        this.lengthInSec = lengthInSec;
         this.importance = importance;
-        this.mustHappen = mustHappen;
     }
 
 
@@ -44,12 +42,12 @@ public abstract class Activity {
         this.description = description;
     }
 
-    public int getTotalLengthInSec() {
-        return totalLengthInSec;
+    public int getLengthInSec() {
+        return lengthInSec;
     }
 
-    public void setTotalLengthInSec(int totalLengthInSec) {
-        this.totalLengthInSec = totalLengthInSec;
+    public void setLengthInSec(int lengthInSec) {
+        this.lengthInSec = lengthInSec;
     }
 
     public short getImportance() {
@@ -58,13 +56,5 @@ public abstract class Activity {
 
     public void setImportance(short importance) {
         this.importance = importance;
-    }
-
-    public boolean isMustHappen() {
-        return mustHappen;
-    }
-
-    public void setMustHappen(boolean mustHappen) {
-        this.mustHappen = mustHappen;
     }
 }
