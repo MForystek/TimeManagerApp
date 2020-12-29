@@ -1,11 +1,9 @@
 package ApplicationLogic;
 
-import java.util.Date;
+import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
-        //var calendar = new Calendar();
-
-
+        var calendar = new Calendar();
     }
 }
