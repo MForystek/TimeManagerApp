@@ -9,6 +9,16 @@ public abstract class Activity {
     private short importance;
     private boolean mustHappen;
 
+    public Activity(int valueInClocks, String name, String description, int totalLengthInSec, short importance, boolean mustHappen) {
+        this.valueInClocks = valueInClocks;
+        this.name = name;
+        this.description = description;
+        this.totalLengthInSec = totalLengthInSec;
+        this.importance = importance;
+        this.mustHappen = mustHappen;
+    }
+
+
     //getters & setters
     public int getValueInClocks() {
         return valueInClocks;

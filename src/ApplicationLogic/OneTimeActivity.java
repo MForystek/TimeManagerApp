@@ -6,8 +6,4 @@ public class OneTimeActivity extends Activity {
     Date deadline;
 
 
-
-
-
-
 }
