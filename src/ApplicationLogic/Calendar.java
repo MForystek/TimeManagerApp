@@ -9,7 +9,7 @@ import java.nio.file.*;
 import java.io.*;
 
 public class Calendar {
-    private final String authors = "Michał Forystek i Szymon Szymiczek";
+    private final String AUTHORS = "Michał Forystek i Szymon Szymiczek";
     private String language;
     private String username;
     private String password;
