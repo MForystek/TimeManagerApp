@@ -26,18 +26,21 @@ public class Day {
 
     public void delActivity(String activityName) {
         activities.remove(activityName);
+    }
 
-        //need to resolve problem with existing segment which can differ form activityName.getNextSegment after some changes
+    public void delSegment(ActivitySegment activitySegment){
+        segments.remove(activitySegment);
     }
 
 
     public Map<String, Short> getUsage() {
         return new HashMap<>();
+        //incomplete
     }
 
     private void _addActivitySegment(ActivitySegment activitySegment) {
 
-        //incomplete method
+        //incomplete
 
         _quicksortSegments(segments, 0, segments.size() -1);
     }
