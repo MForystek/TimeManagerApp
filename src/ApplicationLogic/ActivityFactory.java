@@ -4,56 +4,63 @@ import java.util.Date;
 
 public class ActivityFactory {
 
-    public Activity makePeriodicActivity(
+    public static Activity makePeriodicActivity(
             String name,
             String description,
-            String repetitionLengthInSec,
             String valueInClocks,
-            String importance
+            String importance,
+            String repetitionLengthInSec,
+            String isDuty
     ) {
         return new PeriodicActivity(
                 name,
                 description,
-                Integer.parseInt(repetitionLengthInSec),
                 Integer.parseInt(valueInClocks),
-                Short.parseShort(importance)
+                Short.parseShort(importance),
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty)
         );
     }
 
-    public Activity makeProjectActivity(
+    public static Activity makeProjectActivity(
             String name,
             String description,
-            String repetitionLengthInSec,
             String valueInClocks,
             String importance,
+            String repetitionLengthInSec,
+            String isDuty,
             String totalLengthInSec,
             Date date
     ) {
         return new ProjectActivity(
                 name,
                 description,
-                Integer.parseInt(repetitionLengthInSec),
                 Integer.parseInt(valueInClocks),
                 Short.parseShort(importance),
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty),
                 Short.parseShort(totalLengthInSec),
                 date
         );
     }
 
-    public Activity makeOneTimeActivity(
+    public static Activity makeOneTimeActivity(
             String name,
             String description,
-            String repetitionLengthInSec,
             String valueInClocks,
             String importance,
+            String repetitionLengthInSec,
+            String isDuty,
             Date date
     ) {
         return new OneTimeActivity(
                 name,
                 description,
-                Integer.parseInt(repetitionLengthInSec),
                 Integer.parseInt(valueInClocks),
                 Short.parseShort(importance),
-                date);
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty),
+                date
+        );
     }
 }

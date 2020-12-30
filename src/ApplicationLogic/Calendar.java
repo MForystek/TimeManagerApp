@@ -2,6 +2,7 @@ package ApplicationLogic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 import static java.nio.file.StandardOpenOption.*;
@@ -17,7 +18,7 @@ public class Calendar {
     private long calendarLength;
     private boolean notifications;
     private List<Day> days;
-    private List<Activity> activities;
+    private Map<String, Activity> activities;
     private Scanner scanner = new Scanner(System.in);
 
     public Calendar() {
@@ -31,12 +32,12 @@ public class Calendar {
         saveConfiguration();
     }
 
-    public void addActivity(byte activityType) {
-
+    public void addActivity(Activity newActivity) {
+        activities.put(newActivity.getName(), newActivity);
     }
 
     public void delActivity(String activityName) {
-
+        activities.remove(activityName);
     }
 
     public void buyActivity() {

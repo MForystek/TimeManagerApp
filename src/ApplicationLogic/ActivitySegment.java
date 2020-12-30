@@ -2,11 +2,13 @@ package ApplicationLogic;
 
 public class ActivitySegment {
 
+    private String parentName;
     private int lengthInSec;
     private int valueInClocks;
     private int occurringTime = -1; // this is used only when occurs in a day
 
-    public ActivitySegment(int lengthInSec, int valueInClocks) {
+    public ActivitySegment(String parentName, int lengthInSec, int valueInClocks) {
+        this.parentName = parentName;
         this.lengthInSec = lengthInSec;
         this.valueInClocks = valueInClocks;
     }

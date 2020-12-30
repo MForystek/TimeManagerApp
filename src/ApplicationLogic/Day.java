@@ -7,20 +7,19 @@ import java.util.Map;
 
 public class Day {
     private Date date;
-    private List<Activity> activities;
+    private Map<String, Activity> activities;
     private List<ActivitySegment> segments;
     private final int SECONDS_IN_THE_DAY = 86_400;
-
     private int dayBeginning;
     private int dayEnding;
 
     public void addActivity(Activity activity) {
-        activities.add(activity);
+        activities.put(activity.getName(), activity);
         if(_isEnoughSecondsInTheDay()){
             _addActivitySegment(activity.getNextSegment());
             System.out.println("yeah we'll do it");
         }else{
-            activities.remove(activity);
+            activities.remove(activity.getName());
             System.out.println("you have no more time!");
         }
     }
@@ -33,7 +32,7 @@ public class Day {
 
 
     public Map<String, Short> getUsage() {
-        return new HashMap<String, Short>();
+        return new HashMap<>();
     }
 
     private void _addActivitySegment(ActivitySegment activitySegment) {
@@ -42,8 +41,9 @@ public class Day {
 
         _quicksortSegments(segments, 0, segments.size() -1);
     }
+
     private boolean _isEnoughSecondsInTheDay() {
-        int sum_of_seconds = activities.stream().mapToInt(Activity::getRepetitionLengthInSec).sum();
+        int sum_of_seconds = 0;     //activities.stream().mapToInt(Activity::getRepetitionLengthInSec).sum();
         return sum_of_seconds <= SECONDS_IN_THE_DAY;
     }
 

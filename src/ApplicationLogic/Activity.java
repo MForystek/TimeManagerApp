@@ -2,18 +2,20 @@ package ApplicationLogic;
 
 public abstract class Activity {
 
-    private int valueInClocks;
     private String name;
     private String description;
+    private int valueInClocks;
     private short importance;
     private int repetitionLengthInSec;
+    private boolean isDuty;
 
-    public Activity(String name, String description, int repetitionLengthInSec, int valueInClocks, short importance) {
-        this.valueInClocks = valueInClocks;
+    public Activity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty) {
         this.name = name;
         this.description = description;
-        this.repetitionLengthInSec = repetitionLengthInSec;
+        this.valueInClocks = valueInClocks;
         this.importance = importance;
+        this.repetitionLengthInSec = repetitionLengthInSec;
+        this.isDuty = isDuty;
     }
 
     public abstract ActivitySegment getNextSegment();
