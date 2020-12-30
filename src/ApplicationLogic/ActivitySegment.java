@@ -4,6 +4,7 @@ public class ActivitySegment {
 
     private int lengthInSec;
     private int valueInClocks;
+    private int occurringTime = -1; // this is used only when occurs in a day
 
     public ActivitySegment(int lengthInSec, int valueInClocks) {
         this.lengthInSec = lengthInSec;
@@ -25,6 +26,14 @@ public class ActivitySegment {
 
     public void setValueInClocks(int valueInClocks) {
         this.valueInClocks = valueInClocks;
+    }
+
+    public int getOccurringTime() {
+        return occurringTime;
+    }
+
+    public void setOccurringTime(int occurringTime) {
+        this.occurringTime = occurringTime;
     }
 }
 
