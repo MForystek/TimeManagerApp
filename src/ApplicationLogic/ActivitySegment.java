@@ -5,7 +5,7 @@ public class ActivitySegment {
     private String parentName;
     private int lengthInSec;
     private int valueInClocks;
-    private int occurringTime = -1; // this is used only when occurs in a day
+    private int occurrenceTime = -1; // this is used only when occurs in a day
 
     public ActivitySegment(String parentName, int lengthInSec, int valueInClocks) {
         this.parentName = parentName;
@@ -30,12 +30,16 @@ public class ActivitySegment {
         this.valueInClocks = valueInClocks;
     }
 
-    public int getOccurringTime() {
-        return occurringTime;
+    public int getOccurrenceTime() {
+        return occurrenceTime;
     }
 
-    public void setOccurringTime(int occurringTime) {
-        this.occurringTime = occurringTime;
+    public void setOccurrenceTime(int occurrenceTime) {
+        this.occurrenceTime = occurrenceTime;
+    }
+
+    public String getParentName() {
+        return parentName;
     }
 }
 

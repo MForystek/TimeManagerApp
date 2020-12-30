@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Day {
     private Date date;
@@ -25,6 +27,9 @@ public class Day {
     }
 
     public void delActivity(String activityName) {
+        Predicate<ActivitySegment> isChildOfActivity = segment -> activityName.equals(segment.getParentName());
+        Consumer<ActivitySegment> removeSegmentFromTheList = segment -> segments.remove(segment);
+        segments.stream().filter(isChildOfActivity).forEach(removeSegmentFromTheList);
         activities.remove(activityName);
     }
 
@@ -42,7 +47,7 @@ public class Day {
 
         //incomplete
 
-        _quicksortSegments(segments, 0, segments.size() -1);
+        _quicksortSegments(segments, 0, segments.size() - 1);
     }
 
     private boolean _isEnoughSecondsInTheDay() {
@@ -61,7 +66,7 @@ public class Day {
         ActivitySegment pivot = list.get(end);
         int i = start;
         for (int j = start; j < end; j++) {
-            if(list.get(j).getOccurringTime() < pivot.getOccurringTime()){
+            if(list.get(j).getOccurrenceTime() < pivot.getOccurrenceTime()){
                 ActivitySegment tmp = list.get(i);
                 list.set(i, list.get(j));
                 list.set(j, tmp);
