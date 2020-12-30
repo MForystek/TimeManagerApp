@@ -14,6 +14,7 @@ public class ProjectActivity extends Activity {
         this.deadline = deadline;
     }
 
+    @Override
     public ActivitySegment getNextSegment(){
         float factor = (float) totalLengthInSec /(float) getRepetitionLengthInSec();
         return new ActivitySegment(totalLengthInSec, (int)(factor*getValueInClocks()));

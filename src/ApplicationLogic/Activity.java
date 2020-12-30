@@ -16,7 +16,7 @@ public abstract class Activity {
         this.importance = importance;
     }
 
-    abstract public ActivitySegment getNextSegment();
+    public abstract ActivitySegment getNextSegment();
 
     //getters & setters
     public int getValueInClocks() {

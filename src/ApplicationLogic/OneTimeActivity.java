@@ -11,6 +11,7 @@ public class OneTimeActivity extends Activity {
         this.deadline = deadline;
     }
 
+    @Override
     public ActivitySegment getNextSegment(){
         return new ActivitySegment(getRepetitionLengthInSec(), getValueInClocks());
     }
