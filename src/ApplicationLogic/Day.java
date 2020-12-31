@@ -37,6 +37,10 @@ public class Day {
         segments.remove(activitySegment);
     }
 
+    public void unsetActivity(String activityName) {
+
+    }
+
 
     public Map<String, Short> getUsage() {
         return new HashMap<>();
