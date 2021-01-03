@@ -21,8 +21,6 @@ public class Manager {
     private int calendarLength;
     private boolean notifications;
     private Scanner scanner = new Scanner(System.in);
-    private Calendar calendar;
-    private Shop shop;
 
     public Manager() {
         String temporaryUsername;
@@ -91,15 +89,5 @@ public class Manager {
         System.out.println(amountOfClocks);
         System.out.println(calendarLength);
         System.out.println(notifications);
-    }
-
-    //setters & getters
-
-    public Calendar getCalendar() {
-        return calendar;
-    }
-
-    public Shop getShop() {
-        return shop;
     }
 }

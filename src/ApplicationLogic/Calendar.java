@@ -1,15 +1,38 @@
 package ApplicationLogic;
 
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.Map;
 
-public class Calendar {
+public class Calendar extends Thread {
     private int calendarLength = 92;
+    private int amountOfClocks;
     private List<Day> days;
+    private Map<String, Activity> activities;
+    private Manager manager;
+    private Shop shop;
+
+    public void run(){
+        if(shop.getBoughtActivity() != null){
+            addActivity(shop.getBoughtActivity());
+            reArrange();
+        }
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reArrange(){
+        //incomplete method
+    }
+
+    public void addActivity(Activity activity){
+        activities.put(activity.getName(), activity);
+    }
 
     public void addDay() {
-        //automatyczne dodawanie dni gdy poprzednie minęły
+        //automatically adding days after date change
         days.add(new Day());
     }
 
