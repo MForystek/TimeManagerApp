@@ -15,9 +15,10 @@ public class Calendar extends Thread {
         if(shop.getBoughtActivity() != null){
             addActivity(shop.getBoughtActivity());
             reArrange();
+            shop.setBoughtActivity(null);
         }
         try {
-            Thread.sleep(10000);
+            Thread.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
