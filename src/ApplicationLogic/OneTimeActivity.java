@@ -3,7 +3,6 @@ package ApplicationLogic;
 import java.util.Date;
 
 public class OneTimeActivity extends Activity {
-    //variable lengthInSec for this class is its whole length
     Date deadline;
 
     public OneTimeActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty, Date deadline) {

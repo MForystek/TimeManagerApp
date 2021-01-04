@@ -3,7 +3,6 @@ package ApplicationLogic;
 import java.util.Date;
 
 public class ProjectActivity extends Activity {
-    // variable lengthInSec for this class is length of whole project
 
     private short totalLengthInSec;
     Date deadline;
