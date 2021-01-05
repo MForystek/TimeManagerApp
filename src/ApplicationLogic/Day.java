@@ -1,21 +1,20 @@
 package ApplicationLogic;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class Day {
-
-
-    private Date date;
-    private Map<String, Activity> activities;
-    private List<ActivitySegment> segments;
+    private LocalDate date;
+    private Map<String, Activity> activities = new HashMap<>();
+    private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0;
 
+    public Day(LocalDate date) {
+        this.date = date;
+    }
 
 //    public void addActivity(Activity activity) {
 //        activities.put(activity.getName(), activity);
@@ -35,31 +34,48 @@ public class Day {
 //        activities.remove(activityName);
 //    }
 
-    public void delSegment(ActivitySegment activitySegment) {
+    public void removeSegment(ActivitySegment activitySegment) {
         segments.remove(activitySegment);
     }
 
-    public void addSegment(ActivitySegment activitySegment) {
-
-        //incomplete
-
-        _quicksortSegments(segments, 0, segments.size() - 1);
+    public int putSegment(ActivitySegment activitySegment) {
+        if (isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
+            segments.add(activitySegment);
+            _quicksortSegments(segments, 0, segments.size() - 1);
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
-    public Map<String, Short> getUsage() {
-        return new HashMap<>();
-        //incomplete
+    public Map<String, Integer> getUsage() {
+        int dutyCount = 0;
+        int pleasureCount = 0;
+        for (ActivitySegment segment : segments) {
+            if (activities.get(segment.getParentName()).isDuty()) {
+                dutyCount += segment.getLengthInSec();
+            } else {
+                pleasureCount += segment.getLengthInSec();
+            }
+        }
+        Map<String, Integer> hashMap = new HashMap<>();
+        hashMap.put("duty", (dutyCount/SECONDS_IN_THE_DAY)*100);
+        hashMap.put("pleasure", (pleasureCount/SECONDS_IN_THE_DAY)*100);
+        hashMap.put("free", 100 - hashMap.get("duty") - hashMap.get("pleasure"));
+        return hashMap;
     }
 
     public boolean isSpaceFor(int occurrenceTime, int lengthInSec) {
-        return true;
-        //incomplete
+        for (int i = 0; i < segments.size(); i++) {
+            if (segments.get(i).getOccurrenceTime() > occurrenceTime){
+                return segments.get(i).getOccurrenceTime() - occurrenceTime >= lengthInSec + BREAK_TIME
+                        && segments.get(i - 1).getOccurrenceTime() - occurrenceTime >= segments.get(i - 1).getLengthInSec();
+            }else if (i == segments.size() - 1){
+                return segments.get(i).getOccurrenceTime() - occurrenceTime >= segments.get(i).getLengthInSec();
+            }
+        }
+        return false;
     }
-
-//    private boolean _isEnoughSecondsInTheDay() {
-//        int sum_of_seconds = 0;     //activities.stream().mapToInt(Activity::getRepetitionLengthInSec).sum();
-//        return sum_of_seconds <= SECONDS_IN_THE_DAY;
-//    }
 
     private void _quicksortSegments(List<ActivitySegment> list, int start, int end) {
         if (start < end) {
@@ -86,11 +102,11 @@ public class Day {
     }
 
     //getters & setters
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 }
