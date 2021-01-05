@@ -7,6 +7,9 @@ public abstract class Activity {
     private int valueInClocks;
     private short importance;
     private int repetitionLengthInSec;
+
+
+
     private boolean isDuty;
 
     public Activity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty) {
@@ -59,5 +62,9 @@ public abstract class Activity {
 
     public void setImportance(short importance) {
         this.importance = importance;
+    }
+
+    public boolean isDuty() {
+        return isDuty;
     }
 }
