@@ -53,19 +53,30 @@ public class Day {
     public boolean isSpaceFor(int occurrenceTime, int lengthInSec) {
         if (occurrenceTime < 0 || lengthInSec <= 0 || occurrenceTime + lengthInSec > SECONDS_IN_THE_DAY) {
             return false;
-        } else if (segments.size() == 0 ) {
-                return true;
-        } else if (segments.size() == 1) {
-            if (segments.get(0).getOccurrenceTime() < occurrenceTime) {
-                return segments.get(0).getEndTime() + BREAK_TIME <= occurrenceTime;
-            } else {
-                return occurrenceTime + lengthInSec + BREAK_TIME <= segments.get(0).getOccurrenceTime();
-            }
         } else {
+            boolean isAnythingAfter = true;
+            boolean isAnythingBefore = true;
+            boolean isEnoughTimeAfter = false;
+            boolean isEnoughTimeBefore = false;
             for (int i = 0; i < segments.size(); i++) {
-                //if (segments.get(i).getOccurrenceTime() - occurrenceTime + lengthInSec > 0)
+                if (segments.get(i).getOccurrenceTime() - occurrenceTime > 0) {
+                    isAnythingAfter = false;
+                    if (segments.get(i).getOccurrenceTime() - (occurrenceTime + lengthInSec + BREAK_TIME) >= 0) {
+                        isEnoughTimeAfter = true;
+                    }
+                    break;
+                }
             }
-            return false;
+            for (int i = segments.size() - 1; i >= 0; i--) {
+                if (occurrenceTime - segments.get(i).getOccurrenceTime() > 0) {
+                    isAnythingBefore = false;
+                    if (occurrenceTime - (segments.get(i).getEndTime() + BREAK_TIME) >= 0) {
+                        isEnoughTimeBefore = true;
+                    }
+                    break;
+                }
+            }
+            return (isAnythingBefore || isEnoughTimeBefore) && (isEnoughTimeAfter || isAnythingAfter);
         }
     }
 

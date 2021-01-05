@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
-        for (int i = 0; i <calendar.getCalendarLength(); i++) {
+        for (int i = 0; i < calendar.getCalendarLength(); i++) {
             LocalDate localDate = LocalDate.now().plusDays(i);
             calendar.addDay(localDate);
         }
@@ -34,7 +34,7 @@ public class Main {
                 "nożem",
                 "50",
                 "12",
-                "180",
+                "100",
                 "true"
         );
         calendar.addActivityToShop(activityOneTime);
@@ -45,7 +45,6 @@ public class Main {
         calendar.buyActivity(activityPeriodic);
         calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
         calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
-        calendar.putSegment(calendar.getDays().get(4), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(360));
-
+        calendar.putSegment(calendar.getDays().get(3), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
     }
 }
