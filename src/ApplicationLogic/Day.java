@@ -2,8 +2,6 @@ package ApplicationLogic;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class Day {
     private LocalDate date;
@@ -16,35 +14,22 @@ public class Day {
         this.date = date;
     }
 
-//    public void addActivity(Activity activity) {
-//        activities.put(activity.getName(), activity);
-//        if (_isEnoughSecondsInTheDay()) {
-//            _addActivitySegment(activity.getNextSegment());
-//            System.out.println("yeah we'll do it");
-//        } else {
-//            activities.remove(activity.getName());
-//            System.out.println("you have no more time!");
-//        }
-//    }
-
-//    public void delActivity(String activityName) {
-//        Predicate<ActivitySegment> isChildOfActivity = segment -> activityName.equals(segment.getParentName());
-//        Consumer<ActivitySegment> removeSegmentFromTheList = segment -> segments.remove(segment);
-//        segments.stream().filter(isChildOfActivity).forEach(removeSegmentFromTheList);
-//        activities.remove(activityName);
-//    }
-
-    public void removeSegment(ActivitySegment activitySegment) {
-        segments.remove(activitySegment);
+    public boolean removeSegment(ActivitySegment activitySegment) {
+        if (segments.contains(activitySegment)) {
+            segments.remove(activitySegment);
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public int putSegment(ActivitySegment activitySegment) {
+    public boolean putSegment(ActivitySegment activitySegment) {
         if (isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
             segments.add(activitySegment);
             _quicksortSegments(segments, 0, segments.size() - 1);
-            return 0;
+            return true;
         }else{
-            return 1;
+            return false;
         }
     }
 

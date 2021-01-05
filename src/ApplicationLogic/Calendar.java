@@ -1,8 +1,9 @@
 package ApplicationLogic;
 
+import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar {
+public class Calendar extends Thread{
     private int amountOfClocks;
     private long calendarLength;
     private boolean notifications;
@@ -13,6 +14,18 @@ public class Calendar {
     public Calendar() {
         activitiesInCalendar = new HashMap<>();
         activitiesInShop = new HashMap<>();
+        start();
+    }
+
+    public void run() {
+        while(true) {
+            System.out.println("I'm alive!!!");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int addActivityToShop(Activity activity) {
@@ -72,7 +85,7 @@ public class Calendar {
     }
 
     public int putSegment(Day day, ActivitySegment segment) {
-        if(day.addSegment(segment)) {
+        if(day.putSegment(segment)) {
             System.out.println("Activity placed successfully");
             return 0;
         } else {
@@ -82,7 +95,7 @@ public class Calendar {
     }
 
     public int removeSegment(Day day, ActivitySegment segment) {
-        if(day.delSegment(segment)) {
+        if(day.removeSegment(segment)) {
             System.out.println("Activity removed successfully");
             return 0;
         } else {
@@ -91,7 +104,11 @@ public class Calendar {
         }
     }
 
-    public void addDay(Date date) {
-        days.add(new Day());
+    public void addDay(LocalDate localDate) {
+        days.add(new Day(localDate));
+    }
+
+    public long getCalendarLength() {
+        return calendarLength;
     }
 }

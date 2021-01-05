@@ -7,9 +7,6 @@ public abstract class Activity {
     private int valueInClocks;
     private short importance;
     private int repetitionLengthInSec;
-
-
-
     private boolean isDuty;
 
     public Activity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty) {
