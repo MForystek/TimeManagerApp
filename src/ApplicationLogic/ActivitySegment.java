@@ -7,10 +7,11 @@ public class ActivitySegment {
     private int valueInClocks;
     private int occurrenceTime = -1; // this is used only when occurs in a day
 
-    public ActivitySegment(String parentName, int lengthInSec, int valueInClocks) {
+    public ActivitySegment(String parentName, int lengthInSec, int valueInClocks, int occurrenceTime) {
         this.parentName = parentName;
         this.lengthInSec = lengthInSec;
         this.valueInClocks = valueInClocks;
+        this.occurrenceTime = occurrenceTime;
     }
 
     //getters & setters

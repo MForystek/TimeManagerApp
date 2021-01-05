@@ -8,7 +8,7 @@ public class Day {
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
-    private final int BREAK_TIME = 0;
+    private final int BREAK_TIME = 0; //minimal break between activities
 
     public Day(LocalDate date) {
         this.date = date;
@@ -28,7 +28,7 @@ public class Day {
             segments.add(activitySegment);
             _quicksortSegments(segments, 0, segments.size() - 1);
             return true;
-        }else{
+        } else {
             return false;
         }
     }

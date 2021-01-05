@@ -1,6 +1,6 @@
 package ApplicationLogic;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class ActivityFactory {
 
@@ -30,7 +30,7 @@ public class ActivityFactory {
             String repetitionLengthInSec,
             String isDuty,
             String totalLengthInSec,
-            Date date
+            LocalDate date
     ) {
         return new ProjectActivity(
                 name,
@@ -39,7 +39,7 @@ public class ActivityFactory {
                 Short.parseShort(importance),
                 Integer.parseInt(repetitionLengthInSec),
                 Boolean.parseBoolean(isDuty),
-                Short.parseShort(totalLengthInSec),
+                Integer.parseInt(totalLengthInSec),
                 date
         );
     }
@@ -51,7 +51,7 @@ public class ActivityFactory {
             String importance,
             String repetitionLengthInSec,
             String isDuty,
-            Date date
+            LocalDate date
     ) {
         return new OneTimeActivity(
                 name,

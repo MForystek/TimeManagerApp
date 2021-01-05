@@ -3,9 +3,9 @@ package ApplicationLogic;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar extends Thread{
+public class Calendar { //extends Thread{
     private int amountOfClocks;
-    private long calendarLength;
+    private long calendarLength = 92;
     private boolean notifications;
     private List<Day> days = new ArrayList<>();
     private Map<String, Activity> activitiesInCalendar;
@@ -14,19 +14,19 @@ public class Calendar extends Thread{
     public Calendar() {
         activitiesInCalendar = new HashMap<>();
         activitiesInShop = new HashMap<>();
-        start();
+        //start();
     }
 
-    public void run() {
-        while(true) {
-            System.out.println("I'm alive!!!");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    public void run() {
+//        while(true) {
+//            System.out.println("I'm alive!!!");
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     public int addActivityToShop(Activity activity) {
         if (activitiesInShop.containsKey(activity.getName())) {
@@ -54,17 +54,17 @@ public class Calendar extends Thread{
         if (!activitiesInShop.containsKey(activity.getName())) {
             System.out.println("There is no activity in Shop with this name");
             return 1;
+        } else if(activity.isDuty()) {
+            activitiesInCalendar.put(activity.getName(), activity);
+            System.out.println("Duty bought successfully");
+            return 0;
         } else if (amountOfClocks < activity.getValueInClocks()) {
             System.out.println("You don't have enough clocks for it!");
             return 1;
-        } else if (!activity.isDuty()) {
+        } else {
             amountOfClocks -= activity.getValueInClocks();
             activitiesInCalendar.put(activity.getName(), activity);
             System.out.println("Pleasure bought successfully");
-            return 0;
-        } else {
-            activitiesInCalendar.put(activity.getName(), activity);
-            System.out.println("Duty bought successfully");
             return 0;
         }
     }
@@ -110,5 +110,21 @@ public class Calendar extends Thread{
 
     public long getCalendarLength() {
         return calendarLength;
+    }
+
+    public int getAmountOfClocks() {
+        return amountOfClocks;
+    }
+
+    public void setAmountOfClocks(int amountOfClocks) {
+        this.amountOfClocks = amountOfClocks;
+    }
+
+    public List<Day> getDays() {
+        return days;
+    }
+
+    public Map<String, Activity> getActivitiesInCalendar() {
+        return activitiesInCalendar;
     }
 }

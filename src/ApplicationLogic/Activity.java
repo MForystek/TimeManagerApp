@@ -18,7 +18,7 @@ public abstract class Activity {
         this.isDuty = isDuty;
     }
 
-    public abstract ActivitySegment getNextSegment();
+    public abstract ActivitySegment getNextSegment(int occurrenceTime);
 
     //getters & setters
     public int getValueInClocks() {

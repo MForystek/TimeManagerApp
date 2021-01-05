@@ -1,26 +1,26 @@
 package ApplicationLogic;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class OneTimeActivity extends Activity {
-    Date deadline;
+    LocalDate deadline;
 
-    public OneTimeActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty, Date deadline) {
+    public OneTimeActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty, LocalDate deadline) {
         super(name, description, valueInClocks, importance, repetitionLengthInSec, isDuty);
         this.deadline = deadline;
     }
 
     @Override
-    public ActivitySegment getNextSegment(){
-        return new ActivitySegment(getName(), getRepetitionLengthInSec(), getValueInClocks());
+    public ActivitySegment getNextSegment(int occurrenceTime){
+        return new ActivitySegment(getName(), getRepetitionLengthInSec(), getValueInClocks(), occurrenceTime);
     }
 
     //getters & setters
-    public Date getDeadline() {
+    public LocalDate getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(Date deadline) {
+    public void setDeadline(LocalDate deadline) {
         this.deadline = deadline;
     }
 }
