@@ -51,15 +51,22 @@ public class Day {
     }
 
     public boolean isSpaceFor(int occurrenceTime, int lengthInSec) {
-        for (int i = 0; i < segments.size(); i++) {
-            if (segments.get(i).getOccurrenceTime() > occurrenceTime){
-                return segments.get(i).getOccurrenceTime() - occurrenceTime >= lengthInSec + BREAK_TIME
-                        && segments.get(i - 1).getOccurrenceTime() - occurrenceTime >= segments.get(i - 1).getLengthInSec();
-            }else if (i == segments.size() - 1){
-                return segments.get(i).getOccurrenceTime() - occurrenceTime >= segments.get(i).getLengthInSec();
+        if (occurrenceTime < 0 || lengthInSec <= 0 || occurrenceTime + lengthInSec > SECONDS_IN_THE_DAY) {
+            return false;
+        } else if (segments.size() == 0 ) {
+                return true;
+        } else if (segments.size() == 1) {
+            if (segments.get(0).getOccurrenceTime() < occurrenceTime) {
+                return segments.get(0).getEndTime() + BREAK_TIME <= occurrenceTime;
+            } else {
+                return occurrenceTime + lengthInSec + BREAK_TIME <= segments.get(0).getOccurrenceTime();
             }
+        } else {
+            for (int i = 0; i < segments.size(); i++) {
+                //if (segments.get(i).getOccurrenceTime() - occurrenceTime + lengthInSec > 0)
+            }
+            return false;
         }
-        return false;
     }
 
     private void _quicksortSegments(List<ActivitySegment> list, int start, int end) {

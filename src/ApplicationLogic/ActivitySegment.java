@@ -42,6 +42,10 @@ public class ActivitySegment {
     public String getParentName() {
         return parentName;
     }
+
+    public int getEndTime() {
+        return occurrenceTime + lengthInSec;
+    }
 }
 
 

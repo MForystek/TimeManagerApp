@@ -1,7 +1,6 @@
 package ApplicationLogic;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class ProjectActivity extends Activity {
 
@@ -17,7 +16,7 @@ public class ProjectActivity extends Activity {
     @Override
     public ActivitySegment getNextSegment(int occurrenceTime){
         float factor = (float) totalLengthInSec /(float) getRepetitionLengthInSec();
-        return new ActivitySegment(getName(), totalLengthInSec, (int)(factor*getValueInClocks()), occurrenceTime);
+        return new ActivitySegment(getName(), getRepetitionLengthInSec(), (int)(factor*getValueInClocks()), occurrenceTime);
     }
 
     //getters & setters
