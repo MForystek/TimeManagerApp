@@ -46,5 +46,7 @@ public class Main {
         calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
         calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
         calendar.putSegment(calendar.getDays().get(3), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
+
+        calendar.getDays().get(2).print();
     }
 }
