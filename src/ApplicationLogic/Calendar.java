@@ -104,6 +104,7 @@ public class Calendar { //extends Thread{
         }
     }
 
+    // getters & setters
     public void addDay(LocalDate localDate) {
         days.add(new Day(localDate));
     }
