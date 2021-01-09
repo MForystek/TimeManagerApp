@@ -15,15 +15,16 @@ public class Day {
     }
 
     public void print(){
-        for (int i = 0; i < segments.size(); i++) {
-            if (i != 0){
-                System.out.println(secondsToTime(segments.get(i - 1).getOccurrenceTime()) + " - " + secondsToTime(segments.get(i).getOccurrenceTime()) + " - " + segments.get(i).getParentName());
-            }else{
-                System.out.println("00:00:00 - " + secondsToTime(segments.get(i).getOccurrenceTime()) + " - free time");
+        System.out.println("00:00:00 - " + secondsToTime(segments.get(0).getOccurrenceTime()) + " - free time");
+        for (int i = 0; i < segments.size() - 1; i++) {
+            System.out.println(secondsToTime(segments.get(i).getOccurrenceTime()) + " - " + secondsToTime(segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec()) + " - " + segments.get(i).getParentName());
+            if (segments.get(i+1).getOccurrenceTime() - segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec() >= 60){ // break prints only if is longer than 1min
+                System.out.println(secondsToTime(segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec()) + " - " + secondsToTime(segments.get(i+1).getOccurrenceTime()) + " - break");
             }
         }
-        System.out.println(secondsToTime(segments.get(segments.size() - 1).getOccurrenceTime()) + " - 24:00:00 - free time");
-    }
+        System.out.println(secondsToTime(segments.get(segments.size() - 1).getOccurrenceTime()) + " - " + secondsToTime(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - " + segments.get(segments.size() - 1).getParentName());
+        System.out.println(secondsToTime(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - 24:00:00 - free time");
+}
 
     private String secondsToTime(int seconds){
         int hour = 0;
@@ -61,8 +62,7 @@ public class Day {
     }
 
     public Map<String, Integer> getUsage() { // return percentage of each activity-type in day
-        int dutyCount = 0;
-        int pleasureCount = 0;
+        int dutyCount = 0;        int pleasureCount = 0;
         for (ActivitySegment segment : segments) {
             if (activities.get(segment.getParentName()).isDuty()) {
                 dutyCount += segment.getLengthInSec();
