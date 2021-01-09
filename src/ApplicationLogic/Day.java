@@ -14,6 +14,25 @@ public class Day {
         this.date = date;
     }
 
+    public void print(){
+        for (int i = 0; i < segments.size(); i++) {
+            if (i != 0){
+                System.out.println(segments.get(i - 1).getOccurrenceTime() + " - " + segments.get(i).getOccurrenceTime() + " - " + segments.get(i).getParentName());
+            }else{
+                System.out.println("00:00:00 - " + secondsToTime(segments.get(i).getOccurrenceTime()) + " - free time");
+            }
+        }
+        System.out.println(segments.get(segments.size() - 1).getOccurrenceTime() + " - 00:00:00 - free time");
+    }
+
+    private String secondsToTime(int seconds){
+        int hour = seconds % 3600;
+        seconds -= hour * 3600;
+        int minute = seconds % 60;
+        seconds -= minute * 60;
+        return Integer.toString(hour) + ":" + Integer.toString(minute) + ":" + Integer.toString(seconds);
+    }
+
     public boolean removeSegment(ActivitySegment activitySegment) {
         if (segments.contains(activitySegment)) {
             segments.remove(activitySegment);
@@ -33,7 +52,7 @@ public class Day {
         }
     }
 
-    public Map<String, Integer> getUsage() {
+    public Map<String, Integer> getUsage() { // return percentage of each activity-type in day
         int dutyCount = 0;
         int pleasureCount = 0;
         for (ActivitySegment segment : segments) {
