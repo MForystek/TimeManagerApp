@@ -3,7 +3,7 @@ package ApplicationLogic;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar { //extends Thread{
+public class Calendar {
     private int amountOfClocks;
     private long calendarLength = 92;
     private boolean notifications;
@@ -14,19 +14,7 @@ public class Calendar { //extends Thread{
     public Calendar() {
         activitiesInCalendar = new HashMap<>();
         activitiesInShop = new HashMap<>();
-        //start();
     }
-
-//    public void run() {
-//        while(true) {
-//            System.out.println("I'm alive!!!");
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
 
     public int addActivityToShop(Activity activity) {
         if (activitiesInShop.containsKey(activity.getName())) {
