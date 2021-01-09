@@ -2,7 +2,6 @@ package ApplicationLogic;
 
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
-import java.time.LocalTime;
 
 public class Notification extends Thread {
     private String title;
@@ -46,8 +45,8 @@ public class Notification extends Thread {
             // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.ERROR);
             // Warning:
             // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.WARNING);
-        } catch(Exception ex){
-            System.err.print(ex);
+        } catch(Exception e){
+            System.out.print(e);
         }
 
     }

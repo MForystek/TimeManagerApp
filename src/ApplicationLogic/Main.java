@@ -9,7 +9,7 @@ public class Main {
             LocalDate localDate = LocalDate.now().plusDays(i);
             calendar.addDay(localDate);
         }
-        calendar.setAmountOfClocks(100);
+        calendar.signIn("test", "test");
         var activityOneTime = ActivityFactory.makeOneTimeActivity(
                 "Wynieś dzieci",
                 "za drzwi",
