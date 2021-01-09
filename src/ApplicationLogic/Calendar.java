@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class Calendar {
-    User user;
+    private User user;
 
     public Calendar() {
         user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
@@ -15,7 +15,10 @@ public class Calendar {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
             return false;
         } else {
-            user = UserFactory.createUser(username, password, "0", "92", "false");
+            user = UserFactory.createUser(username, password, "0", "30", "false");
+            for (int i = 0; i < user.getCalendarLength(); i++) {
+                addDay(LocalDate.now().plusDays(i));
+            }
             return true;
         }
     }
@@ -106,6 +109,10 @@ public class Calendar {
     }
 
     // getters & setters
+    public User getUser() {
+        return user;
+    }
+
     public void addDay(LocalDate localDate) {
         user.getDays().add(new Day(localDate));
     }

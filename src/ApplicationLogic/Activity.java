@@ -7,15 +7,15 @@ public abstract class Activity {
     private int valueInClocks;
     private short importance;
     private int repetitionLengthInSec;
-    private boolean isDuty;
+    private boolean duty;
 
-    public Activity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty) {
+    public Activity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean duty) {
         this.name = name;
         this.description = description;
         this.valueInClocks = valueInClocks;
         this.importance = importance;
         this.repetitionLengthInSec = repetitionLengthInSec;
-        this.isDuty = isDuty;
+        this.duty = duty;
     }
 
     public abstract ActivitySegment getNextSegment(int occurrenceTime);
@@ -62,6 +62,6 @@ public abstract class Activity {
     }
 
     public boolean isDuty() {
-        return isDuty;
+        return duty;
     }
 }

@@ -3,13 +3,14 @@ package ApplicationLogic;
 import java.time.LocalDate;
 
 public class Main {
+
     public static void main(String[] args) {
         var calendar = new Calendar();
+        calendar.signIn("test", "test");
         for (int i = 0; i < calendar.getCalendarLength(); i++) {
             LocalDate localDate = LocalDate.now().plusDays(i);
             calendar.addDay(localDate);
         }
-        calendar.signIn("test", "test");
         var activityOneTime = ActivityFactory.makeOneTimeActivity(
                 "Wynieś dzieci",
                 "za drzwi",
@@ -17,7 +18,7 @@ public class Main {
                 "10",
                 "5",
                 "false",
-                LocalDate.of(2021, 1, 10)
+                LocalDate.of(2021, 1, 20)
         );
         var activityProject = ActivityFactory.makeProjectActivity(
                 "Bądź prezydentem",
@@ -43,10 +44,12 @@ public class Main {
         calendar.buyActivity(activityOneTime);
         calendar.buyActivity(activityProject);
         calendar.buyActivity(activityPeriodic);
-        calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
-        calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
-        calendar.putSegment(calendar.getDays().get(3), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
+        calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
+        calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
+        calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
 
-        calendar.getDays().get(2).print();
+        calendar.getDays().get(0).print();
+
+        UsersManager.saveConfiguration(calendar.getUser());
     }
 }

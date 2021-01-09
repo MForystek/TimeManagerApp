@@ -38,8 +38,7 @@ public class Day {
            seconds -= 60;
            minute++;
         }
-        String output = Integer.toString(hour) + ":" + Integer.toString(minute) + ":" + Integer.toString(seconds);
-        return output;
+        return hour + ":" + minute + ":" + seconds;
     }
 
     public boolean removeSegment(ActivitySegment activitySegment) {
@@ -138,5 +137,13 @@ public class Day {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Map<String, Activity> getActivities() {
+        return activities;
+    }
+
+    public List<ActivitySegment> getSegments() {
+        return segments;
     }
 }
