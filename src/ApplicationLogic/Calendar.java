@@ -4,12 +4,28 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar {
+public class Calendar implements Observer{
     private User user;
 
     public Calendar() {
         user = UserFactory.createUser("notNull", "notNull", "0", "30", "false");
     }
+
+    public void update(ActivitySegment segment){
+        if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity){
+            user.getActivitiesInCalendar().remove(segment.getParentName());
+        }else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity){
+            ((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).subtractLength(segment.getLengthInSec());
+            if (((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).getTotalLengthInSec() <= 0) {
+                user.getActivitiesInCalendar().remove(segment.getParentName());
+            }
+        }//else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
+        if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
+            user.addClocks(segment.getValueInClocks());
+        else
+            user.removeClocks(segment.getValueInClocks());
+    }
+
 
     public boolean signUp(String username, String password) {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
@@ -71,7 +87,7 @@ public class Calendar {
             System.out.println("You don't have enough clocks for it!");
             return 1;
         } else {
-            user.decreaseAmountOfClocks(activity.getValueInClocks());
+            user.removeClocks(activity.getValueInClocks());
             user.getActivitiesInCalendar().put(activity.getName(), activity);
             System.out.println("Pleasure bought successfully");
             return 0;
@@ -83,7 +99,7 @@ public class Calendar {
             System.out.println("There is no bought activity with this name");
             return 1;
         } else if (!activity.isDuty()) {
-            user.increaseAmountOfClocks(activity.getValueInClocks());
+            user.addClocks(activity.getValueInClocks());
             user.getActivitiesInCalendar().remove(activity.getName());
             System.out.println("Pleasure sold successfully");
         } else {
@@ -120,7 +136,9 @@ public class Calendar {
     }
 
     public void addDay(LocalDate localDate) {
-        user.getDays().add(new Day(localDate));
+        Day day = new Day(localDate);
+        day.setObserver(this);
+        user.getDays().add(day);
     }
 
     public long getCalendarLength() {

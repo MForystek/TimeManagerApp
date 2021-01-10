@@ -19,6 +19,10 @@ public class ProjectActivity extends Activity {
         return new ActivitySegment(getName(), getRepetitionLengthInSec(), (int)(factor*getValueInClocks()), occurrenceTime);
     }
 
+    public void subtractLength(int length){
+        this.totalLengthInSec -= length;
+    }
+
     //getters & setters
     public int getTotalLengthInSec() {
         return totalLengthInSec;

@@ -3,12 +3,13 @@ package ApplicationLogic;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Day implements Comparable<Day>{
+public class Day implements Comparable<Day>, Observable{
     private LocalDate date;
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
+    private Observer calendar;
 
     public Day(LocalDate date) {
         this.date = date;
@@ -39,6 +40,10 @@ public class Day implements Comparable<Day>{
            minute++;
         }
         return hour + ":" + minute + ":" + seconds;
+    }
+
+    public void setObserver(Observer observer){
+        this.calendar = observer;
     }
 
     public boolean removeSegment(ActivitySegment activitySegment) {

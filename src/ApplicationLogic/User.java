@@ -54,15 +54,15 @@ public class User {
         this.activitiesInShop = activitiesInShop;
     }
 
-    public void increaseAmountOfClocks(int amountOfClocks) {
-        if (amountOfClocks >= 0) {
-            this.amountOfClocks += amountOfClocks;
+    public void addClocks(int clocks) {
+        if (clocks >= 0) {
+            this.amountOfClocks += clocks;
         }
     }
 
-    public void decreaseAmountOfClocks(int amountOfClocks) {
-        if (amountOfClocks >= 0 && this.amountOfClocks + amountOfClocks >= 0) {
-            this.amountOfClocks -= amountOfClocks;
+    public void removeClocks(int clocks) {
+        if (clocks >= 0 && this.amountOfClocks + clocks >= 0) {
+            this.amountOfClocks -= clocks;
         }
     }
 
@@ -71,7 +71,6 @@ public class User {
     }
 
     //getters & setters
-
     public String getLanguage() {
         return language;
     }
