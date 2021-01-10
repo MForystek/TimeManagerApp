@@ -3,7 +3,7 @@ package ApplicationLogic;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Day {
+public class Day implements Comparable<Day>{
     private LocalDate date;
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
@@ -51,7 +51,7 @@ public class Day {
     }
 
     public boolean putSegment(ActivitySegment activitySegment) {
-        if (isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
+        if (_isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
             segments.add(activitySegment);
             _quicksortSegments(segments, 0, segments.size() - 1);
             return true;
@@ -76,7 +76,12 @@ public class Day {
         return hashMap;
     }
 
-    public boolean isSpaceFor(int occurrenceTime, int lengthInSec) {
+    @Override
+    public int compareTo(Day other) {
+        return date.compareTo(other.getDate());
+    }
+
+    private boolean _isSpaceFor(int occurrenceTime, int lengthInSec) {
         if (occurrenceTime < 0 || lengthInSec <= 0 || occurrenceTime + lengthInSec > SECONDS_IN_THE_DAY) {
             return false;
         } else {
@@ -85,7 +90,7 @@ public class Day {
             boolean isEnoughTimeAfter = false;
             boolean isEnoughTimeBefore = false;
             for (int i = 0; i < segments.size(); i++) {
-                if (segments.get(i).getOccurrenceTime() - occurrenceTime > 0) {
+                if (segments.get(i).getOccurrenceTime() - occurrenceTime >= 0) {
                     isAnythingAfter = false;
                     if (segments.get(i).getOccurrenceTime() - (occurrenceTime + lengthInSec + BREAK_TIME) >= 0) {
                         isEnoughTimeAfter = true;
@@ -94,7 +99,7 @@ public class Day {
                 }
             }
             for (int i = segments.size() - 1; i >= 0; i--) {
-                if (occurrenceTime - segments.get(i).getOccurrenceTime() > 0) {
+                if (occurrenceTime - segments.get(i).getOccurrenceTime() >= 0) {
                     isAnythingBefore = false;
                     if (occurrenceTime - (segments.get(i).getEndTime() + BREAK_TIME) >= 0) {
                         isEnoughTimeBefore = true;

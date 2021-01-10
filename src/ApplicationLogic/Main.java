@@ -6,11 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
         var calendar = new Calendar();
-        calendar.signIn("test", "test");
-        for (int i = 0; i < calendar.getCalendarLength(); i++) {
-            LocalDate localDate = LocalDate.now().plusDays(i);
-            calendar.addDay(localDate);
-        }
+        System.out.println(calendar.signIn("test", "test"));
+        System.out.println(calendar.removeAccount("test", "test"));
+        System.out.println(calendar.signUp("test", "test"));
+        calendar.getUser().setAmountOfClocks(100);
         var activityOneTime = ActivityFactory.makeOneTimeActivity(
                 "Wynieś dzieci",
                 "za drzwi",

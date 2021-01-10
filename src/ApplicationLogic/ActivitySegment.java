@@ -5,7 +5,7 @@ public class ActivitySegment {
     private String parentName;
     private int lengthInSec;
     private int valueInClocks;
-    private int occurrenceTime = -1; // this is used only when occurs in a day
+    private int occurrenceTime;
 
     public ActivitySegment(String parentName, int lengthInSec, int valueInClocks, int occurrenceTime) {
         this.parentName = parentName;

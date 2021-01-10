@@ -8,7 +8,7 @@ public class Calendar {
     private User user;
 
     public Calendar() {
-        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        user = UserFactory.createUser("notNull", "notNull", "0", "30", "false");
     }
 
     public boolean signUp(String username, String password) {
@@ -30,6 +30,11 @@ public class Calendar {
         } else {
             return false;
         }
+    }
+
+    public boolean removeAccount(String username, String password) {
+        var isDeleted = new File("usersConfigs/" + username + password + ".txt").delete();
+        return isDeleted;
     }
 
     public int addActivityToShop(Activity activity) {
@@ -106,6 +111,7 @@ public class Calendar {
             System.out.println("Removing an Activity failed");
             return 1;
         }
+
     }
 
     // getters & setters
@@ -131,6 +137,17 @@ public class Calendar {
 
     public List<Day> getDays() {
         return user.getDays();
+    }
+
+    public Day getDayByDate(LocalDate date) {
+        for (var day : user.getDays()) {
+            if (date.equals(day.getDate())) {
+                return day;
+            }
+        }
+        var newDay = new Day(date);
+        user.getDays().add(newDay);
+        return newDay;
     }
 
     public Map<String, Activity> getActivitiesInCalendar() {

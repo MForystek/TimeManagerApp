@@ -1,9 +1,6 @@
 package ApplicationLogic;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class User {
     private String language;
@@ -67,6 +64,10 @@ public class User {
         if (amountOfClocks >= 0 && this.amountOfClocks + amountOfClocks >= 0) {
             this.amountOfClocks -= amountOfClocks;
         }
+    }
+
+    public void sortDays() {
+        Collections.sort(days);
     }
 
     //getters & setters
