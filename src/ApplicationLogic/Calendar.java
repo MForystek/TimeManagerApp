@@ -11,6 +11,7 @@ public class Calendar implements Observer{
         user = UserFactory.createUser("notNull", "notNull", "0", "30", "false");
     }
 
+    @Override
     public void update(ActivitySegment segment){
         if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity){
             user.getActivitiesInCalendar().remove(segment.getParentName());
@@ -19,13 +20,10 @@ public class Calendar implements Observer{
             if (((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).getTotalLengthInSec() <= 0) {
                 user.getActivitiesInCalendar().remove(segment.getParentName());
             }
-        }//else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
+        } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
         if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
             user.addClocks(segment.getValueInClocks());
-        else
-            user.removeClocks(segment.getValueInClocks());
     }
-
 
     public boolean signUp(String username, String password) {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
@@ -35,6 +33,7 @@ public class Calendar implements Observer{
             for (int i = 0; i < user.getCalendarLength(); i++) {
                 addDay(LocalDate.now().plusDays(i));
             }
+            this._updateDays();
             return true;
         }
     }
@@ -42,6 +41,9 @@ public class Calendar implements Observer{
     public boolean signIn(String username, String password) {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
             user = UsersManager.readConfiguration(username, password);
+            for (var day : user.getDays()) {
+                day.setObserver(this);
+            }
             return true;
         } else {
             return false;
@@ -128,6 +130,19 @@ public class Calendar implements Observer{
             return 1;
         }
 
+    }
+
+    private void _updateDays() {
+        for (int i = 0; i < user.getDays().size(); i++) {
+            if (user.getDays().get(i).getDate().isBefore(LocalDate.now())) {
+                user.getDays().remove(i);
+            }
+        }
+        int dayCounter = user.getDays().size();
+        while (user.getCalendarLength() > user.getDays().size()) {
+            addDay(LocalDate.now().plusDays(dayCounter));
+            dayCounter++;
+        }
     }
 
     // getters & setters
