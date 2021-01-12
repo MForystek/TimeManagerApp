@@ -20,6 +20,9 @@ public class Day extends Thread implements Comparable<Day>, Observable{
     public void run(){
         LocalTime now = LocalTime.now();
         LocalTime lastSegment = secondsToTime(segments.get(0).getOccurrenceTime()+segments.get(0).getLengthInSec());
+        if (LocalDate.now().isAfter(this.date)){
+            interrupt();
+        }
         if (lastSegment.isAfter(now)){
             calendar.update(segments.get(0));
             segments.remove(0);
