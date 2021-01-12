@@ -1,9 +1,11 @@
 package ApplicationLogic;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
-public class Day implements Comparable<Day>, Observable{
+public class Day extends Thread implements Comparable<Day>, Observable{
     private LocalDate date;
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
@@ -13,6 +15,20 @@ public class Day implements Comparable<Day>, Observable{
 
     public Day(LocalDate date) {
         this.date = date;
+    }
+
+    public void run(){
+        LocalTime now = LocalTime.now();
+        LocalTime lastSegment = secondsToTime(segments.get(0).getOccurrenceTime()+segments.get(0).getLengthInSec());
+        if (lastSegment.isAfter(now)){
+            calendar.update(segments.get(0));
+            segments.remove(0);
+        }
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void print(){
@@ -27,7 +43,7 @@ public class Day implements Comparable<Day>, Observable{
         System.out.println(secondsToTime(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - 24:00:00 - free time");
 }
 
-    private String secondsToTime(int seconds){
+    private LocalTime secondsToTime(int seconds){
         int hour = 0;
         while(seconds >= 3600){
             seconds -= 3600;
@@ -39,7 +55,7 @@ public class Day implements Comparable<Day>, Observable{
            seconds -= 60;
            minute++;
         }
-        return hour + ":" + minute + ":" + seconds;
+        return LocalTime.of(hour, minute, seconds);
     }
 
     public void setObserver(Observer observer){
