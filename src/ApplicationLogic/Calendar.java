@@ -4,7 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar implements ObserverDay, IActivityShopAddDel {
+public class Calendar implements IObserver, IActivityShopAddDel {
     private User user;
 
     public Calendar() {
