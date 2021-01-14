@@ -1,17 +1,16 @@
 package ApplicationLogic;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Day extends Thread implements Comparable<Day>, Observable{
+public class Day extends Thread implements Comparable<Day>, ObservableDay {
     private LocalDate date;
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
-    private Observer calendar;
+    private ObserverDay calendar;
 
     public Day(LocalDate date) {
         this.date = date;
@@ -61,8 +60,8 @@ public class Day extends Thread implements Comparable<Day>, Observable{
         return LocalTime.of(hour, minute, seconds);
     }
 
-    public void setObserver(Observer observer){
-        this.calendar = observer;
+    public void setObserver(ObserverDay observerDay){
+        this.calendar = observerDay;
     }
 
     public boolean removeSegment(ActivitySegment activitySegment) {

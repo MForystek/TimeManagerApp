@@ -1,6 +1,7 @@
 package ApplicationGUI;
 
 import ApplicationLogic.Activity;
+import ApplicationLogic.Calendar;
 import ApplicationLogic.User;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -17,10 +18,10 @@ import javafx.stage.Stage;
 import java.util.Map;
 
 public class ShopGUI extends Application {
-    private User user;
+    private Calendar calendar;
 
-    public ShopGUI(User user) {
-        this.user = user;
+    public ShopGUI(Calendar calendar) {
+        this.calendar = calendar;
     }
 
     @Override
@@ -32,7 +33,6 @@ public class ShopGUI extends Application {
         //Clocks Label
         Label clocksLabel = new Label();
         clocksLabel.setFont(Font.font(25));
-        clocksLabel.setText(user.getAmountOfClocks() + " clocks");
 
         //Passing FileInputStream object as a parameter
 //        Image clockIcon = new Image(new File("/src/ApplicationGUI/clockIcon.png").toURI().toURL().toExternalForm());
@@ -43,10 +43,24 @@ public class ShopGUI extends Application {
         //Add activity Button
         Button addActivityButton = new Button("Add Activity");
         addActivityButton.setMinSize(50, 20);
+        addActivityButton.setOnAction(event -> {
+            try {
+                new AddActivityGUI(calendar.getUser().getActivitiesInShop()).start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         //Del Activity Button
         Button delActivityButton = new Button("Del Activity");
         delActivityButton.setMinSize(50,20);
+        delActivityButton.setOnAction(event -> {
+            try {
+                new DelActivityGUI(calendar.getUser().getActivitiesInShop(), calendar).start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         //Informational labels and buttons TilePane
         TilePane shopLabelClocksAndButtonsTilePane = new TilePane(shopLabel, clocksLabel, addActivityButton, delActivityButton);
@@ -57,14 +71,16 @@ public class ShopGUI extends Application {
         shopLabelClocksAndButtonsTilePane.setPrefColumns(2);
 
         //Activities in Shop TilePane
-        TilePane activityInShop = makeActivitiesGroup(user);
-        activityInShop.setTileAlignment(Pos.CENTER);
-        activityInShop.setAlignment(Pos.TOP_CENTER);
-        activityInShop.setOrientation(Orientation.HORIZONTAL);
-        activityInShop.setPrefColumns(1);
+        TilePane activitiesInShopTilePane = makeActivitiesGroup(calendar.getUser(), clocksLabel);
+        activitiesInShopTilePane.setTileAlignment(Pos.CENTER);
+        activitiesInShopTilePane.setAlignment(Pos.CENTER);
+        activitiesInShopTilePane.setOrientation(Orientation.HORIZONTAL);
+        activitiesInShopTilePane.setPrefColumns(3);
+        activitiesInShopTilePane.setHgap(5);
+        activitiesInShopTilePane.setVgap(10);
 
         //Root Node
-        VBox shopRoot = new VBox(shopLabelClocksAndButtonsTilePane, activityInShop);
+        VBox shopRoot = new VBox(shopLabelClocksAndButtonsTilePane, activitiesInShopTilePane);
         shopRoot.setAlignment(Pos.CENTER);
         shopRoot.setSpacing(10);
         shopRoot.setPadding(new Insets(10,20,10,20));
@@ -76,14 +92,10 @@ public class ShopGUI extends Application {
         shopStage.show();
     }
 
-    private TilePane makeActivitiesGroup(User user) {
+    private TilePane makeActivitiesGroup(User user, Label clocksLabel) {
+        clocksLabel.setText(user.getAmountOfClocks() + " clocks");
+
         TilePane activitiesInShopTilePane = new TilePane();
-        activitiesInShopTilePane.setTileAlignment(Pos.CENTER);
-        activitiesInShopTilePane.setAlignment(Pos.TOP_CENTER);
-        activitiesInShopTilePane.setOrientation(Orientation.HORIZONTAL);
-        activitiesInShopTilePane.setPrefColumns(3);
-        activitiesInShopTilePane.setHgap(15);
-        activitiesInShopTilePane.setVgap(10);
 
         for (Map.Entry<String, Activity> activitySet : user.getActivitiesInShop().entrySet()) {
             var activity = activitySet.getValue();

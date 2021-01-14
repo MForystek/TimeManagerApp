@@ -159,7 +159,7 @@ public class MainMenuGUI extends Application {
         shopButton.setMinSize(150,93);
         shopButton.setOnAction((event -> {
             try {
-                new ShopGUI(calendar.getUser()).start(shopStage);
+                new ShopGUI(calendar).start(shopStage);
                 //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
             } catch (Exception e) {
                 e.printStackTrace();

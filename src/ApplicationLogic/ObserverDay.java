@@ -1,5 +1,5 @@
 package ApplicationLogic;
 
-public interface Observer {
+public interface ObserverDay {
     void update(ActivitySegment segment);
 }

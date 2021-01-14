@@ -4,7 +4,7 @@ import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 
-public class Calendar implements Observer{
+public class Calendar implements ObserverDay, IActivityShopAddDel {
     private User user;
 
     public Calendar() {
@@ -66,6 +66,7 @@ public class Calendar implements Observer{
         }
     }
 
+    @Override
     public int delActivityFromShop(String activityName) {
         if (!user.getActivitiesInShop().containsKey(activityName)) {
             System.out.println("There already is no activity with this name in Shop");
