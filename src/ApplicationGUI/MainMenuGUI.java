@@ -7,11 +7,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -22,10 +24,24 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class MainMenuGUI extends Application {
-    private Calendar calendar = new Calendar();
+    private Calendar calendar;
+
+    public MainMenuGUI() {
+        calendar = new Calendar();
+        calendar.signIn("test", "test");
+    }
 
     @Override
     public void start(Stage mainStage) throws Exception {
+        //STAGES DECLARATIONS
+        Stage shopStage = new Stage();
+        Stage calendarStage = new Stage();
+        Stage settingsStage = new Stage();
+
+        //SCENES DECLARATIONS
+        Scene mainMenuScene;
+
+//MAIN MENU
 
         //Time Manager Logo Label
         Label logoLabel = new Label("TIME MANAGER");
@@ -124,6 +140,9 @@ public class MainMenuGUI extends Application {
         Label nextActivityTimeTillEnd = new Label();
         nextActivityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
 
+        Group group = new Group(nextActivityLabel, nextActivityName, nextActivityDescription, nextActivityValue,
+                nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd);
+
         //Current Activity Node
         VBox nextActivity = new VBox();
         nextActivity.setAlignment(Pos.TOP_LEFT);
@@ -133,85 +152,92 @@ public class MainMenuGUI extends Application {
                 nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd
         );
 
-        //SECOND NEXT ACTIVITY
+        //MENU BUTTONS
 
-        //Informational Label
-        Label secNextActivityLabel = new Label("Second Next Activity: ");
-        secNextActivityLabel.setFont(Font.font(15));
-
-        //Name Label
-        Label secNextActivityName = new Label();
-        secNextActivityName.setText("Name: " + "name_goes_here");
-
-        //Description Label
-        Label secNextActivityDescription = new Label();
-        secNextActivityDescription.setText("Description: " + "description_goes_here");
-
-        //ClocksValue Label
-        Label secNextActivityValue = new Label();
-        secNextActivityValue.setText("Value: " + "value_goes_here" + " clocks");
-
-        //Importance Label
-        Label secNextActivityImportance = new Label();
-        secNextActivityImportance.setText("Importance: " + "importance_goes_here");
-
-        //Length Label
-        Label secNextActivityLength = new Label();
-        secNextActivityLength.setText("Length: " + "Length_goes_here");
-
-        //TimeTillEnd Label
-        Label secNextActivityTimeTillEnd = new Label();
-        secNextActivityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
-
-        //Current Activity Node
-        VBox secNextActivity = new VBox();
-        secNextActivity.setAlignment(Pos.TOP_LEFT);
-        secNextActivity.setSpacing(2);
-        secNextActivity.getChildren().addAll(
-                secNextActivityLabel, secNextActivityName, secNextActivityDescription, secNextActivityValue,
-                secNextActivityImportance, secNextActivityLength, secNextActivityTimeTillEnd
-        );
-
-        //Menu buttons
+        //Shop Button
         Button shopButton = new Button("SHOP");
         shopButton.setMinSize(150,93);
+        shopButton.setOnAction((event -> {
+            try {
+                new ShopGUI(calendar.getUser()).start(shopStage);
+                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
+
+        //Calendar Button
         Button calendarButton = new Button("CALENDAR");
         calendarButton.setMinSize(150,93);
+        calendarButton.setOnAction((event -> {
+            try {
+                new CalendarGUI().start(calendarStage);
+                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
+
+        //Settings Button
         Button settingsButton = new Button("SETTINGS");
         settingsButton.setMinSize(150,93);
+        settingsButton.setOnAction((event -> {
+            try {
+                new SettingsGUI().start(settingsStage);
+                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }));
 
-        //Date and Time Node
-        HBox logoDateAndTimeNode = new HBox(logoLabel, timeLabel, dateLabel);
-        logoDateAndTimeNode.setAlignment(Pos.CENTER);
-        logoDateAndTimeNode.setSpacing(10);
+        //Logo, date and Time TilePane
+        TilePane logoDateAndTimeTilePane = new TilePane(logoLabel, timeLabel, dateLabel);
+        logoDateAndTimeTilePane.setAlignment(Pos.TOP_CENTER);
+        logoDateAndTimeTilePane.setOrientation(Orientation.HORIZONTAL);
+        logoDateAndTimeTilePane.setPrefColumns(3);
+        logoDateAndTimeTilePane.setPrefRows(1);
+        logoDateAndTimeTilePane.setTileAlignment(Pos.CENTER);
+        logoDateAndTimeTilePane.setHgap(5);
+        logoDateAndTimeTilePane.setVgap(5);
 
-        //Activities Display Node
-        HBox displayedActivities = new HBox(currentActivity, nextActivity, secNextActivity);
-        displayedActivities.setAlignment(Pos.CENTER);
-        displayedActivities.setSpacing(10);
+        //Activities TilePane
+        TilePane mainMenuActivitiesTilePane = new TilePane(currentActivity, nextActivity);
+        mainMenuActivitiesTilePane.setAlignment(Pos.TOP_CENTER);
+        mainMenuActivitiesTilePane.setOrientation(Orientation.HORIZONTAL);
+        mainMenuActivitiesTilePane.setPrefColumns(3);
+        mainMenuActivitiesTilePane.setPrefRows(1);
+        mainMenuActivitiesTilePane.setTileAlignment(Pos.CENTER);
+        mainMenuActivitiesTilePane.setHgap(10);
+        mainMenuActivitiesTilePane.setVgap(10);
 
-        //Menu Buttons Node
-        HBox menuButtons = new HBox(shopButton, calendarButton, settingsButton);
-        menuButtons.setAlignment(Pos.CENTER);
-        menuButtons.setSpacing(60);
+        //Buttons TilePane
+        TilePane mainMenuButtonsTilePane = new TilePane(shopButton, calendarButton, settingsButton);
+        mainMenuButtonsTilePane.setAlignment(Pos.TOP_CENTER);
+        mainMenuButtonsTilePane.setOrientation(Orientation.HORIZONTAL);
+        mainMenuButtonsTilePane.setPrefColumns(3);
+        mainMenuButtonsTilePane.setPrefRows(1);
+        mainMenuButtonsTilePane.setTileAlignment(Pos.CENTER);
+        mainMenuButtonsTilePane.setHgap(50);
+        mainMenuButtonsTilePane.setVgap(10);
 
-        //Root Node
-        VBox mainVBox = new VBox();
-        mainVBox.setSpacing(5);
-        mainVBox.setAlignment(Pos.TOP_CENTER);
-        mainVBox.setPadding(new Insets(10, 20, 10, 20));
-        mainVBox.getChildren().addAll(logoDateAndTimeNode, displayedActivities, menuButtons);
+        //MainMenu Root Node
+        VBox mainMenuRoot = new VBox(logoDateAndTimeTilePane, mainMenuActivitiesTilePane, mainMenuButtonsTilePane);
+        mainMenuRoot.setSpacing(5);
+        mainMenuRoot.setAlignment(Pos.TOP_CENTER);
+        mainMenuRoot.setPadding(new Insets(10, 20, 10, 20));
 
-        Scene sceneMainMenu = new Scene(mainVBox);
+        //MainMenu Scene
+        mainMenuScene = new Scene(mainMenuRoot, 650, 400);
 
-        mainStage.setWidth(650);
-        mainStage.setHeight(400);
+        //MainMenu Stage
+        //mainStage.setWidth(650);
+        //mainStage.setHeight(400);
         mainStage.setTitle("Time Manager");
-        mainStage.setScene(sceneMainMenu);
+        mainStage.setScene(mainMenuScene);
         mainStage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        MainMenuGUI.launch(args);
     }
 }
