@@ -4,13 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
-public class Day extends Thread implements Comparable<Day>, ObservableDay {
+public class Day extends Thread implements Comparable<Day>, IObservable {
     private LocalDate date;
     private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
-    private ObserverDay calendar;
+    private IObserver calendar;
 
     private ActivitySegment doneSegment;
 
@@ -63,8 +63,8 @@ public class Day extends Thread implements Comparable<Day>, ObservableDay {
         return LocalTime.of(hour, minute, seconds);
     }
 
-    public void setObserver(ObserverDay observerDay){
-        this.calendar = observerDay;
+    public void setObserver(IObserver IObserver){
+        this.calendar = IObserver;
     }
 
     public void notifyObserver(){

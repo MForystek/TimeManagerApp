@@ -1,5 +1,5 @@
 package ApplicationLogic;
 
-public interface ObserverDay {
+public interface IObserver {
     void update();
 }
