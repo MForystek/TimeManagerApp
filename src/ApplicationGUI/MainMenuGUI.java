@@ -52,7 +52,7 @@ public class MainMenuGUI extends Application {
         timeLabel.setFont(Font.font(25));
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalTime currentTime = LocalTime.now();
-            timeLabel.setText("Time: " + currentTime.format(DateTimeFormatter.ofPattern("kk:mm:ss")));
+            timeLabel.setText("Time: " + currentTime.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
         }),
                 new KeyFrame(Duration.seconds(1))
         );

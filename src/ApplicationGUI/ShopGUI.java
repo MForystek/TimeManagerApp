@@ -45,7 +45,7 @@ public class ShopGUI extends Application {
         addActivityButton.setMinSize(50, 20);
         addActivityButton.setOnAction(event -> {
             try {
-                new AddActivityGUI(calendar.getUser().getActivitiesInShop()).start(new Stage());
+                new AddActivityGUI(calendar.getUser().getActivitiesInShop(), calendar).start(new Stage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -75,7 +75,7 @@ public class ShopGUI extends Application {
         activitiesInShopTilePane.setTileAlignment(Pos.CENTER);
         activitiesInShopTilePane.setAlignment(Pos.CENTER);
         activitiesInShopTilePane.setOrientation(Orientation.HORIZONTAL);
-        activitiesInShopTilePane.setPrefColumns(3);
+        activitiesInShopTilePane.setPrefColumns(4);
         activitiesInShopTilePane.setHgap(5);
         activitiesInShopTilePane.setVgap(10);
 
@@ -99,10 +99,11 @@ public class ShopGUI extends Application {
 
         for (Map.Entry<String, Activity> activitySet : user.getActivitiesInShop().entrySet()) {
             var activity = activitySet.getValue();
-            Label activityName = new Label("Name: " + activitySet.getKey());
+            Label activityName = new Label(activitySet.getKey());
             activityName.setWrapText(true);
             activityName.setMaxWidth(200);
-            Label activityValue = new Label(activity.getValueInClocks() + " clocks");
+            Label isDuty = new Label(activity.isDuty() ? "Duty" : "Pleasure");
+            Label activityValue = new Label(activity.isDuty() ? "+" + activity.getValueInClocks() + " clocks" : "-" + activity.getValueInClocks() + " clocks");
             Button detailsButton = new Button("Details");
             detailsButton.setMinSize(30,20);
             detailsButton.setOnAction(event -> {
@@ -113,9 +114,7 @@ public class ShopGUI extends Application {
                 }
             });
 
-            activitiesInShopTilePane.getChildren().add(activityName);
-            activitiesInShopTilePane.getChildren().add(activityValue);
-            activitiesInShopTilePane.getChildren().add(detailsButton);
+            activitiesInShopTilePane.getChildren().addAll(activityName, isDuty, activityValue, detailsButton);
         }
         return activitiesInShopTilePane;
     }
