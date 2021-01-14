@@ -12,8 +12,11 @@ public class Day extends Thread implements Comparable<Day>, ObservableDay {
     private final int BREAK_TIME = 0; //minimal break between activities
     private ObserverDay calendar;
 
+    private ActivitySegment doneSegment;
+
     public Day(LocalDate date) {
         this.date = date;
+        this.doneSegment = null;
     }
 
     public void run(){
@@ -23,8 +26,8 @@ public class Day extends Thread implements Comparable<Day>, ObservableDay {
             interrupt();
         }
         if (lastSegment.isAfter(now)){
-            calendar.update(segments.get(0));
-            segments.remove(0);
+            this.doneSegment = segments.get(0);
+            notifyObserver();
         }
         try {
             sleep(1000);
@@ -62,6 +65,10 @@ public class Day extends Thread implements Comparable<Day>, ObservableDay {
 
     public void setObserver(ObserverDay observerDay){
         this.calendar = observerDay;
+    }
+
+    public void notifyObserver(){
+        calendar.update();
     }
 
     public boolean removeSegment(ActivitySegment activitySegment) {
@@ -173,5 +180,13 @@ public class Day extends Thread implements Comparable<Day>, ObservableDay {
 
     public List<ActivitySegment> getSegments() {
         return segments;
+    }
+
+    public ActivitySegment getDoneSegment() {
+        return doneSegment;
+    }
+
+    public void setDoneSegment(ActivitySegment doneSegment) {
+        this.doneSegment = doneSegment;
     }
 }

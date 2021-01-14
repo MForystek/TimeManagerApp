@@ -12,7 +12,8 @@ public class Calendar implements ObserverDay, IActivityShopAddDel {
     }
 
     @Override
-    public void update(ActivitySegment segment){
+    public void update(){
+        ActivitySegment segment = getDayByDate(LocalDate.now()).getDoneSegment();
         if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity){
             user.getActivitiesInCalendar().remove(segment.getParentName());
         }else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity){
@@ -23,6 +24,8 @@ public class Calendar implements ObserverDay, IActivityShopAddDel {
         } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
         if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
             user.addClocks(segment.getValueInClocks());
+        removeSegment(getDayByDate(LocalDate.now()), segment);
+        getDayByDate(LocalDate.now()).setDoneSegment(null);
     }
 
     public boolean signUp(String username, String password) {
@@ -130,7 +133,6 @@ public class Calendar implements ObserverDay, IActivityShopAddDel {
             System.out.println("Removing an Activity failed");
             return 1;
         }
-
     }
 
     private void _updateDays() {
