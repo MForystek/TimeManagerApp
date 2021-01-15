@@ -13,8 +13,14 @@ public class SettingsGUI extends Application {
     public void start(Stage settingsStage) throws Exception {
         Label settingsLabel = new Label("SETTINGS");
 
+        //Save configuration Button
+
+        //Log out Button
+
+        //Delete account Button
+
         //Settings Root Node
-        VBox settingsVBox = new VBox();
+        VBox settingsVBox = new VBox(settingsLabel);
         settingsVBox.setSpacing(5);
         settingsVBox.setAlignment(Pos.TOP_CENTER);
         settingsVBox.setPadding(new Insets(10, 20, 10, 20));

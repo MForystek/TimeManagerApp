@@ -2,7 +2,7 @@ package ApplicationGUI;
 
 import ApplicationLogic.Activity;
 import ApplicationLogic.Calendar;
-import ApplicationLogic.User;
+import ApplicationLogic.IObserver;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -10,6 +10,8 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -17,11 +19,18 @@ import javafx.stage.Stage;
 
 import java.util.Map;
 
-public class ShopGUI extends Application {
+public class ShopGUI extends Application implements IObserver {
     private Calendar calendar;
+    private Label clocksLabel;
+    private GridPane activitiesInShopGridPane;
 
     public ShopGUI(Calendar calendar) {
         this.calendar = calendar;
+    }
+
+    @Override
+    public void update() {
+        activitiesInShopGridPane = _makeActivitiesGroup(activitiesInShopGridPane);
     }
 
     @Override
@@ -31,7 +40,7 @@ public class ShopGUI extends Application {
         shopLabel.setFont(Font.font(25));
 
         //Clocks Label
-        Label clocksLabel = new Label();
+        clocksLabel = new Label();
         clocksLabel.setFont(Font.font(25));
 
         //Passing FileInputStream object as a parameter
@@ -45,67 +54,66 @@ public class ShopGUI extends Application {
         addActivityButton.setMinSize(50, 20);
         addActivityButton.setOnAction(event -> {
             try {
-                new AddActivityGUI(calendar.getUser().getActivitiesInShop(), calendar).start(new Stage());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        //Del Activity Button
-        Button delActivityButton = new Button("Del Activity");
-        delActivityButton.setMinSize(50,20);
-        delActivityButton.setOnAction(event -> {
-            try {
-                new DelActivityGUI(calendar.getUser().getActivitiesInShop(), calendar).start(new Stage());
+                var adder = new AddActivityGUI(calendar.getUser().getActivitiesInShop(), calendar, activitiesInShopGridPane);
+                adder.start(new Stage());
+                adder.setObserver(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
         //Informational labels and buttons TilePane
-        TilePane shopLabelClocksAndButtonsTilePane = new TilePane(shopLabel, clocksLabel, addActivityButton, delActivityButton);
+        TilePane shopLabelClocksAndButtonsTilePane = new TilePane(shopLabel, clocksLabel, addActivityButton);
         shopLabelClocksAndButtonsTilePane.setTileAlignment(Pos.CENTER);
         shopLabelClocksAndButtonsTilePane.setAlignment(Pos.TOP_CENTER);
         shopLabelClocksAndButtonsTilePane.setOrientation(Orientation.HORIZONTAL);
-        shopLabelClocksAndButtonsTilePane.setPrefRows(2);
-        shopLabelClocksAndButtonsTilePane.setPrefColumns(2);
+        shopLabelClocksAndButtonsTilePane.setPrefRows(1);
+        shopLabelClocksAndButtonsTilePane.setPrefColumns(4);
 
-        //Activities in Shop TilePane
-        TilePane activitiesInShopTilePane = makeActivitiesGroup(calendar.getUser(), clocksLabel);
-        activitiesInShopTilePane.setTileAlignment(Pos.CENTER);
-        activitiesInShopTilePane.setAlignment(Pos.CENTER);
-        activitiesInShopTilePane.setOrientation(Orientation.HORIZONTAL);
-        activitiesInShopTilePane.setPrefColumns(4);
-        activitiesInShopTilePane.setHgap(5);
-        activitiesInShopTilePane.setVgap(10);
+        //Activities in Shop GridPane
+        activitiesInShopGridPane = _makeActivitiesGroup(activitiesInShopGridPane);
+        activitiesInShopGridPane.setAlignment(Pos.TOP_CENTER);
+        activitiesInShopGridPane.autosize();
+        activitiesInShopGridPane.setHgap(5);
+        activitiesInShopGridPane.setVgap(10);
+
+        //Shop main VBox
+        VBox shopVBox = new VBox(shopLabelClocksAndButtonsTilePane, activitiesInShopGridPane);
+        shopVBox.setAlignment(Pos.TOP_CENTER);
+        shopVBox.setSpacing(10);
+        shopVBox.setPadding(new Insets(10,20,10,20));
 
         //Root Node
-        VBox shopRoot = new VBox(shopLabelClocksAndButtonsTilePane, activitiesInShopTilePane);
-        shopRoot.setAlignment(Pos.CENTER);
-        shopRoot.setSpacing(10);
-        shopRoot.setPadding(new Insets(10,20,10,20));
+        ScrollPane shopRoot = new ScrollPane(shopVBox);
+        shopRoot.setFitToHeight(true);
+        shopRoot.setMinSize(450, 400);
 
         Scene shopScene = new Scene(shopRoot);
 
         shopStage.setTitle("Shop");
         shopStage.setScene(shopScene);
+        shopStage.setMinHeight(400);
+        shopStage.setMinWidth(450);
         shopStage.show();
     }
 
-    private TilePane makeActivitiesGroup(User user, Label clocksLabel) {
-        clocksLabel.setText(user.getAmountOfClocks() + " clocks");
-
-        TilePane activitiesInShopTilePane = new TilePane();
-
-        for (Map.Entry<String, Activity> activitySet : user.getActivitiesInShop().entrySet()) {
+    private GridPane _makeActivitiesGroup(GridPane activitiesInShopGridPane) {
+        clocksLabel.setText(calendar.getUser().getAmountOfClocks() + " clocks");
+        if (activitiesInShopGridPane == null) {
+            activitiesInShopGridPane = new GridPane();
+        }
+        activitiesInShopGridPane.getChildren().clear();
+        for (Map.Entry<String, Activity> activitySet : calendar.getUser().getActivitiesInShop().entrySet()) {
             var activity = activitySet.getValue();
             Label activityName = new Label(activitySet.getKey());
             activityName.setWrapText(true);
             activityName.setMaxWidth(200);
             Label isDuty = new Label(activity.isDuty() ? "Duty" : "Pleasure");
             Label activityValue = new Label(activity.isDuty() ? "+" + activity.getValueInClocks() + " clocks" : "-" + activity.getValueInClocks() + " clocks");
+
+            //Activity details Button
             Button detailsButton = new Button("Details");
-            detailsButton.setMinSize(30,20);
+            detailsButton.setMinSize(70,30);
             detailsButton.setOnAction(event -> {
                 try {
                     new ActivityDetailsGUI(activity).start(new Stage());
@@ -114,8 +122,24 @@ public class ShopGUI extends Application {
                 }
             });
 
-            activitiesInShopTilePane.getChildren().addAll(activityName, isDuty, activityValue, detailsButton);
+            //Buy activity Button
+            Button buyButton = new Button("Buy");
+            buyButton.setMinSize(70, 30);
+            buyButton.setOnAction(event -> {
+
+            });
+
+            //Delete activity Button
+            Button deleteButton = new Button("Delete");
+            deleteButton.setMinSize(70, 30);
+            GridPane finalActivitiesInShopGridPane = activitiesInShopGridPane;
+            deleteButton.setOnAction(event -> {
+                calendar.delActivityFromShop(activitySet.getKey());
+                finalActivitiesInShopGridPane.getChildren().removeAll(activityName, isDuty, activityValue, detailsButton, buyButton, deleteButton);
+            });
+
+            activitiesInShopGridPane.addRow(activitiesInShopGridPane.getRowCount(), activityName, isDuty, activityValue, detailsButton, buyButton, deleteButton);
         }
-        return activitiesInShopTilePane;
+        return activitiesInShopGridPane;
     }
 }

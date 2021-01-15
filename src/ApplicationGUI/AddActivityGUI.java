@@ -1,7 +1,6 @@
 package ApplicationGUI;
 
-import ApplicationLogic.Activity;
-import ApplicationLogic.IActivityShopAddDel;
+import ApplicationLogic.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,19 +8,34 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.time.LocalDate;
 import java.util.Map;
 
-public class AddActivityGUI extends Application {
+public class AddActivityGUI extends Application implements IObservable {
     private Map<String, Activity> activities;
     private IActivityShopAddDel activityAdder;
+    private IObserver iObserver;
+    private GridPane activitiesInShopGridPane;
 
-    public AddActivityGUI(Map<String, Activity> activities, IActivityShopAddDel activityAdder) {
+    public AddActivityGUI(Map<String, Activity> activities, IActivityShopAddDel activityAdder, GridPane activitiesInShopGridPane) {
         this.activities = activities;
         this.activityAdder = activityAdder;
+        this.activitiesInShopGridPane = activitiesInShopGridPane;
+    }
+
+    @Override
+    public void setObserver(IObserver iObserver) {
+        this.iObserver = iObserver;
+    }
+
+    @Override
+    public void notifyObserver() {
+        iObserver.update();
     }
 
     @Override
@@ -44,6 +58,7 @@ public class AddActivityGUI extends Application {
         Label periodicValueLabel = new Label("Value:");
         Label periodicImportanceLabel = new Label("Importance:");
         Label periodicSegmentLengthLabel = new Label("Pref Segment Length:");
+        Label periodicResultLabel = new Label();
 
         //Fields to interaction
         TextField periodicNameTextField = new TextField();
@@ -60,7 +75,38 @@ public class AddActivityGUI extends Application {
         Button addPeriodicButton = new Button("Add");
         addPeriodicButton.setMinSize(50, 20);
         addPeriodicButton.setOnAction(event -> {
-
+            if (!periodicNameTextField.getText().isEmpty() && !periodicDescriptionTextField.getText().isEmpty()
+                    && _isPositiveInteger(periodicValueTextField.getText()) && _isPositiveInteger(periodicImportanceTextField.getText())
+                    && _isPositiveInteger(periodicSegmentLengthTextField.getText())
+            ) {
+                PeriodicActivity newPeriodicActivity;
+                if (periodicDutyRadioButton.isSelected()) {
+                    newPeriodicActivity = (PeriodicActivity) ActivityFactory.makePeriodicActivity(
+                            periodicNameTextField.getText(),
+                            periodicDescriptionTextField.getText(),
+                            periodicValueTextField.getText(),
+                            periodicImportanceTextField.getText(),
+                            periodicSegmentLengthTextField.getText(),
+                            "true"
+                    );
+                } else {
+                    newPeriodicActivity = (PeriodicActivity) ActivityFactory.makePeriodicActivity(
+                            periodicNameTextField.getText(),
+                            periodicDescriptionTextField.getText(),
+                            periodicValueTextField.getText(),
+                            periodicImportanceTextField.getText(),
+                            periodicSegmentLengthTextField.getText(),
+                            "false"
+                    );
+                }
+                if (activityAdder.addActivityToShop(newPeriodicActivity) == 0) {
+                    iObserver.update();
+                } else {
+                    periodicResultLabel.setText("There already is an activity with this name in Shop");
+                }
+            } else {
+                periodicResultLabel.setText("Not all fields have correct input!");
+            }
         });
 
         GridPane periodicGridPane = new GridPane();
@@ -86,7 +132,7 @@ public class AddActivityGUI extends Application {
         periodicActivityTypesRadioButtons.setAlignment(Pos.CENTER);
 
         //Periodic Root
-        VBox periodicRoot = new VBox(periodicLabelForUser, periodicActivityTypesRadioButtons, periodicGridPane, addPeriodicButton);
+        VBox periodicRoot = new VBox(periodicLabelForUser, periodicActivityTypesRadioButtons, periodicGridPane, periodicResultLabel, addPeriodicButton);
         periodicRoot.setAlignment(Pos.CENTER);
         periodicRoot.setSpacing(10);
         periodicRoot.setPadding(new Insets(10,10,10,10));
@@ -108,6 +154,7 @@ public class AddActivityGUI extends Application {
         Label projectSegmentLengthLabel = new Label("Pref Segment Length:");
         Label projectTotalLengthLabel = new Label("Total Length:");
         Label projectDeadlineLabel = new Label("Deadline:");
+        Label projectResultLabel = new Label();
 
         //Fields to interaction
         TextField projectNameTextField = new TextField();
@@ -126,7 +173,43 @@ public class AddActivityGUI extends Application {
         Button addProjectButton = new Button("Add");
         addProjectButton.setMinSize(50, 20);
         addProjectButton.setOnAction(event -> {
-
+            if (!projectNameTextField.getText().isEmpty() && !projectDescriptionTextField.getText().isEmpty()
+                    && _isPositiveInteger(projectValueTextField.getText()) && _isPositiveInteger(projectImportanceTextField.getText())
+                    && projectDeadlinePicker.getValue() != null && !projectDeadlinePicker.getValue().isBefore(LocalDate.now())
+                    && _isAppropriateTotalAndSegmentLength(projectTotalLengthTextField.getText(), projectSegmentLengthTextField.getText())
+            ) {
+                ProjectActivity newProjectActivity;
+                if (projectDutyRadioButton.isSelected()) {
+                    newProjectActivity = (ProjectActivity) ActivityFactory.makeProjectActivity(
+                            projectNameTextField.getText(),
+                            projectDescriptionTextField.getText(),
+                            projectValueTextField.getText(),
+                            projectImportanceTextField.getText(),
+                            projectSegmentLengthTextField.getText(),
+                            "true",
+                            projectTotalLengthTextField.getText(),
+                            projectDeadlinePicker.getValue()
+                    );
+                } else {
+                    newProjectActivity = (ProjectActivity) ActivityFactory.makeProjectActivity(
+                            projectNameTextField.getText(),
+                            projectDescriptionTextField.getText(),
+                            projectValueTextField.getText(),
+                            projectImportanceTextField.getText(),
+                            projectSegmentLengthTextField.getText(),
+                            "false",
+                            projectTotalLengthTextField.getText(),
+                            projectDeadlinePicker.getValue()
+                    );
+                }
+                if (activityAdder.addActivityToShop(newProjectActivity) == 0) {
+                    iObserver.update();
+                } else {
+                    projectResultLabel.setText("There already is an activity with this name in Shop");
+                }
+            } else {
+                projectResultLabel.setText("Not all fields have correct input!");
+            }
         });
 
         GridPane projectGridPane = new GridPane();
@@ -156,7 +239,7 @@ public class AddActivityGUI extends Application {
         projectActivityTypesRadioButtons.setAlignment(Pos.CENTER);
 
         //Project Root
-        VBox projectRoot = new VBox(projectLabelForUser,  projectActivityTypesRadioButtons, projectGridPane, addProjectButton);
+        VBox projectRoot = new VBox(projectLabelForUser,  projectActivityTypesRadioButtons, projectGridPane, projectResultLabel, addProjectButton);
         projectRoot.setAlignment(Pos.CENTER);
         projectRoot.setSpacing(10);
         projectRoot.setPadding(new Insets(10,10,10,10));
@@ -177,6 +260,7 @@ public class AddActivityGUI extends Application {
         Label oneTimeImportanceLabel = new Label("Importance:");
         Label oneTimeTotalLengthLabel = new Label("Total Length:");
         Label oneTimeDeadlineLabel = new Label("Deadline:");
+        Label oneTimeResultLabel = new Label();
 
         //Fields to interaction
         TextField oneTimeNameTextField = new TextField();
@@ -194,7 +278,41 @@ public class AddActivityGUI extends Application {
         Button addOneTimeButton = new Button("Add");
         addOneTimeButton.setMinSize(50, 20);
         addOneTimeButton.setOnAction(event -> {
-
+            if (!oneTimeNameTextField.getText().isEmpty() && !oneTimeDescriptionTextField.getText().isEmpty()
+                    && _isPositiveInteger(oneTimeValueTextField.getText()) && _isPositiveInteger(oneTimeImportanceTextField.getText())
+                    && oneTimeDeadlinePicker.getValue() != null && !oneTimeDeadlinePicker.getValue().isBefore(LocalDate.now())
+                    && _isPositiveInteger(oneTimeTotalLengthTextField.getText())
+            ) {
+                OneTimeActivity newOneTimeActivity;
+                if (oneTimeDutyRadioButton.isSelected()) {
+                    newOneTimeActivity = (OneTimeActivity) ActivityFactory.makeOneTimeActivity(
+                            oneTimeNameTextField.getText(),
+                            oneTimeDescriptionTextField.getText(),
+                            oneTimeValueTextField.getText(),
+                            oneTimeImportanceTextField.getText(),
+                            oneTimeTotalLengthTextField.getText(),
+                            "true",
+                            oneTimeDeadlinePicker.getValue()
+                    );
+                } else {
+                    newOneTimeActivity = (OneTimeActivity) ActivityFactory.makeOneTimeActivity(
+                            oneTimeNameTextField.getText(),
+                            oneTimeDescriptionTextField.getText(),
+                            oneTimeValueTextField.getText(),
+                            oneTimeImportanceTextField.getText(),
+                            oneTimeTotalLengthTextField.getText(),
+                            "false",
+                            oneTimeDeadlinePicker.getValue()
+                    );
+                }
+                if (activityAdder.addActivityToShop(newOneTimeActivity) == 0) {
+                    iObserver.update();
+                } else {
+                    oneTimeResultLabel.setText("There already is an activity with this name in Shop");
+                }
+            } else {
+                oneTimeResultLabel.setText("Not all fields have correct input!");
+            }
         });
 
         GridPane oneTimeGridPane = new GridPane();
@@ -222,16 +340,14 @@ public class AddActivityGUI extends Application {
         oneTimeActivityTypesRadioButtons.setAlignment(Pos.CENTER);
 
         //One Time Root
-        VBox oneTimeRoot = new VBox(oneTimeLabelForUser, oneTimeActivityTypesRadioButtons, oneTimeGridPane, addOneTimeButton);
+        VBox oneTimeRoot = new VBox(oneTimeLabelForUser, oneTimeActivityTypesRadioButtons, oneTimeGridPane, oneTimeResultLabel, addOneTimeButton);
         oneTimeRoot.setAlignment(Pos.CENTER);
         oneTimeRoot.setSpacing(10);
         oneTimeRoot.setPadding(new Insets(10,10,10,10));
 
-        Scene periodicScene = new Scene(periodicRoot, 320, 350);
-        //Scene periodicScene = new Scene(periodicRoot, 290, 290);
-        Scene projectScene = new Scene(projectRoot, 320, 350);
+        Scene periodicScene = new Scene(periodicRoot, 300, 340 );
+        Scene projectScene = new Scene(projectRoot, 350, 390);
         Scene oneTimeScene = new Scene(oneTimeRoot, 320, 350);
-        //Scene oneTimeScene = new Scene(oneTimeRoot, 270, 320);
 
         periodicProjectActivityRadioButton.setOnAction(event -> {
             addStage.setScene(projectScene);
@@ -266,10 +382,28 @@ public class AddActivityGUI extends Application {
 
         addStage.setTitle("Add Activity");
         addStage.setMaxWidth(320);
-        addStage.setMaxHeight(350);
+        addStage.setMaxHeight(370);
         addStage.setMinWidth(320);
-        addStage.setMinHeight(350);
+        addStage.setMinHeight(370);
+        addStage.setResizable(false);
         addStage.setScene(periodicScene);
         addStage.show();
+    }
+
+    private boolean _isPositiveInteger(String string) {
+        boolean good = true;
+        try {
+            var number = Integer.parseInt(string);
+            if (number <= 0) {
+                good = false;
+            }
+        } catch (NumberFormatException e) {
+            good = false;
+        }
+        return good;
+    }
+
+    private boolean _isAppropriateTotalAndSegmentLength(String totLen, String segLen) {
+        return _isPositiveInteger(totLen) && _isPositiveInteger(segLen) && Integer.parseInt(totLen) >= Integer.parseInt(segLen);
     }
 }

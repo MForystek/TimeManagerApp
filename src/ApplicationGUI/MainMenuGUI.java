@@ -13,6 +13,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -25,10 +28,11 @@ import java.time.format.DateTimeFormatter;
 
 public class MainMenuGUI extends Application {
     private Calendar calendar;
+    private boolean userLoggedIn;
 
     public MainMenuGUI() {
         calendar = new Calendar();
-        calendar.signIn("test", "test");
+        userLoggedIn = false;
     }
 
     @Override
@@ -70,6 +74,10 @@ public class MainMenuGUI extends Application {
         );
         date.setCycleCount(Animation.INDEFINITE);
         date.play();
+
+        //User Label
+        Label userLabel = new Label("Not logged in");
+        userLabel.setFont(Font.font(15));
 
         //CURRENT ACTIVITY
 
@@ -152,43 +160,100 @@ public class MainMenuGUI extends Application {
                 nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd
         );
 
+        //Signing fields
+        Label usernameLabel = new Label("Username:");
+        Label passwordLabel = new Label("Password:");
+        TextField usernameTextField = new TextField();
+        PasswordField passwordField = new PasswordField();
+
+        //Informational Label
+        Label informationalLabel = new Label();
+        informationalLabel.setAlignment(Pos.CENTER);
+
         //MENU BUTTONS
 
         //Shop Button
         Button shopButton = new Button("SHOP");
-        shopButton.setMinSize(150,93);
+        shopButton.setMinSize(120,70);
         shopButton.setOnAction((event -> {
-            try {
-                new ShopGUI(calendar).start(shopStage);
-                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (userLoggedIn) {
+                try {
+                    new ShopGUI(calendar).start(shopStage);
+                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                informationalLabel.setText("You must be logged in to go to the Shop");
             }
         }));
 
         //Calendar Button
         Button calendarButton = new Button("CALENDAR");
-        calendarButton.setMinSize(150,93);
+        calendarButton.setMinSize(120,70);
         calendarButton.setOnAction((event -> {
-            try {
-                new CalendarGUI().start(calendarStage);
-                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (userLoggedIn) {
+                try {
+                    new CalendarGUI().start(calendarStage);
+                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                informationalLabel.setText("You must be logged in to go to the Calendar");
             }
         }));
 
         //Settings Button
         Button settingsButton = new Button("SETTINGS");
-        settingsButton.setMinSize(150,93);
+        settingsButton.setMinSize(120,70);
         settingsButton.setOnAction((event -> {
-            try {
-                new SettingsGUI().start(settingsStage);
-                //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            if (userLoggedIn) {
+                try {
+                    new SettingsGUI().start(settingsStage);
+                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                    informationalLabel.setText("You must be logged in to go to the Settings");
+                }
         }));
+
+        //SignIn Button
+        Button signInButton = new Button("Sign In");
+        signInButton.setMinSize(80, 40);
+        signInButton.setOnAction(event -> {
+            if (calendar.signIn(usernameTextField.getText(), passwordField.getText())) {
+                informationalLabel.setText("User " + usernameTextField.getText() + " logged successfully");
+                userLoggedIn = true;
+                userLabel.setText("Welcome " + usernameTextField.getText());
+                usernameTextField.setText("");
+                passwordField.setText("");
+            } else {
+                informationalLabel.setText("User with this username or password doesn't exist");
+            }
+        });
+
+        //SignUp Button
+        Button signUpButton = new Button("Sign Up");
+        signUpButton.setMinSize(80, 40);
+        signUpButton.setOnAction(event -> {
+            if (usernameTextField.getText().equals("") || passwordField.getText().equals("")) {
+                informationalLabel.setText("Username or password empty");
+            } else {
+                if (calendar.signUp(usernameTextField.getText(), passwordField.getText())
+                ) {
+                    informationalLabel.setText("User " + usernameTextField.getText() + " registered successfully");
+                    userLoggedIn = true;
+                    userLabel.setText("Welcome " + usernameTextField.getText());
+                    usernameTextField.setText("");
+                    passwordField.setText("");
+                } else {
+                    informationalLabel.setText("User with this username or password already exist");
+                }
+            }
+        });
 
         //Logo, date and Time TilePane
         TilePane logoDateAndTimeTilePane = new TilePane(logoLabel, timeLabel, dateLabel);
@@ -220,14 +285,24 @@ public class MainMenuGUI extends Application {
         mainMenuButtonsTilePane.setHgap(50);
         mainMenuButtonsTilePane.setVgap(10);
 
+
+        //Signing GridPane
+        GridPane mainMenuSigningGridPane = new GridPane();
+        mainMenuSigningGridPane.addRow(0, usernameLabel, usernameTextField);
+        mainMenuSigningGridPane.addRow(1, passwordLabel, passwordField);
+        mainMenuSigningGridPane.addRow(2, signInButton, signUpButton);
+        mainMenuSigningGridPane.setAlignment(Pos.TOP_CENTER);
+        mainMenuSigningGridPane.setHgap(20);
+        mainMenuSigningGridPane.setVgap(10);
+
         //MainMenu Root Node
-        VBox mainMenuRoot = new VBox(logoDateAndTimeTilePane, mainMenuActivitiesTilePane, mainMenuButtonsTilePane);
+        VBox mainMenuRoot = new VBox(logoDateAndTimeTilePane, userLabel, mainMenuActivitiesTilePane, mainMenuButtonsTilePane, informationalLabel, mainMenuSigningGridPane);
         mainMenuRoot.setSpacing(5);
         mainMenuRoot.setAlignment(Pos.TOP_CENTER);
         mainMenuRoot.setPadding(new Insets(10, 20, 10, 20));
 
         //MainMenu Scene
-        mainMenuScene = new Scene(mainMenuRoot, 650, 400);
+        mainMenuScene = new Scene(mainMenuRoot);
 
         //MainMenu Stage
         //mainStage.setWidth(650);

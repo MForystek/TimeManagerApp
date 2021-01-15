@@ -44,6 +44,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     public boolean signIn(String username, String password) {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
             user = UsersManager.readConfiguration(username, password);
+            this._updateDays();
             for (var day : user.getDays()) {
                 day.setObserver(this);
             }
@@ -60,11 +61,9 @@ public class Calendar implements IObserver, IActivityShopAddDel {
 
     public int addActivityToShop(Activity activity) {
         if (user.getActivitiesInShop().containsKey(activity.getName())) {
-            System.out.println("There already is an activity with this name in Shop");
             return 1;
         } else {
             user.getActivitiesInShop().put(activity.getName(), activity);
-            System.out.println("Activity successfully added to the Shop");
             return 0;
         }
     }
@@ -135,11 +134,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     private void _updateDays() {
-        for (int i = 0; i < user.getDays().size(); i++) {
-            if (user.getDays().get(i).getDate().isBefore(LocalDate.now())) {
-                user.getDays().remove(i);
-            }
-        }
+        user.getDays().removeIf(day -> day.getDate().isBefore(LocalDate.now()));
         int dayCounter = user.getDays().size();
         while (user.getCalendarLength() > user.getDays().size()) {
             addDay(LocalDate.now().plusDays(dayCounter));
