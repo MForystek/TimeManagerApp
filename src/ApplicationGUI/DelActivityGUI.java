@@ -23,19 +23,20 @@ public class DelActivityGUI extends Application {
 
     @Override
     public void start(Stage delStage) throws Exception {
-        Label labelForUser = new Label("Type name of the Activity you want to delete from the shop");
+        Label labelForUser = new Label("Type the name of Activity you want to delete from the shop");
         TextField nameOfActivityToDeleteTextField = new TextField();
+        Label isDoneLabel = new Label();
         Button delButton = new Button("Delete");
         delButton.setMinSize(50, 20);
         delButton.setOnAction(event -> {
             String activityName = nameOfActivityToDeleteTextField.getText();
             if (activityDeleter.delActivityFromShop(activityName) == 0) {
-                nameOfActivityToDeleteTextField.setText("Activity " + activityName + " deleted successfully");
+                isDoneLabel.setText("Activity " + activityName + " deleted successfully");
             } else {
-                nameOfActivityToDeleteTextField.setText("There is no activity with name " + activityName);
+                isDoneLabel.setText("There is no activity with name " + activityName);
             }
         });
-        VBox root = new VBox(labelForUser, nameOfActivityToDeleteTextField, delButton);
+        VBox root = new VBox(labelForUser, nameOfActivityToDeleteTextField, isDoneLabel, delButton);
         root.setAlignment(Pos.CENTER);
         root.setSpacing(10);
         root.setPadding(new Insets(10,10,10,10));
@@ -43,6 +44,7 @@ public class DelActivityGUI extends Application {
         Scene scene = new Scene(root);
 
         delStage.setTitle("Delete Activity");
+        delStage.setMinHeight(200);
         delStage.setScene(scene);
         delStage.show();
 

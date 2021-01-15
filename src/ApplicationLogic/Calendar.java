@@ -72,11 +72,10 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     @Override
     public int delActivityFromShop(String activityName) {
         if (!user.getActivitiesInShop().containsKey(activityName)) {
-            System.out.println("There already is no activity with this name in Shop");
+
             return 1;
         } else {
             user.getActivitiesInShop().remove(activityName);
-            System.out.println("Activity successfully removed from the Shop");
             return 0;
         }
     }
