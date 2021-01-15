@@ -153,22 +153,6 @@ public class Calendar implements IObserver, IActivityShopAddDel {
         user.getDays().add(day);
     }
 
-    public long getCalendarLength() {
-        return user.getCalendarLength();
-    }
-
-    public int getAmountOfClocks() {
-        return user.getAmountOfClocks();
-    }
-
-    public void setAmountOfClocks(int amountOfClocks) {
-        this.user.setAmountOfClocks(amountOfClocks);
-    }
-
-    public List<Day> getDays() {
-        return user.getDays();
-    }
-
     public Day getDayByDate(LocalDate date) {
         for (var day : user.getDays()) {
             if (date.equals(day.getDate())) {
