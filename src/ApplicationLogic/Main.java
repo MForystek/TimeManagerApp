@@ -43,11 +43,11 @@ public class Main {
         calendar.buyActivity(activityOneTime);
         calendar.buyActivity(activityProject);
         calendar.buyActivity(activityPeriodic);
-        calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
-        calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
-        calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
+        calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Wynieś dzieci").getNextSegment(50400));
+        calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Bądź prezydentem").getNextSegment(50500));
+        calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Zabij kolege").getNextSegment(9_000));
 
-        calendar.getDays().get(0).print();
+        calendar.getUser().getDays().get(0).print();
 
         UsersManager.saveConfiguration(calendar.getUser());
     }
