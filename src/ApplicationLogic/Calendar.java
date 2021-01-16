@@ -6,9 +6,10 @@ import java.util.*;
 
 public class Calendar implements IObserver, IActivityShopAddDel {
     private User user;
+    private UsersManager usersManager = new UsersManager();
 
     public Calendar() {
-        user = UserFactory.createUser("notNull", "notNull", "0", "30", "false");
+        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
     }
 
     @Override
@@ -43,7 +44,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
 
     public boolean signIn(String username, String password) {
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
-            user = UsersManager.readConfiguration(username, password);
+            user = usersManager.readConfiguration(username, password);
             this._updateDays();
             for (var day : user.getDays()) {
                 day.setObserver(this);
@@ -54,9 +55,18 @@ public class Calendar implements IObserver, IActivityShopAddDel {
         }
     }
 
-    public boolean removeAccount(String username, String password) {
-        var isDeleted = new File("usersConfigs/" + username + password + ".txt").delete();
-        return isDeleted;
+    public void saveAccount(User user) {
+        usersManager.saveConfiguration(user);
+    }
+
+    public void logout() {
+        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+    }
+
+    public boolean delAccount(String username, String password) {
+        var result = new File("usersConfigs/" + username + password + ".txt").delete();
+        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        return result;
     }
 
     public int addActivityToShop(Activity activity) {

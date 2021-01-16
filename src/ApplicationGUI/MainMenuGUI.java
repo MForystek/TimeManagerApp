@@ -6,6 +6,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -46,6 +47,7 @@ public class MainMenuGUI extends Application {
         Scene mainMenuScene;
 
 //MAIN MENU
+        mainStage.setOnCloseRequest(event -> Platform.exit());
 
         //Time Manager Logo Label
         Label logoLabel = new Label("TIME MANAGER");
@@ -224,14 +226,18 @@ public class MainMenuGUI extends Application {
         Button signInButton = new Button("Sign In");
         signInButton.setMinSize(80, 40);
         signInButton.setOnAction(event -> {
-            if (calendar.signIn(usernameTextField.getText(), passwordField.getText())) {
-                informationalLabel.setText("User " + usernameTextField.getText() + " logged successfully");
-                userLoggedIn = true;
-                userLabel.setText("Welcome " + usernameTextField.getText());
-                usernameTextField.setText("");
-                passwordField.setText("");
+            if (usernameTextField.getText().equals("") || passwordField.getText().equals("")) {
+                informationalLabel.setText("Username or password empty");
             } else {
-                informationalLabel.setText("User with this username or password doesn't exist");
+                if (calendar.signIn(usernameTextField.getText(), passwordField.getText())) {
+                    informationalLabel.setText("User " + usernameTextField.getText() + " logged successfully");
+                    userLoggedIn = true;
+                    userLabel.setText("Welcome " + usernameTextField.getText());
+                    usernameTextField.setText("");
+                    passwordField.setText("");
+                } else {
+                    informationalLabel.setText("User with this username or password doesn't exist");
+                }
             }
         });
 
@@ -254,6 +260,51 @@ public class MainMenuGUI extends Application {
                 }
             }
         });
+
+        //Save config Button
+        Button saveButton = new Button("Save");
+        saveButton.setMinSize(80, 40);
+        saveButton.setOnAction(event -> {
+            if (userLoggedIn) {
+                calendar.saveAccount(calendar.getUser());
+                informationalLabel.setText("Configuration of user " + calendar.getUser().getUsername() + " saved successfully");
+            } else {
+                informationalLabel.setText("No one is logged in");
+            }
+        });
+
+        //Logout Button
+        Button logoutButton = new Button("Logout");
+        logoutButton.setMinSize(80, 40);
+        logoutButton.setOnAction(event -> {
+            if (userLoggedIn) {
+                userLoggedIn = false;
+                calendar.logout();
+                userLabel.setText("Not logged in");
+                informationalLabel.setText("Logged out successfully");
+            } else {
+                informationalLabel.setText("No one is logged in");
+            }
+        });
+
+        //Delete account Button
+        Button delAccountButton = new Button("Del Account");
+        delAccountButton.setMinSize(80, 40);
+        delAccountButton.setOnAction(event -> {
+            if (userLoggedIn) {
+                userLabel.setText("Not logged in");
+                informationalLabel.setText("Account of user " + calendar.getUser().getUsername() + " deleted successfully");
+                calendar.delAccount(calendar.getUser().getUsername(), calendar.getUser().getPassword());
+                userLoggedIn = false;
+            } else {
+                informationalLabel.setText("No one is logged in");
+            }
+        });
+
+        //Exit Button
+        Button exitButton = new Button("Exit");
+        exitButton.setMinSize(80, 40);
+        exitButton.setOnAction(event -> Platform.exit());
 
         //Logo, date and Time TilePane
         TilePane logoDateAndTimeTilePane = new TilePane(logoLabel, timeLabel, dateLabel);
@@ -288,9 +339,8 @@ public class MainMenuGUI extends Application {
 
         //Signing GridPane
         GridPane mainMenuSigningGridPane = new GridPane();
-        mainMenuSigningGridPane.addRow(0, usernameLabel, usernameTextField);
-        mainMenuSigningGridPane.addRow(1, passwordLabel, passwordField);
-        mainMenuSigningGridPane.addRow(2, signInButton, signUpButton);
+        mainMenuSigningGridPane.addRow(0, usernameLabel, usernameTextField, signInButton, saveButton, delAccountButton);
+        mainMenuSigningGridPane.addRow(1, passwordLabel, passwordField, signUpButton, logoutButton, exitButton);
         mainMenuSigningGridPane.setAlignment(Pos.TOP_CENTER);
         mainMenuSigningGridPane.setHgap(20);
         mainMenuSigningGridPane.setVgap(10);

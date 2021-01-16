@@ -12,7 +12,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
 public class UsersManager {
     private Scanner scanner = new Scanner(System.in);
 
-    public static User readConfiguration(String username, String password){
+    public User readConfiguration(String username, String password){
         List<String> config = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get("usersConfigs/" + username + password + ".txt"))) {
             stream.forEach(config::add);
@@ -184,7 +184,7 @@ public class UsersManager {
         }
     }
 
-    public static void saveConfiguration(User user) {
+    public void saveConfiguration(User user) {
         try (OutputStream out = new BufferedOutputStream(
                 Files.newOutputStream(Paths.get("usersConfigs/" + user.getUsername() + user.getPassword() + ".txt"), CREATE))
         ) {
@@ -238,7 +238,7 @@ public class UsersManager {
         }
     }
 
-    private static void _writeActivities(Activity activity, OutputStream out) throws IOException {
+    private void _writeActivities(Activity activity, OutputStream out) throws IOException {
         if (activity instanceof OneTimeActivity) {
             out.write(("OneTimeActivity\n").getBytes());
             _writeCommonThingsInActivity(activity, out);
@@ -256,7 +256,7 @@ public class UsersManager {
         }
     }
 
-    private static void _writeCommonThingsInActivity(Activity activity, OutputStream out) throws IOException {
+    private void _writeCommonThingsInActivity(Activity activity, OutputStream out) throws IOException {
         out.write((activity.getName() + "\n").getBytes());
         out.write((activity.getDescription() + "\n").getBytes());
         out.write((activity.getValueInClocks() + "\n").getBytes());

@@ -25,25 +25,25 @@ public class DayTest {
         calendar.buyActivity(activityPeriodic);
 
         //Day 0
-        assertEquals(1, calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(-12)));     //przed 00:00
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(0)));       //o 00:00
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(86_300)));  //na styk przed 24:00
-        assertEquals(1, calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(86_320)));  //na mniej niż styk przed 24:00
-        assertEquals(1, calendar.putSegment(calendar.getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(100_000)));  //po 24:00
+        assertEquals(1, calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(-12)));     //przed 00:00
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(0)));       //o 00:00
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(86_300)));  //na styk przed 24:00
+        assertEquals(1, calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(86_320)));  //na mniej niż styk przed 24:00
+        assertEquals(1, calendar.putSegment(calendar.getUser().getDays().get(0), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(100_000)));  //po 24:00
 
         //Day 1
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(200)));
-        assertEquals(1, calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(150)));     //za mało czasu po
-        assertEquals(1, calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(250)));     //za mało czasu przed
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(500)));
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(350)));     //pomiędzy dwoma z luzem
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(200)));
+        assertEquals(1, calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(150)));     //za mało czasu po
+        assertEquals(1, calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(250)));     //za mało czasu przed
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(500)));
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(1), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(350)));     //pomiędzy dwoma z luzem
 
         //Day 2
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(200)));
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(600)));
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(300)));     //pomiędzy, na styk po wcześniejszej
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(500)));     //pomiędzy, na styk przed późniejszą
-        assertEquals(0, calendar.putSegment(calendar.getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(400)));     //pomiędzy, na styk po wcześniejszej i przed późniejszą
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(200)));
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(600)));
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(300)));     //pomiędzy, na styk po wcześniejszej
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(500)));     //pomiędzy, na styk przed późniejszą
+        assertEquals(0, calendar.putSegment(calendar.getUser().getDays().get(2), calendar.getActivitiesInCalendar().get("Napisz projekt na PO").getNextSegment(400)));     //pomiędzy, na styk po wcześniejszej i przed późniejszą
 
     }
 }

@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         var calendar = new Calendar();
         System.out.println(calendar.signIn("test", "test"));
-        System.out.println(calendar.removeAccount("test", "test"));
+        System.out.println(calendar.delAccount("test", "test"));
         System.out.println(calendar.signUp("test", "test"));
         calendar.getUser().setAmountOfClocks(100);
         var activityOneTime = ActivityFactory.makeOneTimeActivity(
@@ -49,6 +49,6 @@ public class Main {
 
         calendar.getUser().getDays().get(0).print();
 
-        UsersManager.saveConfiguration(calendar.getUser());
+        //usersManager.saveConfiguration(calendar.getUser());
     }
 }

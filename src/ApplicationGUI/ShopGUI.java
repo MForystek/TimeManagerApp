@@ -17,12 +17,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ShopGUI extends Application implements IObserver {
     private Calendar calendar;
     private Label clocksLabel;
     private GridPane activitiesInShopGridPane;
+    List<Stage> detailsStages = new ArrayList<>();
+
 
     public ShopGUI(Calendar calendar) {
         this.calendar = calendar;
@@ -35,6 +39,19 @@ public class ShopGUI extends Application implements IObserver {
 
     @Override
     public void start(Stage shopStage) throws Exception {
+        //Stage declarations
+        Stage addActivityStage = new Stage();
+
+        //On close
+        shopStage.setOnCloseRequest(event -> {
+            addActivityStage.close();
+            if (detailsStages.size() > 0) {
+                for (var detailStage : detailsStages) {
+                    detailStage.close();
+                }
+            }
+        });
+
         //Shop Label
         Label shopLabel = new Label("SHOP");
         shopLabel.setFont(Font.font(25));
@@ -55,7 +72,7 @@ public class ShopGUI extends Application implements IObserver {
         addActivityButton.setOnAction(event -> {
             try {
                 var adder = new AddActivityGUI(calendar.getUser().getActivitiesInShop(), calendar, activitiesInShopGridPane);
-                adder.start(new Stage());
+                adder.start(addActivityStage);
                 adder.setObserver(this);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -111,12 +128,16 @@ public class ShopGUI extends Application implements IObserver {
             Label isDuty = new Label(activity.isDuty() ? "Duty" : "Pleasure");
             Label activityValue = new Label(activity.isDuty() ? "+" + activity.getValueInClocks() + " clocks" : "-" + activity.getValueInClocks() + " clocks");
 
+            //Details Stage
+            Stage detailsStage = new Stage();
+            detailsStages.add(detailsStage);
+
             //Activity details Button
             Button detailsButton = new Button("Details");
             detailsButton.setMinSize(70,30);
             detailsButton.setOnAction(event -> {
                 try {
-                    new ActivityDetailsGUI(activity).start(new Stage());
+                    new ActivityDetailsGUI(activity).start(detailsStage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
