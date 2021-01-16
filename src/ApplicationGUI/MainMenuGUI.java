@@ -176,7 +176,7 @@ public class MainMenuGUI extends Application {
 
         //Shop Button
         Button shopButton = new Button("SHOP");
-        shopButton.setMinSize(120,70);
+        shopButton.setMinSize(100,40);
         shopButton.setOnAction((event -> {
             if (userLoggedIn) {
                 try {
@@ -192,7 +192,7 @@ public class MainMenuGUI extends Application {
 
         //Calendar Button
         Button calendarButton = new Button("CALENDAR");
-        calendarButton.setMinSize(120,70);
+        calendarButton.setMinSize(100,40);
         calendarButton.setOnAction((event -> {
             if (userLoggedIn) {
                 try {
@@ -208,7 +208,7 @@ public class MainMenuGUI extends Application {
 
         //Settings Button
         Button settingsButton = new Button("SETTINGS");
-        settingsButton.setMinSize(120,70);
+        settingsButton.setMinSize(100,40);
         settingsButton.setOnAction((event -> {
             if (userLoggedIn) {
                 try {
