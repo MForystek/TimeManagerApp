@@ -10,23 +10,30 @@ public class Calendar implements IObserver, IActivityShopAddDel {
 
     public Calendar() {
         user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        _updateDays();
+        getDayByDate(LocalDate.now()).start();
     }
 
     @Override
     public void update(){
-        ActivitySegment segment = getDayByDate(LocalDate.now()).getDoneSegment();
-        if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity){
-            user.getActivitiesInCalendar().remove(segment.getParentName());
-        }else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity){
-            ((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).subtractLength(segment.getLengthInSec());
-            if (((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).getTotalLengthInSec() <= 0) {
+        if (getDayByDate(LocalDate.now()).getDoneSegment() != null) {
+            ActivitySegment segment = getDayByDate(LocalDate.now()).getDoneSegment();
+            if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity) {
                 user.getActivitiesInCalendar().remove(segment.getParentName());
-            }
-        } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
-        if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
-            user.addClocks(segment.getValueInClocks());
-        removeSegment(getDayByDate(LocalDate.now()), segment);
-        getDayByDate(LocalDate.now()).setDoneSegment(null);
+            } else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity) {
+                ((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).subtractLength(segment.getLengthInSec());
+                if (((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).getTotalLengthInSec() <= 0) {
+                    user.getActivitiesInCalendar().remove(segment.getParentName());
+                }
+            } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
+            if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
+                user.addClocks(segment.getValueInClocks());
+            removeSegment(getDayByDate(LocalDate.now()), segment);
+            getDayByDate(LocalDate.now()).setDoneSegment(null);
+        }
+        if (!getDayByDate(LocalDate.now()).isAlive()){
+            getDayByDate(LocalDate.now()).start();
+        }
     }
 
     public boolean signUp(String username, String password) {
