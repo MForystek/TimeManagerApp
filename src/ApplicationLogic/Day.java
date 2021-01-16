@@ -29,6 +29,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
             notifyObserver();
         }
         if (LocalDate.now().isAfter(date)){
+            notifyObserver();
             interrupt();
         }
         try {
