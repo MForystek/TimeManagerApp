@@ -7,6 +7,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -21,6 +22,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.time.LocalDate;
@@ -196,8 +198,7 @@ public class MainMenuGUI extends Application {
         calendarButton.setOnAction((event -> {
             if (userLoggedIn) {
                 try {
-                    new CalendarGUI().start(calendarStage);
-                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
+                    new CalendarGUI(calendar.getUser()).start(calendarStage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -213,7 +214,6 @@ public class MainMenuGUI extends Application {
             if (userLoggedIn) {
                 try {
                     new SettingsGUI().start(settingsStage);
-                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -279,6 +279,9 @@ public class MainMenuGUI extends Application {
         logoutButton.setOnAction(event -> {
             if (userLoggedIn) {
                 userLoggedIn = false;
+                shopStage.fireEvent(new WindowEvent(shopStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                calendarStage.fireEvent(new WindowEvent(calendarStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                settingsStage.fireEvent(new WindowEvent(settingsStage, WindowEvent.WINDOW_CLOSE_REQUEST));
                 calendar.logout();
                 userLabel.setText("Not logged in");
                 informationalLabel.setText("Logged out successfully");
@@ -294,6 +297,9 @@ public class MainMenuGUI extends Application {
             if (userLoggedIn) {
                 userLabel.setText("Not logged in");
                 informationalLabel.setText("Account of user " + calendar.getUser().getUsername() + " deleted successfully");
+                shopStage.fireEvent(new WindowEvent(shopStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                calendarStage.fireEvent(new WindowEvent(calendarStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+                settingsStage.fireEvent(new WindowEvent(settingsStage, WindowEvent.WINDOW_CLOSE_REQUEST));
                 calendar.delAccount(calendar.getUser().getUsername(), calendar.getUser().getPassword());
                 userLoggedIn = false;
             } else {

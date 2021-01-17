@@ -20,13 +20,13 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     }
 
     public void run(){
-        LocalTime lastSegment = secondsToTime(segments.get(0).getOccurrenceTime()+segments.get(0).getLengthInSec());
-        if (LocalDate.now().isAfter(this.date)){
-            interrupt();
-        }
-        if (lastSegment.isAfter(LocalTime.now())){
-            this.doneSegment = segments.get(0);
-            notifyObserver();
+        if (segments.size() > 0) {
+            LocalTime lastSegment = secondsToTime(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec());
+
+            if (lastSegment.isAfter(LocalTime.now())) {
+                this.doneSegment = segments.get(0);
+                notifyObserver();
+            }
         }
         if (!LocalDate.now().equals(date)){
             notifyObserver();

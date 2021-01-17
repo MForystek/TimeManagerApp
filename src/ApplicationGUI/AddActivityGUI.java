@@ -101,6 +101,7 @@ public class AddActivityGUI extends Application implements IObservable {
                 }
                 if (activityAdder.addActivityToShop(newPeriodicActivity) == 0) {
                     iObserver.update();
+                    addStage.close();
                 } else {
                     periodicResultLabel.setText("There already is an activity with this name in Shop");
                 }
@@ -204,6 +205,7 @@ public class AddActivityGUI extends Application implements IObservable {
                 }
                 if (activityAdder.addActivityToShop(newProjectActivity) == 0) {
                     iObserver.update();
+                    addStage.close();
                 } else {
                     projectResultLabel.setText("There already is an activity with this name in Shop");
                 }
@@ -307,6 +309,7 @@ public class AddActivityGUI extends Application implements IObservable {
                 }
                 if (activityAdder.addActivityToShop(newOneTimeActivity) == 0) {
                     iObserver.update();
+                    addStage.close();
                 } else {
                     oneTimeResultLabel.setText("There already is an activity with this name in Shop");
                 }
