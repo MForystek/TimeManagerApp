@@ -3,26 +3,20 @@ package ApplicationLogic;
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 
-public class Notification extends Thread {
-    private String title;
-    private String description;
+public class Notification {
 
-    public Notification(String title, String description) {
-        this.title = title;
-        this.description = description;
-        start();
-    }
+    public Notification() {}
 
-    public void showNotification() {
+    public void show(String title, String description, int type) {
         if (SystemTray.isSupported()) {
-            Notification notification = new Notification(title, description);
-            notification.displayTray();
+            this.displayTray(title, description, type);
         } else {
             System.err.println("System tray not supported!");
         }
+
     }
 
-    private void displayTray() {
+    private void displayTray(String title, String description, int type) {
         try {
             //Obtain only one instance of the SystemTray object
             SystemTray tray = SystemTray.getSystemTray();
@@ -40,15 +34,21 @@ public class Notification extends Thread {
             tray.add(trayIcon);
 
             // Display info notification:
-            trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.INFO);
-            // Error:
-            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.ERROR);
-            // Warning:
-            // trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.WARNING);
+            switch (type) {
+                case 2:
+                    // Error:
+                    trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.ERROR);
+                case 3:
+                    // Warning:
+                    trayIcon.displayMessage("Hello, World", "Java Notification Demo", MessageType.WARNING);
+                default:
+                    // Info:
+                    trayIcon.displayMessage(title, description, MessageType.INFO);
+            }
+            tray.remove(trayIcon);
         } catch(Exception e){
             System.out.print(e);
         }
-
     }
 
 //    public static void main(String[] args) {
