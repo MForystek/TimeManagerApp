@@ -7,7 +7,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -198,7 +197,7 @@ public class MainMenuGUI extends Application {
         calendarButton.setOnAction((event -> {
             if (userLoggedIn) {
                 try {
-                    new CalendarGUI(calendar.getUser()).start(calendarStage);
+                    new CalendarGUI(calendar).start(calendarStage);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -341,7 +340,6 @@ public class MainMenuGUI extends Application {
         mainMenuButtonsTilePane.setTileAlignment(Pos.CENTER);
         mainMenuButtonsTilePane.setHgap(50);
         mainMenuButtonsTilePane.setVgap(10);
-
 
         //Signing GridPane
         GridPane mainMenuSigningGridPane = new GridPane();
