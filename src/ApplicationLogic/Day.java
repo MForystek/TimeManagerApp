@@ -202,7 +202,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         return doneSegment;
     }
 
-    public void setDoneSegment(ActivitySegment doneSegment) {
-        this.doneSegment = doneSegment;
+    public void setDoneSegmentNull() {
+        this.doneSegment = null;
     }
 }

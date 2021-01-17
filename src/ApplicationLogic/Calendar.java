@@ -11,7 +11,6 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     public Calendar() {
         user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
         _updateDays();
-        getDayByDate(LocalDate.now()).start();
     }
 
     @Override
@@ -29,8 +28,12 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
                 user.addClocks(segment.getValueInClocks());
             removeSegment(getDayByDate(LocalDate.now()), segment);
-            getDayByDate(LocalDate.now()).setDoneSegment(null);
+            getDayByDate(LocalDate.now()).setDoneSegmentNull();
         }
+        startToday();//condition is checked in method
+    }
+
+    public void startToday(){
         if (!getDayByDate(LocalDate.now()).isAlive()){
             getDayByDate(LocalDate.now()).start();
         }
