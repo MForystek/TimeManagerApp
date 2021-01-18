@@ -68,8 +68,9 @@ public class AddActivityGUI extends Application implements IObservable {
         ToggleGroup periodicIsDutyRadioButtons = new ToggleGroup();
         RadioButton periodicDutyRadioButton = new RadioButton("Duty");
         periodicDutyRadioButton.fire();
-        RadioButton periodicPleasureRadioButton = new RadioButton("Pleasure");
-        periodicIsDutyRadioButtons.getToggles().addAll(periodicDutyRadioButton, periodicPleasureRadioButton);
+        periodicDutyRadioButton.setDisable(true);
+        //RadioButton periodicPleasureRadioButton = new RadioButton("Pleasure");
+        //periodicIsDutyRadioButtons.getToggles().addAll(periodicDutyRadioButton, periodicPleasureRadioButton);
 
         Button addPeriodicButton = new Button("Add");
         addPeriodicButton.setMinSize(50, 20);
@@ -121,7 +122,7 @@ public class AddActivityGUI extends Application implements IObservable {
         periodicGridPane.add(periodicValueTextField, 1, 2);
         periodicGridPane.add(periodicImportanceTextField, 1, 3);
         periodicGridPane.add(periodicSegmentLengthTextField, 1, 4);
-        periodicGridPane.add(periodicPleasureRadioButton, 1, 5);
+        //periodicGridPane.add(periodicPleasureRadioButton, 1, 5);
         periodicGridPane.setHgap(5);
         periodicGridPane.setVgap(5);
         periodicGridPane.setAlignment(Pos.CENTER);
