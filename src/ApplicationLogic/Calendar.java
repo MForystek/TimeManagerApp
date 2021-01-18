@@ -109,7 +109,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             return 0;
         } else if (user.getAmountOfClocks() < activity.getValueInClocks()) {
             System.out.println("You don't have enough clocks for it!");
-            return 1;
+            return 2;
         } else {
             user.removeClocks(activity.getValueInClocks());
             user.getActivitiesInCalendar().put(activity.getName(), activity);

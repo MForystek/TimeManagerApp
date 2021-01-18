@@ -180,11 +180,14 @@ public class MainMenuGUI extends Application {
         shopButton.setMinSize(100,40);
         shopButton.setOnAction((event -> {
             if (userLoggedIn) {
-                try {
-                    new ShopGUI(calendar).start(shopStage);
-                    //stage.getScene().getRoot().getChildrenUnmodifiable().get(1).getText();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!calendarStage.isShowing() && !settingsStage.isShowing()){
+                    try {
+                        new ShopGUI(calendar).start(shopStage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    informationalLabel.setText("Close other windows first");
                 }
             } else {
                 informationalLabel.setText("You must be logged in to go to the Shop");
@@ -196,10 +199,14 @@ public class MainMenuGUI extends Application {
         calendarButton.setMinSize(100,40);
         calendarButton.setOnAction((event -> {
             if (userLoggedIn) {
-                try {
-                    new CalendarGUI(calendar).start(calendarStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!shopStage.isShowing() && !settingsStage.isShowing()) {
+                    try {
+                        new CalendarGUI(calendar).start(calendarStage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    informationalLabel.setText("Close other windows first");
                 }
             } else {
                 informationalLabel.setText("You must be logged in to go to the Calendar");
@@ -211,10 +218,14 @@ public class MainMenuGUI extends Application {
         settingsButton.setMinSize(100,40);
         settingsButton.setOnAction((event -> {
             if (userLoggedIn) {
-                try {
-                    new SettingsGUI().start(settingsStage);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!shopStage.isShowing() && !calendarStage.isShowing()) {
+                    try {
+                        new SettingsGUI().start(settingsStage);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    informationalLabel.setText("Close other windows first");
                 }
             } else {
                     informationalLabel.setText("You must be logged in to go to the Settings");

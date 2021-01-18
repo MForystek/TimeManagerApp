@@ -15,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +33,18 @@ public class CalendarGUI extends Application {
 
     @Override
     public void start(Stage calendarStage) throws Exception {
+        Stage aLICStage = new Stage();
+
+        calendarStage.setOnCloseRequest(event -> {
+            aLICStage.fireEvent(new WindowEvent(aLICStage, WindowEvent.WINDOW_CLOSE_REQUEST));
+            aLICStage.close();
+            if (detailsStages.size() > 0) {
+                for (var detailStage : detailsStages) {
+                    detailStage.close();
+                }
+            }
+        });
+
         Label calendarLabel = new Label("CALENDAR");
         calendarLabel.setFont(Font.font(20));
 
@@ -57,6 +70,7 @@ public class CalendarGUI extends Application {
         GridPane activitiesInDayGridPane = new GridPane();
         activitiesInDayGridPane.setGridLinesVisible(true);
 
+        //Choosing date event
         chooseDayDatePicker.setOnAction(event -> {
             if (chooseDayDatePicker.getValue().isBefore(LocalDate.now())
                     || chooseDayDatePicker.getValue().isAfter(LocalDate.now().plusDays(calendar.getUser().getCalendarLength()))
@@ -87,8 +101,19 @@ public class CalendarGUI extends Application {
             }
         });
 
+        //Activity List Button
+        Button activityListButton = new Button("Activity List");
+        activityListButton.setMinSize(70, 30);
+        activityListButton.setOnAction(event -> {
+            try {
+                new ActivityListInCalendar(calendar).start(aLICStage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
         //Calendar Root
-        VBox calendarRoot = new VBox(informationalLabelsAndDatePicker, activitiesInDayGridPane);
+        VBox calendarRoot = new VBox(informationalLabelsAndDatePicker, activityListButton, activitiesInDayGridPane);
         calendarRoot.setAlignment(Pos.TOP_CENTER);
         calendarRoot.setPadding(new Insets(10,20,10,20));
         calendarRoot.setSpacing(10);
@@ -128,14 +153,14 @@ public class CalendarGUI extends Application {
                 }
             });
 
-            //Activity sell Button
-            Button sellButton = new Button("Sell");
-            sellButton.setMinSize(70, 30);
-            sellButton.setOnAction(event -> {
-                //
+            //Activity unschedule Button
+            Button unscheduleButton = new Button("Unschedule");
+            unscheduleButton.setMinSize(70, 30);
+            unscheduleButton.setOnAction(event -> {
+
             });
 
-            HBox segmentHBox = new HBox(activityName, isDuty, segmentValue, detailsButton, sellButton);
+            HBox segmentHBox = new HBox(activityName, isDuty, segmentValue, detailsButton, unscheduleButton);
             activitiesInDayGridPane.addRow(activitiesInDayGridPane.getRowCount(), segmentHBox);
 
         });

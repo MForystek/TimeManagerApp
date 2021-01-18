@@ -143,17 +143,38 @@ public class ShopGUI extends Application implements IObserver {
                 }
             });
 
+            //needed in lower code
+            GridPane finalActivitiesInShopGridPane = activitiesInShopGridPane;
+
             //Buy activity Button
             Button buyButton = new Button("Buy");
             buyButton.setMinSize(70, 30);
-            buyButton.setOnAction(event -> {
-
-            });
 
             //Delete activity Button
             Button deleteButton = new Button("Delete");
             deleteButton.setMinSize(70, 30);
-            GridPane finalActivitiesInShopGridPane = activitiesInShopGridPane;
+
+            //Buy Button event
+            buyButton.setOnAction(event -> {
+                switch (calendar.buyActivity(activity)) {
+                    case 0 -> {
+                        clocksLabel.setText(calendar.getUser().getAmountOfClocks() + " clocks");
+                        calendar.delActivityFromShop(activitySet.getKey());
+                        finalActivitiesInShopGridPane.getChildren().removeAll(activityName, isDuty, activityValue, detailsButton, buyButton, deleteButton);
+                        break;
+                    }
+                    case 1 -> {
+                        //no activity in the shop message
+                        break;
+                    }
+                    case 2 -> {
+                        //not enough clocks
+                        break;
+                    }
+                }
+            });
+
+            //Delete Button event
             deleteButton.setOnAction(event -> {
                 calendar.delActivityFromShop(activitySet.getKey());
                 finalActivitiesInShopGridPane.getChildren().removeAll(activityName, isDuty, activityValue, detailsButton, buyButton, deleteButton);
