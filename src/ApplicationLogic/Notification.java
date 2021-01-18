@@ -3,20 +3,17 @@ package ApplicationLogic;
 import java.awt.*;
 import java.awt.TrayIcon.MessageType;
 
-public class Notification {
+public abstract class Notification {
 
-    public Notification() {}
-
-    public void show(String title, String description, int type) {
+    public static void show(String title, String description, int type) {
         if (SystemTray.isSupported()) {
-            this.displayTray(title, description, type);
+            displayTray(title, description, type);
         } else {
             System.err.println("System tray not supported!");
         }
-
     }
 
-    private void displayTray(String title, String description, int type) {
+    private static void displayTray(String title, String description, int type) {
         try {
             //Obtain only one instance of the SystemTray object
             SystemTray tray = SystemTray.getSystemTray();

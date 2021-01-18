@@ -11,7 +11,6 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
     private IObserver calendar;
-    private Notification notification;
 
     private ActivitySegment doneSegment;
 
@@ -25,18 +24,18 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         if (segments.size() > 0) {
             if (secondsToTime(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()).isAfter(LocalTime.now())) {
                 this.doneSegment = segments.get(0);
-                notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
+                Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
                 notifyObserver();
             }
             if (LocalTime.now().equals(secondsToTime(segments.get(0).getOccurrenceTime()).minusMinutes(15))){
-                notification.show(segments.get(0).getParentName() + " starts in 15 minutes", secondsToTime(segments.get(0).getOccurrenceTime()).toString(), 1);
+                Notification.show(segments.get(0).getParentName() + " starts in 15 minutes", secondsToTime(segments.get(0).getOccurrenceTime()).toString(), 1);
                 try {
                     sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             } else if(LocalTime.now().equals(secondsToTime(segments.get(0).getOccurrenceTime()))){
-                notification.show(segments.get(0).getParentName() + " started", "", 1);
+                Notification.show(segments.get(0).getParentName() + " started", "", 1);
             }
 
 
