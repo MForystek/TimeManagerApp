@@ -82,86 +82,86 @@ public class MainMenuGUI extends Application {
         Label userLabel = new Label("Not logged in");
         userLabel.setFont(Font.font(15));
 
-        //CURRENT ACTIVITY
-
-        //Informational Label
-        Label activityLabel = new Label("Current Activity: ");
-        activityLabel.setFont(Font.font(15));
-
-        //Name Label
-        Label activityName = new Label();
-        activityName.setText("Name: " + "name_goes_here");
-
-        // Description Label
-        Label activityDescription = new Label();
-        activityDescription.setText("Description: " + "description_goes_here");
-
-        //ClocksValue Label
-        Label activityValue = new Label();
-        activityValue.setText("Value: " + "value_goes_here" + " clocks");
-
-        //Importance Label
-        Label activityImportance = new Label();
-        activityImportance.setText("Importance: " + "importance_goes_here");
-
-        //Length Label
-        Label activityLength = new Label();
-        activityLength.setText("Length: " + "Length_goes_here");
-
-        //TimeTillEnd Label
-        Label activityTimeTillEnd = new Label();
-        activityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
-
-        //Current Activity Node
-        VBox currentActivity = new VBox();
-        currentActivity.setAlignment(Pos.TOP_LEFT);
-        currentActivity.setSpacing(2);
-        currentActivity.getChildren().addAll(
-                activityLabel, activityName, activityDescription, activityValue,
-                activityImportance, activityLength, activityTimeTillEnd
-        );
-
-        //NEXT ACTIVITY
-
-        //Informational Label
-        Label nextActivityLabel = new Label("Next Activity: ");
-        nextActivityLabel.setFont(Font.font(15));
-
-        //Name Label
-        Label nextActivityName = new Label();
-        nextActivityName.setText("Name: " + "name_goes_here");
-
-        //Description Label
-        Label nextActivityDescription = new Label();
-        nextActivityDescription.setText("Description: " + "description_goes_here");
-
-        //ClocksValue Label
-        Label nextActivityValue = new Label();
-        nextActivityValue.setText("Value: " + "value_goes_here" + " clocks");
-
-        //Importance Label
-        Label nextActivityImportance = new Label();
-        nextActivityImportance.setText("Importance: " + "importance_goes_here");
-
-        //Length Label
-        Label nextActivityLength = new Label();
-        nextActivityLength.setText("Length: " + "Length_goes_here");
-
-        //TimeTillEnd Label
-        Label nextActivityTimeTillEnd = new Label();
-        nextActivityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
-
-        Group group = new Group(nextActivityLabel, nextActivityName, nextActivityDescription, nextActivityValue,
-                nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd);
-
-        //Current Activity Node
-        VBox nextActivity = new VBox();
-        nextActivity.setAlignment(Pos.TOP_LEFT);
-        nextActivity.setSpacing(2);
-        nextActivity.getChildren().addAll(
-                nextActivityLabel, nextActivityName, nextActivityDescription, nextActivityValue,
-                nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd
-        );
+//        //CURRENT ACTIVITY
+//
+//        //Informational Label
+//        Label activityLabel = new Label("Current Activity: ");
+//        activityLabel.setFont(Font.font(15));
+//
+//        //Name Label
+//        Label activityName = new Label();
+//        activityName.setText("Name: " + "name_goes_here");
+//
+//        // Description Label
+//        Label activityDescription = new Label();
+//        activityDescription.setText("Description: " + "description_goes_here");
+//
+//        //ClocksValue Label
+//        Label activityValue = new Label();
+//        activityValue.setText("Value: " + "value_goes_here" + " clocks");
+//
+//        //Importance Label
+//        Label activityImportance = new Label();
+//        activityImportance.setText("Importance: " + "importance_goes_here");
+//
+//        //Length Label
+//        Label activityLength = new Label();
+//        activityLength.setText("Length: " + "Length_goes_here");
+//
+//        //TimeTillEnd Label
+//        Label activityTimeTillEnd = new Label();
+//        activityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
+//
+//        //Current Activity Node
+//        VBox currentActivity = new VBox();
+//        currentActivity.setAlignment(Pos.TOP_LEFT);
+//        currentActivity.setSpacing(2);
+//        currentActivity.getChildren().addAll(
+//                activityLabel, activityName, activityDescription, activityValue,
+//                activityImportance, activityLength, activityTimeTillEnd
+//        );
+//
+//        //NEXT ACTIVITY
+//
+//        //Informational Label
+//        Label nextActivityLabel = new Label("Next Activity: ");
+//        nextActivityLabel.setFont(Font.font(15));
+//
+//        //Name Label
+//        Label nextActivityName = new Label();
+//        nextActivityName.setText("Name: " + "name_goes_here");
+//
+//        //Description Label
+//        Label nextActivityDescription = new Label();
+//        nextActivityDescription.setText("Description: " + "description_goes_here");
+//
+//        //ClocksValue Label
+//        Label nextActivityValue = new Label();
+//        nextActivityValue.setText("Value: " + "value_goes_here" + " clocks");
+//
+//        //Importance Label
+//        Label nextActivityImportance = new Label();
+//        nextActivityImportance.setText("Importance: " + "importance_goes_here");
+//
+//        //Length Label
+//        Label nextActivityLength = new Label();
+//        nextActivityLength.setText("Length: " + "Length_goes_here");
+//
+//        //TimeTillEnd Label
+//        Label nextActivityTimeTillEnd = new Label();
+//        nextActivityTimeTillEnd.setText("Time till end: " + "TimeTillEnd_goes_here");
+//
+//        Group group = new Group(nextActivityLabel, nextActivityName, nextActivityDescription, nextActivityValue,
+//                nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd);
+//
+//        //Current Activity Node
+//        VBox nextActivity = new VBox();
+//        nextActivity.setAlignment(Pos.TOP_LEFT);
+//        nextActivity.setSpacing(2);
+//        nextActivity.getChildren().addAll(
+//                nextActivityLabel, nextActivityName, nextActivityDescription, nextActivityValue,
+//                nextActivityImportance, nextActivityLength, nextActivityTimeTillEnd
+//        );
 
         //Signing fields
         Label usernameLabel = new Label("Username:");
@@ -332,15 +332,15 @@ public class MainMenuGUI extends Application {
         logoDateAndTimeTilePane.setHgap(5);
         logoDateAndTimeTilePane.setVgap(5);
 
-        //Activities TilePane
-        TilePane mainMenuActivitiesTilePane = new TilePane(currentActivity, nextActivity);
-        mainMenuActivitiesTilePane.setAlignment(Pos.TOP_CENTER);
-        mainMenuActivitiesTilePane.setOrientation(Orientation.HORIZONTAL);
-        mainMenuActivitiesTilePane.setPrefColumns(3);
-        mainMenuActivitiesTilePane.setPrefRows(1);
-        mainMenuActivitiesTilePane.setTileAlignment(Pos.CENTER);
-        mainMenuActivitiesTilePane.setHgap(10);
-        mainMenuActivitiesTilePane.setVgap(10);
+//        //Activities TilePane
+//        TilePane mainMenuActivitiesTilePane = new TilePane(currentActivity, nextActivity);
+//        mainMenuActivitiesTilePane.setAlignment(Pos.TOP_CENTER);
+//        mainMenuActivitiesTilePane.setOrientation(Orientation.HORIZONTAL);
+//        mainMenuActivitiesTilePane.setPrefColumns(3);
+//        mainMenuActivitiesTilePane.setPrefRows(1);
+//        mainMenuActivitiesTilePane.setTileAlignment(Pos.CENTER);
+//        mainMenuActivitiesTilePane.setHgap(10);
+//        mainMenuActivitiesTilePane.setVgap(10);
 
         //Buttons TilePane
         TilePane mainMenuButtonsTilePane = new TilePane(shopButton, calendarButton, settingsButton);
@@ -361,7 +361,7 @@ public class MainMenuGUI extends Application {
         mainMenuSigningGridPane.setVgap(10);
 
         //MainMenu Root Node
-        VBox mainMenuRoot = new VBox(logoDateAndTimeTilePane, userLabel, mainMenuActivitiesTilePane, mainMenuButtonsTilePane, informationalLabel, mainMenuSigningGridPane);
+        VBox mainMenuRoot = new VBox(logoDateAndTimeTilePane, userLabel, mainMenuButtonsTilePane, informationalLabel, mainMenuSigningGridPane);
         mainMenuRoot.setSpacing(5);
         mainMenuRoot.setAlignment(Pos.TOP_CENTER);
         mainMenuRoot.setPadding(new Insets(10, 20, 10, 20));
@@ -370,8 +370,9 @@ public class MainMenuGUI extends Application {
         mainMenuScene = new Scene(mainMenuRoot);
 
         //MainMenu Stage
-        //mainStage.setWidth(650);
-        //mainStage.setHeight(400);
+        mainStage.setWidth(650);
+        mainStage.setHeight(300);
+        mainStage.setResizable(false);
         mainStage.setTitle("Time Manager");
         mainStage.setScene(mainMenuScene);
         mainStage.show();

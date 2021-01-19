@@ -20,6 +20,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity) {
                 user.getActivitiesInCalendar().remove(segment.getParentName());
             } else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity) {
+                //subtraction of total length of project
                 ((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).subtractLength(segment.getLengthInSec());
                 if (((ProjectActivity) user.getActivitiesInCalendar().get(segment.getParentName())).getTotalLengthInSec() <= 0) {
                     user.getActivitiesInCalendar().remove(segment.getParentName());

@@ -27,17 +27,17 @@ public class ActivitySegment {
         return valueInClocks;
     }
 
-    public void setValueInClocks(int valueInClocks) {
-        this.valueInClocks = valueInClocks;
-    }
+//    public void setValueInClocks(int valueInClocks) {
+//        this.valueInClocks = valueInClocks;
+//    }
 
     public int getOccurrenceTime() {
         return occurrenceTime;
     }
 
-    public void setOccurrenceTime(int occurrenceTime) {
-        this.occurrenceTime = occurrenceTime;
-    }
+//    public void setOccurrenceTime(int occurrenceTime) {
+//        this.occurrenceTime = occurrenceTime;
+//    }
 
     public String getParentName() {
         return parentName;

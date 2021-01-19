@@ -111,49 +111,49 @@ public class UsersManager {
                 if (config.get(i).equals("Day")) {
                     var day = new Day(LocalDate.parse(config.get(i + 1)));
 
-                    //reading Activities in Day
-                    while((i < config.size()) && (!config.get(i).equals("SegmentsInDay"))) {
-                        if (config.get(i).equals("OneTimeActivity")) {
-                            var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
-                                    config.get(i + 1),
-                                    config.get(i + 2),
-                                    config.get(i + 3),
-                                    config.get(i + 4),
-                                    config.get(i + 5),
-                                    config.get(i + 6),
-                                    LocalDate.parse(config.get(i + 7))
-                            );
-                            day.getActivities().put(oneTimeActivity.getName(), oneTimeActivity);
-                            i += 8;
-                        } else if (config.get(i).equals("ProjectActivity")) {
-                            var projectActivity = ActivityFactory.makeProjectActivity(
-                                    config.get(i + 1),
-                                    config.get(i + 2),
-                                    config.get(i + 3),
-                                    config.get(i + 4),
-                                    config.get(i + 5),
-                                    config.get(i + 6),
-                                    config.get(i + 7),
-                                    LocalDate.parse(config.get(i + 8))
-                            );
-                            day.getActivities().put(projectActivity.getName(), projectActivity);
-                            i += 9;
-                        } else if (config.get(i).equals("PeriodicActivity")) {
-                            var periodicActivity = ActivityFactory.makePeriodicActivity(
-                                    config.get(i + 1),
-                                    config.get(i + 2),
-                                    config.get(i + 3),
-                                    config.get(i + 4),
-                                    config.get(i + 5),
-                                    config.get(i + 6)
-                            );
-                            day.getActivities().put(periodicActivity.getName(), periodicActivity);
-                            i += 7;
-                        } else {
-                            i++;
-                        }
-                    }
-
+//                    //reading Activities in Day
+//                    while((i < config.size()) && (!config.get(i).equals("SegmentsInDay"))) {
+//                        if (config.get(i).equals("OneTimeActivity")) {
+//                            var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
+//                                    config.get(i + 1),
+//                                    config.get(i + 2),
+//                                    config.get(i + 3),
+//                                    config.get(i + 4),
+//                                    config.get(i + 5),
+//                                    config.get(i + 6),
+//                                    LocalDate.parse(config.get(i + 7))
+//                            );
+//                            day.getActivities().put(oneTimeActivity.getName(), oneTimeActivity);
+//                            i += 8;
+//                        } else if (config.get(i).equals("ProjectActivity")) {
+//                            var projectActivity = ActivityFactory.makeProjectActivity(
+//                                    config.get(i + 1),
+//                                    config.get(i + 2),
+//                                    config.get(i + 3),
+//                                    config.get(i + 4),
+//                                    config.get(i + 5),
+//                                    config.get(i + 6),
+//                                    config.get(i + 7),
+//                                    LocalDate.parse(config.get(i + 8))
+//                            );
+//                            day.getActivities().put(projectActivity.getName(), projectActivity);
+//                            i += 9;
+//                        } else if (config.get(i).equals("PeriodicActivity")) {
+//                            var periodicActivity = ActivityFactory.makePeriodicActivity(
+//                                    config.get(i + 1),
+//                                    config.get(i + 2),
+//                                    config.get(i + 3),
+//                                    config.get(i + 4),
+//                                    config.get(i + 5),
+//                                    config.get(i + 6)
+//                            );
+//                            day.getActivities().put(periodicActivity.getName(), periodicActivity);
+//                            i += 7;
+//                        } else {
+//                            i++;
+//                        }
+//                    }
+                    i++;
                     //reading Segments in Day
                     while((i < config.size()) && (!config.get(i).equals("Day"))) {
                         if (config.get(i).equals("Segment")) {
@@ -217,11 +217,11 @@ public class UsersManager {
                 out.write((day.getDate() + "\n").getBytes());
 
                 //writing Activities in Day
-                out.write(("ActivitiesInDay\n").getBytes());
-                for (Map.Entry<String, Activity> activityEntry : day.getActivities().entrySet()) {
-                    var activity = activityEntry.getValue();
-                    _writeActivities(activity, out);
-                }
+//                out.write(("ActivitiesInDay\n").getBytes());
+//                for (Map.Entry<String, Activity> activityEntry : day.getActivities().entrySet()) {
+//                    var activity = activityEntry.getValue();
+//                    _writeActivities(activity, out);
+//                }
 
                 //writing Segments in Day
                 out.write(("SegmentsInDay\n").getBytes());

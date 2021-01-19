@@ -6,7 +6,7 @@ import java.util.*;
 
 public class Day extends Thread implements Comparable<Day>, IObservable {
     private LocalDate date;
-    private Map<String, Activity> activities = new HashMap<>();
+    //private Map<String, Activity> activities = new HashMap<>();
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
@@ -90,21 +90,21 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         }
     }
 
-    public Map<String, Integer> getUsage() { // return percentage of each activity-type in day
-        int dutyCount = 0;        int pleasureCount = 0;
-        for (ActivitySegment segment : segments) {
-            if (activities.get(segment.getParentName()).isDuty()) {
-                dutyCount += segment.getLengthInSec();
-            } else {
-                pleasureCount += segment.getLengthInSec();
-            }
-        }
-        Map<String, Integer> hashMap = new HashMap<>();
-        hashMap.put("duty", (dutyCount/SECONDS_IN_THE_DAY)*100);
-        hashMap.put("pleasure", (pleasureCount/SECONDS_IN_THE_DAY)*100);
-        hashMap.put("free", 100 - hashMap.get("duty") - hashMap.get("pleasure"));
-        return hashMap;
-    }
+//    public Map<String, Integer> getUsage() { // return percentage of each activity-type in day
+//        int dutyCount = 0;        int pleasureCount = 0;
+//        for (ActivitySegment segment : segments) {
+//            if (activities.get(segment.getParentName()).isDuty()) {
+//                dutyCount += segment.getLengthInSec();
+//            } else {
+//                pleasureCount += segment.getLengthInSec();
+//            }
+//        }
+//        Map<String, Integer> hashMap = new HashMap<>();
+//        hashMap.put("duty", (dutyCount/SECONDS_IN_THE_DAY)*100);
+//        hashMap.put("pleasure", (pleasureCount/SECONDS_IN_THE_DAY)*100);
+//        hashMap.put("free", 100 - hashMap.get("duty") - hashMap.get("pleasure"));
+//        return hashMap;
+//    }
 
     @Override
     public int compareTo(Day other) {
@@ -174,9 +174,9 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         this.date = date;
     }
 
-    public Map<String, Activity> getActivities() {
-        return activities;
-    }
+//    public Map<String, Activity> getActivities() {
+//        return activities;
+//    }
 
     public List<ActivitySegment> getSegments() {
         return segments;

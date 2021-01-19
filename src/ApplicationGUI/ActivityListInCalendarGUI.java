@@ -1,13 +1,13 @@
 package ApplicationGUI;
 
-import ApplicationLogic.Activity;
-import ApplicationLogic.Calendar;
+import ApplicationLogic.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -17,12 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ActivityListInCalendar extends Application {
+public class ActivityListInCalendarGUI extends Application implements IObserver, IObservable {
     private Calendar calendar;
     private GridPane activitiesInCalendarGridPane;
     List<Stage> detailsStages = new ArrayList<>();
+    List<Stage> scheduleStages = new ArrayList<>();
+    private IObserver iObserver;
 
-    public ActivityListInCalendar(Calendar calendar) {
+    public ActivityListInCalendarGUI(Calendar calendar) {
         this.calendar = calendar;
     }
 
@@ -34,6 +36,11 @@ public class ActivityListInCalendar extends Application {
                     detailStage.close();
                 }
             }
+            if (scheduleStages.size() > 0) {
+                for (var scheduleStage : scheduleStages) {
+                    scheduleStage.close();
+                }
+            }
         });
 
         Label activityListLabel = new Label("List of activities in Calendar");
@@ -41,7 +48,6 @@ public class ActivityListInCalendar extends Application {
 
         activitiesInCalendarGridPane = _makeActivitiesGroup(activitiesInCalendarGridPane);
         activitiesInCalendarGridPane.setAlignment(Pos.TOP_CENTER);
-        activitiesInCalendarGridPane.autosize();
         activitiesInCalendarGridPane.setHgap(5);
         activitiesInCalendarGridPane.setVgap(10);
 
@@ -51,14 +57,36 @@ public class ActivityListInCalendar extends Application {
         rootVBox.setPadding(new Insets(10,20,10,20));
         rootVBox.setAlignment(Pos.TOP_CENTER);
 
-        Scene scene = new Scene(rootVBox);
+        ScrollPane scrollPane = new ScrollPane(rootVBox);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
+        Scene scene = new Scene(scrollPane);
 
         aLICStage.setTitle("Calendar list of Activity");
         aLICStage.setScene(scene);
+        aLICStage.setMinWidth(600);
         aLICStage.show();
     }
 
+    @Override
+    public void update() {
+        activitiesInCalendarGridPane = _makeActivitiesGroup(activitiesInCalendarGridPane);
+        notifyObserver();
+    }
+
+    @Override
+    public void setObserver(IObserver iObserver) {
+        this.iObserver = iObserver;
+    }
+
+    @Override
+    public void notifyObserver() {
+        iObserver.update();
+    }
+
     private GridPane _makeActivitiesGroup(GridPane activitiesInCalendarGridPane) {
+        ActivityListInCalendarGUI dys = this;
         if (activitiesInCalendarGridPane == null) {
             activitiesInCalendarGridPane = new GridPane();
         }
@@ -89,9 +117,14 @@ public class ActivityListInCalendar extends Application {
             //needed in lower code
             GridPane finalActivitiesInShopGridPane = activitiesInCalendarGridPane;
 
+            //Schedule Stage
+            Stage scheduleStage = new Stage();
+            scheduleStages.add(scheduleStage);
+
             //Schedule activity Button
             Button scheduleButton = new Button("Schedule");
             scheduleButton.setMinSize(70, 30);
+            //if amount of segments greater than allowed make it not clickable
 
             //Sell activity Button
             Button sellButton = new Button("Sell");
@@ -99,7 +132,13 @@ public class ActivityListInCalendar extends Application {
 
             //Schedule Button event
             scheduleButton.setOnAction(event -> {
-
+                try {
+                    var temp = new ActivityScheduleGUI(calendar, activity);
+                    temp.setObserver(dys);
+                    temp.start(scheduleStage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             });
 
             //Sell Button event
