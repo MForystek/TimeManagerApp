@@ -17,11 +17,11 @@ public class UsersManager {
         try (Stream<String> stream = Files.lines(Paths.get("usersConfigs/" + username + password + ".txt"))) {
             stream.forEach(config::add);
             //reading basic user configuration
-            var user =  UserFactory.createUser(config.get(1), config.get(2), config.get(3), config.get(4), config.get(5));
+            var user = UserFactory.createUser(config.get(1), config.get(2), config.get(3), config.get(4), config.get(5));
             int i = 7;
 
             //reading Activities in Shop
-            while((i < config.size()) && (!config.get(i).equals("ActivitiesInCalendar"))) {
+            while ((i < config.size()) && (!config.get(i).equals("ActivitiesInCalendar"))) {
                 if (config.get(i).equals("OneTimeActivity")) {
                     var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
                             config.get(i + 1),
@@ -64,7 +64,7 @@ public class UsersManager {
             }
 
             //reading Activities in Calendar
-            while((i < config.size()) && (!config.get(i).equals("Days"))) {
+            while ((i < config.size()) && (!config.get(i).equals("Days"))) {
                 if (config.get(i).equals("OneTimeActivity")) {
                     var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
                             config.get(i + 1),
@@ -107,7 +107,7 @@ public class UsersManager {
             }
 
             //reading Days
-            while(i < config.size()) {
+            while (i < config.size()) {
                 if (config.get(i).equals("Day")) {
                     var day = new Day(LocalDate.parse(config.get(i + 1)));
 
@@ -155,7 +155,7 @@ public class UsersManager {
 //                    }
                     i++;
                     //reading Segments in Day
-                    while((i < config.size()) && (!config.get(i).equals("Day"))) {
+                    while ((i < config.size()) && (!config.get(i).equals("Day"))) {
                         if (config.get(i).equals("Segment")) {
                             var segment = ActivitySegmentFactory.makeActivitySegment(
                                     config.get(i + 1),
@@ -180,8 +180,9 @@ public class UsersManager {
 
         } catch (IOException e) {
             System.out.println(e);
-            return UserFactory.createUser("error","error","0","1", "false");
+            return UserFactory.createUser("error", "error", "0", "1", "false");
         }
+
     }
 
     public void saveConfiguration(User user) {

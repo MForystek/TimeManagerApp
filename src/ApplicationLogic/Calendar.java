@@ -1,6 +1,8 @@
 package ApplicationLogic;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -41,27 +43,45 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     public boolean signUp(String username, String password) {
+        if (Files.exists(Paths.get("usersConfigs"))) {
+            File theDir = new File("usersConfigs");
+            theDir.mkdirs();
+        }
         if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
             return false;
         } else {
+            for (var day : user.getDays()) {
+                day.interrupt();
+            }
             user = UserFactory.createUser(username, password, "0", "30", "false");
             for (int i = 0; i < user.getCalendarLength(); i++) {
                 addDay(LocalDate.now().plusDays(i));
             }
             this._updateDays();
+            startToday();
             return true;
         }
     }
 
     public boolean signIn(String username, String password) {
-        if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
-            user = usersManager.readConfiguration(username, password);
-            this._updateDays();
-            for (var day : user.getDays()) {
-                day.addObserver(this);
+        if (Files.exists(Paths.get("usersConfigs"))) {
+            if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
+                for (var day : user.getDays()) {
+                    day.interrupt();
+                }
+                user = usersManager.readConfiguration(username, password);
+                this._updateDays();
+                for (var day : user.getDays()) {
+                    day.addObserver(this);
+                }
+                startToday();
+                return true;
+            } else {
+                return false;
             }
-            return true;
         } else {
+            File theDir = new File("usersConfigs");
+            theDir.mkdirs();
             return false;
         }
     }

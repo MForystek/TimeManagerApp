@@ -46,9 +46,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
             }
             try {
                 sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException ignored) {}
         }
     }
 
