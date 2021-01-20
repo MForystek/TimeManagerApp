@@ -28,7 +28,7 @@ public class AddActivityGUI extends Application implements IObservable {
     }
 
     @Override
-    public void setObserver(IObserver iObserver) {
+    public void addObserver(IObserver iObserver) {
         this.iObserver = iObserver;
     }
 

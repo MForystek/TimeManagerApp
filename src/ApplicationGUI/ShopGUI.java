@@ -73,7 +73,7 @@ public class ShopGUI extends Application implements IObserver {
             try {
                 var adder = new AddActivityGUI(calendar.getUser().getActivitiesInShop(), calendar, activitiesInShopGridPane);
                 adder.start(addActivityStage);
-                adder.setObserver(this);
+                adder.addObserver(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -58,7 +58,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             user = usersManager.readConfiguration(username, password);
             this._updateDays();
             for (var day : user.getDays()) {
-                day.setObserver(this);
+                day.addObserver(this);
             }
             return true;
         } else {
@@ -182,7 +182,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
 
     public void addDay(LocalDate localDate) {
         Day day = new Day(localDate);
-        day.setObserver(this);
+        day.addObserver(this);
         user.getDays().add(day);
     }
 

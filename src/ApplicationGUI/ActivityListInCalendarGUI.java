@@ -76,7 +76,7 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
     }
 
     @Override
-    public void setObserver(IObserver iObserver) {
+    public void addObserver(IObserver iObserver) {
         this.iObserver = iObserver;
     }
 
@@ -134,7 +134,7 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
             scheduleButton.setOnAction(event -> {
                 try {
                     var temp = new ActivityScheduleGUI(calendar, activity);
-                    temp.setObserver(dys);
+                    temp.addObserver(dys);
                     temp.start(scheduleStage);
                 } catch (Exception e) {
                     e.printStackTrace();

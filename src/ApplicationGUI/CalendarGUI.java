@@ -110,7 +110,7 @@ public class CalendarGUI extends Application implements IObserver{
         activityListButton.setOnAction(event -> {
             try {
                 var temp = new ActivityListInCalendarGUI(calendar);
-                temp.setObserver(dys);
+                temp.addObserver(dys);
                 temp.start(aLICStage);
             } catch (Exception e) {
                 e.printStackTrace();

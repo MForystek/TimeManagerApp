@@ -1,6 +1,6 @@
 package ApplicationLogic;
 
 public interface IObservable {
-    void setObserver(IObserver iObserver);
+    void addObserver(IObserver iObserver);
     void notifyObserver();
 }

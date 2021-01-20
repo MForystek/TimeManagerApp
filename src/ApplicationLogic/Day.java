@@ -10,7 +10,8 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
-    private IObserver calendar;
+    //private IObserver calendar;
+    private List<IObserver> observers;
 
     private ActivitySegment doneSegment;
 
@@ -21,24 +22,24 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
 
     public void run(){
 
+        //now with precision to seconds
+        LocalTime now = LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(), LocalTime.now().getSecond());
         if (segments.size() > 0) {
             if (LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()).isAfter(LocalTime.now())) {
                 this.doneSegment = segments.get(0);
                 Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
                 notifyObserver();
             }
-            if (LocalTime.now().equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).minusMinutes(15))){
+            if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).minusMinutes(15))){
                 Notification.show(segments.get(0).getParentName() + " starts in 15 minutes", LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).toString(), 1);
                 try {
                     sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            } else if(LocalTime.now().equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))){
+            } else if(now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))){
                 Notification.show(segments.get(0).getParentName() + " started", "", 1);
             }
-
-
         }
         if (!LocalDate.now().equals(date)){
             notifyObserver();
@@ -63,12 +64,16 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         System.out.println(LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - 24:00:00 - free time");
 }
 
-    public void setObserver(IObserver IObserver){
-        this.calendar = IObserver;
+    public void addObserver(IObserver iObserver){
+        if (!observers.contains(iObserver)) {
+            observers.add(iObserver);
+        }
     }
 
     public void notifyObserver(){
-        calendar.update();
+        for (IObserver observer : observers) {
+            observer.update();
+        }
     }
 
     public boolean removeSegment(ActivitySegment activitySegment) {
