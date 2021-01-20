@@ -80,8 +80,6 @@ public class Calendar implements IObserver, IActivityShopAddDel {
                 return false;
             }
         } else {
-            File theDir = new File("usersConfigs");
-            theDir.mkdirs();
             return false;
         }
     }
