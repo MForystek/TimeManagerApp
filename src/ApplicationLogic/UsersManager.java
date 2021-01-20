@@ -14,7 +14,7 @@ public class UsersManager {
 
     public User readConfiguration(String username, String password){
         List<String> config = new ArrayList<>();
-        try (Stream<String> stream = Files.lines(Paths.get("usersConfigs/" + username + password + ".txt"))) {
+        try (Stream<String> stream = Files.lines(Paths.get(username + password + ".txt"))) {
             stream.forEach(config::add);
             //reading basic user configuration
             var user = UserFactory.createUser(config.get(1), config.get(2), config.get(3), config.get(4), config.get(5));
@@ -187,7 +187,7 @@ public class UsersManager {
 
     public void saveConfiguration(User user) {
         try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(Paths.get("usersConfigs/" + user.getUsername() + user.getPassword() + ".txt"), CREATE))
+                Files.newOutputStream(Paths.get(user.getUsername() + user.getPassword() + ".txt"), CREATE))
         ) {
             //writing basic user configuration
             out.write((user.getLanguage() + "\n").getBytes());

@@ -20,6 +20,9 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     public void update(){
         if (getDayByDate(LocalDate.now()).getDoneSegment() != null) {
             ActivitySegment segment = getDayByDate(LocalDate.now()).getDoneSegment();
+            if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty()) {
+                user.addClocks(segment.getValueInClocks());
+            }
             if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof OneTimeActivity) {
                 user.getActivitiesInCalendar().remove(segment.getParentName());
             } else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof ProjectActivity) {
@@ -29,8 +32,6 @@ public class Calendar implements IObserver, IActivityShopAddDel {
                     user.getActivitiesInCalendar().remove(segment.getParentName());
                 }
             } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
-            if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
-                user.addClocks(segment.getValueInClocks());
             getDayByDate(LocalDate.now()).removeDoneSegment();
         }
         startToday();//condition is checked in method
@@ -43,11 +44,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     public boolean signUp(String username, String password) {
-        if (Files.exists(Paths.get("usersConfigs"))) {
-            File theDir = new File("usersConfigs");
-            theDir.mkdirs();
-        }
-        if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
+        if (new File(username + password + ".txt").isFile()) {
             return false;
         } else {
             for (var day : user.getDays()) {
@@ -64,21 +61,17 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     public boolean signIn(String username, String password) {
-        if (Files.exists(Paths.get("usersConfigs"))) {
-            if (new File("usersConfigs/" + username + password + ".txt").isFile()) {
-                for (var day : user.getDays()) {
-                    day.interrupt();
-                }
-                user = usersManager.readConfiguration(username, password);
-                this._updateDays();
-                for (var day : user.getDays()) {
-                    day.addObserver(this);
-                }
-                startToday();
-                return true;
-            } else {
-                return false;
+        if (new File(username + password + ".txt").isFile()) {
+            for (var day : user.getDays()) {
+                day.interrupt();
             }
+            user = usersManager.readConfiguration(username, password);
+            this._updateDays();
+            for (var day : user.getDays()) {
+                day.addObserver(this);
+            }
+            startToday();
+            return true;
         } else {
             return false;
         }
@@ -93,7 +86,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     public boolean delAccount(String username, String password) {
-        var result = new File("usersConfigs/" + username + password + ".txt").delete();
+        var result = new File(username + password + ".txt").delete();
         user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
         return result;
     }
