@@ -154,6 +154,18 @@ public class Calendar implements IObserver, IActivityShopAddDel {
         }
     }
 
+    public int ilośćWystąpieńSegmentu(Activity activity){
+        int counter = 0;
+        for (int i = 0; i < user.getDays().size(); i++) {
+            for (int j = 0; j < user.getDays().get(i).getSegments().size(); j++) {
+                if (user.getDays().get(i).getSegments().get(j).getParentName().equals(activity.getName())){
+                    counter++;
+                }
+            }
+        }
+        return counter;
+    } //testing needed
+
     private void _updateDays() {
         user.getDays().removeIf(day -> day.getDate().isBefore(LocalDate.now()));
         int dayCounter = user.getDays().size();
