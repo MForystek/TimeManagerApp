@@ -213,24 +213,24 @@ public class MainMenuGUI extends Application {
             }
         }));
 
-        //Settings Button
-        Button settingsButton = new Button("SETTINGS");
-        settingsButton.setMinSize(100,40);
-        settingsButton.setOnAction((event -> {
-            if (userLoggedIn) {
-                if (!shopStage.isShowing() && !calendarStage.isShowing()) {
-                    try {
-                        new SettingsGUI().start(settingsStage);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    informationalLabel.setText("Close other windows first");
-                }
-            } else {
-                    informationalLabel.setText("You must be logged in to go to the Settings");
-                }
-        }));
+//        //Settings Button
+//        Button settingsButton = new Button("SETTINGS");
+//        settingsButton.setMinSize(100,40);
+//        settingsButton.setOnAction((event -> {
+//            if (userLoggedIn) {
+//                if (!shopStage.isShowing() && !calendarStage.isShowing()) {
+//                    try {
+//                        new SettingsGUI().start(settingsStage);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                } else {
+//                    informationalLabel.setText("Close other windows first");
+//                }
+//            } else {
+//                    informationalLabel.setText("You must be logged in to go to the Settings");
+//                }
+//        }));
 
         //SignIn Button
         Button signInButton = new Button("Sign In");
@@ -343,7 +343,7 @@ public class MainMenuGUI extends Application {
 //        mainMenuActivitiesTilePane.setVgap(10);
 
         //Buttons TilePane
-        TilePane mainMenuButtonsTilePane = new TilePane(shopButton, calendarButton, settingsButton);
+        TilePane mainMenuButtonsTilePane = new TilePane(shopButton, calendarButton);
         mainMenuButtonsTilePane.setAlignment(Pos.TOP_CENTER);
         mainMenuButtonsTilePane.setOrientation(Orientation.HORIZONTAL);
         mainMenuButtonsTilePane.setPrefColumns(3);
