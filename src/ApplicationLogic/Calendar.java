@@ -28,8 +28,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             } //else if (user.getActivitiesInCalendar().get(segment.getParentName()) instanceof PeriodicActivity){}
             if (user.getActivitiesInCalendar().get(segment.getParentName()).isDuty())
                 user.addClocks(segment.getValueInClocks());
-            removeSegment(getDayByDate(LocalDate.now()), segment);
-            getDayByDate(LocalDate.now()).setDoneSegmentNull();
+            getDayByDate(LocalDate.now()).removeDoneSegment();
         }
         startToday();//condition is checked in method
     }

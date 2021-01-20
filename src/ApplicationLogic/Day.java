@@ -85,6 +85,11 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         }
     }
 
+    public void removeDoneSegment(){
+        segments.remove(doneSegment);
+        doneSegment = null;
+    }
+
     public boolean putSegment(ActivitySegment activitySegment) {
         if (_isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
             segments.add(activitySegment);
@@ -191,7 +196,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
         return doneSegment;
     }
 
-    public void setDoneSegmentNull() {
-        this.doneSegment = null;
-    }
+//    public void setDoneSegmentNull() {
+//        this.doneSegment = null;
+//    }
 }
