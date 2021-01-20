@@ -124,6 +124,13 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
             //Schedule activity Button
             Button scheduleButton = new Button("Schedule");
             scheduleButton.setMinSize(70, 30);
+            if (activity instanceof OneTimeActivity && calendar.ilośćWystąpieńSegmentu(activity) >= 1) {
+                scheduleButton.setDisable(true);
+            } else if (activity instanceof ProjectActivity
+                    && calendar.ilośćWystąpieńSegmentu(activity) * activity.getRepetitionLengthInSec() >= ((ProjectActivity) activity).getTotalLengthInSec()
+            ) {
+                scheduleButton.setDisable(true);
+            }
             //if amount of segments greater than allowed make it not clickable
 
             //Sell activity Button

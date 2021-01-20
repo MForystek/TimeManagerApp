@@ -30,6 +30,7 @@ public class CalendarGUI extends Application implements IObserver{
 
     public CalendarGUI(Calendar calendar) {
         this.calendar = calendar;
+        this.calendar.getDayByDate(LocalDate.now()).addObserver(this);
     }
 
     @Override

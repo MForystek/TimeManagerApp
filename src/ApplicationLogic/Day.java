@@ -10,8 +10,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     private List<ActivitySegment> segments= new ArrayList<>();
     private final int SECONDS_IN_THE_DAY = 86_400;
     private final int BREAK_TIME = 0; //minimal break between activities
-    //private IObserver calendar;
-    private List<IObserver> observers;
+    private List<IObserver> observers = new ArrayList<>();
 
     private ActivitySegment doneSegment;
 
@@ -21,34 +20,35 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     }
 
     public void run(){
-
-        //now with precision to seconds
-        LocalTime now = LocalTime.of(LocalTime.now().getHour(),LocalTime.now().getMinute(), LocalTime.now().getSecond());
-        if (segments.size() > 0) {
-            if (LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()).isAfter(LocalTime.now())) {
-                this.doneSegment = segments.get(0);
-                Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
-                notifyObserver();
-            }
-            if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).minusMinutes(15))){
-                Notification.show(segments.get(0).getParentName() + " starts in 15 minutes", LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).toString(), 1);
-                try {
-                    sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+        while(true) {
+            //now with precision to seconds
+            LocalTime now = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), LocalTime.now().getSecond());
+            if (segments.size() > 0) {
+                if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()))) {
+                    this.doneSegment = segments.get(0);
+                    Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
+                    notifyObserver();
                 }
-            } else if(now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))){
-                Notification.show(segments.get(0).getParentName() + " started", "", 1);
+                if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).minusMinutes(15))) {
+                    Notification.show(segments.get(0).getParentName() + " starts in 15 minutes", LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).toString(), 1);
+                    try {
+                        sleep(5000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))) {
+                    Notification.show(segments.get(0).getParentName() + " started", "", 1);
+                }
             }
-        }
-        if (!LocalDate.now().equals(date)){
-            notifyObserver();
-            interrupt();
-        }
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            if (!LocalDate.now().equals(date)) {
+                notifyObserver();
+                interrupt();
+            }
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -122,7 +122,9 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     }
 
     private boolean _isSpaceFor(int occurrenceTime, int lengthInSec) {
-        if (occurrenceTime < 0 || lengthInSec <= 0 || occurrenceTime + lengthInSec > SECONDS_IN_THE_DAY) {
+        if (occurrenceTime < 0 || lengthInSec <= 0 || occurrenceTime + lengthInSec > SECONDS_IN_THE_DAY
+                || LocalTime.now().isAfter(LocalTime.ofSecondOfDay(occurrenceTime))
+        ) {
             return false;
         } else {
             boolean isAnythingAfter = true;

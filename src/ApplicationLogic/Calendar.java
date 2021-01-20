@@ -11,6 +11,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     public Calendar() {
         user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
         _updateDays();
+        startToday();
     }
 
     @Override
