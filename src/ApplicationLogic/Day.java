@@ -32,11 +32,11 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
                         e.printStackTrace();
                     }
                 } else if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))) {
-                    Notification.show(segments.get(0).getParentName() + " started", "", 1);
+                    Notification.show(segments.get(0).getParentName() + " started", "Time Manager", 1);
                 }
                 if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()))) {
                     this.doneSegment = segments.get(0);
-                    Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
+                    Notification.show(doneSegment.getParentName() + " finished, good job!", "Time Manager", 1);
                     notifyObserver();
                 }
             }
