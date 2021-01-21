@@ -24,11 +24,6 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
             //now with precision to seconds
             LocalTime now = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute(), LocalTime.now().getSecond());
             if (segments.size() > 0) {
-                if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()))) {
-                    this.doneSegment = segments.get(0);
-                    Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
-                    notifyObserver();
-                }
                 if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).minusMinutes(15))) {
                     Notification.show(segments.get(0).getParentName() + " starts in 15 minutes", LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()).toString(), 1);
                     try {
@@ -38,6 +33,11 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
                     }
                 } else if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))) {
                     Notification.show(segments.get(0).getParentName() + " started", "", 1);
+                }
+                if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()))) {
+                    this.doneSegment = segments.get(0);
+                    Notification.show(doneSegment.getParentName() + " finished", "good job!", 1);
+                    notifyObserver();
                 }
             }
             if (!LocalDate.now().equals(date)) {

@@ -15,7 +15,7 @@ public class ProjectActivity extends Activity {
 
     @Override
     public ActivitySegment getNextSegment(int occurrenceTime){
-        float factor = (float) totalLengthInSec /(float) getRepetitionLengthInSec();
+        double factor =  ((double) getRepetitionLengthInSec()) / ((double) totalLengthInSec);
         return new ActivitySegment(getName(), getRepetitionLengthInSec(), (int)(factor*getValueInClocks()), occurrenceTime);
     }
 

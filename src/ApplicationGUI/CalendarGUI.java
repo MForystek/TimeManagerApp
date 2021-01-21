@@ -138,11 +138,10 @@ public class CalendarGUI extends Application implements IObserver{
 
     @Override
     public void update() {
-        _loadAndDisplayDay(activitiesInDayGridPane, chooseDayDatePicker);
+        //_loadAndDisplayDay(activitiesInDayGridPane, chooseDayDatePicker);
     }
 
     private void _loadAndDisplayDay(GridPane activitiesInDayGridPane, DatePicker chooseDayDatePicker) {
-        Day day = calendar.getDayByDate(chooseDayDatePicker.getValue());
         Consumer<ActivitySegment> addSegmentToGridPane = (segment -> {
             var parentActivity = calendar.getUser().getActivitiesInCalendar().get(segment.getParentName());
             var thisDate = chooseDayDatePicker.getValue();
@@ -175,7 +174,7 @@ public class CalendarGUI extends Application implements IObserver{
             //Activity unschedule Button
             Button unscheduleButton = new Button("Unschedule");
             unscheduleButton.setMinSize(70, 30);
-            unscheduleButton.setOnAction(event -> {
+            unscheduleButton.setOnMouseClicked(event -> {
                 calendar.removeSegment(calendar.getDayByDate(thisDate), segment);
                 activitiesInDayGridPane.getChildren().removeAll(whenLabel,activityName,isDuty,segmentValue,detailsButton,unscheduleButton);
             });
@@ -186,7 +185,7 @@ public class CalendarGUI extends Application implements IObserver{
 
         });
         activitiesInDayGridPane.getChildren().clear();
-        day.getSegments().forEach(addSegmentToGridPane);
+        calendar.getDayByDate(chooseDayDatePicker.getValue()).getSegments().forEach(addSegmentToGridPane);
     }
 
     private String _makeFormToTimeString(LocalTime begining, LocalTime end) {

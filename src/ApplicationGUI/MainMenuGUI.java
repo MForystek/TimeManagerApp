@@ -2,6 +2,7 @@ package ApplicationGUI;
 
 import ApplicationLogic.Calendar;
 
+import ApplicationLogic.Day;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -47,7 +48,9 @@ public class MainMenuGUI extends Application {
         Scene mainMenuScene;
 
 //MAIN MENU
-        mainStage.setOnCloseRequest(event -> Platform.exit());
+        mainStage.setOnCloseRequest(event -> {
+            Platform.exit();
+        });
 
         //Time Manager Logo Label
         Label logoLabel = new Label("TIME MANAGER");
