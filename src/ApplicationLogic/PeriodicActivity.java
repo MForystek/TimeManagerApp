@@ -2,7 +2,7 @@ package ApplicationLogic;
 
 public class PeriodicActivity extends Activity {
 
-    public PeriodicActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty) {
+    public PeriodicActivity(String name, String description, int valueInClocks, int importance, int repetitionLengthInSec, boolean isDuty) {
         super(name, description, valueInClocks, importance, repetitionLengthInSec, isDuty);
     }
 

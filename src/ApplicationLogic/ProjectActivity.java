@@ -7,7 +7,7 @@ public class ProjectActivity extends Activity {
     private int totalLengthInSec;
     LocalDate deadline;
 
-    public ProjectActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty, int totalLengthInSec, LocalDate deadline) {
+    public ProjectActivity(String name, String description, int valueInClocks, int importance, int repetitionLengthInSec, boolean isDuty, int totalLengthInSec, LocalDate deadline) {
         super(name, description, valueInClocks, importance, repetitionLengthInSec, isDuty);
         this.totalLengthInSec = totalLengthInSec;
         this.deadline = deadline;

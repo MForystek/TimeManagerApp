@@ -124,10 +124,10 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
             //Schedule activity Button
             Button scheduleButton = new Button("Schedule");
             scheduleButton.setMinSize(70, 30);
-            if (activity instanceof OneTimeActivity && calendar.ilośćWystąpieńSegmentu(activity) >= 1) {
+            if (activity instanceof OneTimeActivity && calendar.howMuchSegments(activity) >= 1) {
                 scheduleButton.setDisable(true);
             } else if (activity instanceof ProjectActivity
-                    && calendar.ilośćWystąpieńSegmentu(activity) * activity.getRepetitionLengthInSec() >= ((ProjectActivity) activity).getTotalLengthInSec()
+                    && calendar.howMuchSegments(activity) * activity.getRepetitionLengthInSec() >= ((ProjectActivity) activity).getTotalLengthInSec()
             ) {
                 scheduleButton.setDisable(true);
             }
@@ -136,6 +136,9 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
             //Sell activity Button
             Button sellButton = new Button("Sell");
             sellButton.setMinSize(70, 30);
+            if (calendar.howMuchSegments(activity) > 0) {
+                sellButton.setDisable(true);
+            }
 
             //Schedule Button event
             scheduleButton.setOnAction(event -> {

@@ -1,8 +1,6 @@
 package ApplicationLogic;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -165,7 +163,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
         }
     }
 
-    public int ilośćWystąpieńSegmentu(Activity activity){
+    public int howMuchSegments(Activity activity){
         int counter = 0;
         for (int i = 0; i < user.getDays().size(); i++) {
             for (int j = 0; j < user.getDays().get(i).getSegments().size(); j++) {

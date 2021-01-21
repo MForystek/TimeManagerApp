@@ -16,7 +16,7 @@ public class ActivityFactory {
                 name,
                 description,
                 Integer.parseInt(valueInClocks),
-                Short.parseShort(importance),
+                Integer.parseInt(importance),
                 Integer.parseInt(repetitionLengthInSec),
                 Boolean.parseBoolean(isDuty)
         );
@@ -36,7 +36,7 @@ public class ActivityFactory {
                 name,
                 description,
                 Integer.parseInt(valueInClocks),
-                Short.parseShort(importance),
+                Integer.parseInt(importance),
                 Integer.parseInt(repetitionLengthInSec),
                 Boolean.parseBoolean(isDuty),
                 Integer.parseInt(totalLengthInSec),
@@ -57,7 +57,7 @@ public class ActivityFactory {
                 name,
                 description,
                 Integer.parseInt(valueInClocks),
-                Short.parseShort(importance),
+                Integer.parseInt(importance),
                 Integer.parseInt(repetitionLengthInSec),
                 Boolean.parseBoolean(isDuty),
                 date

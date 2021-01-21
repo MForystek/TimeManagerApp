@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class OneTimeActivity extends Activity {
     LocalDate deadline;
 
-    public OneTimeActivity(String name, String description, int valueInClocks, short importance, int repetitionLengthInSec, boolean isDuty, LocalDate deadline) {
+    public OneTimeActivity(String name, String description, int valueInClocks, int importance, int repetitionLengthInSec, boolean isDuty, LocalDate deadline) {
         super(name, description, valueInClocks, importance, repetitionLengthInSec, isDuty);
         this.deadline = deadline;
     }
