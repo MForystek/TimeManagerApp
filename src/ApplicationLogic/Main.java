@@ -5,6 +5,7 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
+        //Alpha1.0
         var calendar = new Calendar();
         System.out.println(calendar.signIn("test", "test"));
         //System.out.println(calendar.delAccount("test", "test"));
