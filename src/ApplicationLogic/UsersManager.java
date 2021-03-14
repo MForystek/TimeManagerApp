@@ -229,7 +229,7 @@ public class UsersManager {
                 for (var segment: day.getSegments()) {
                     out.write(("Segment\n").getBytes());
                     out.write((segment.getParentName() + "\n").getBytes());
-                    out.write((segment.getLengthInSec() + "\n").getBytes());
+                    out.write((segment.getDurationInSec() + "\n").getBytes());
                     out.write((segment.getValueInClocks() + "\n").getBytes());
                     out.write((segment.getOccurrenceTime() + "\n").getBytes());
                 }
@@ -247,7 +247,7 @@ public class UsersManager {
         } else if (activity instanceof ProjectActivity) {
             out.write(("ProjectActivity\n").getBytes());
             _writeCommonThingsInActivity(activity, out);
-            out.write((((ProjectActivity) activity).getTotalLengthInSec() + "\n").getBytes());
+            out.write((((ProjectActivity) activity).getTotalDurationInSec() + "\n").getBytes());
             out.write((((ProjectActivity) activity).getDeadline() + "\n").getBytes());
         } else if (activity instanceof PeriodicActivity) {
             out.write(("PeriodicActivity\n").getBytes());
@@ -262,7 +262,7 @@ public class UsersManager {
         out.write((activity.getDescription() + "\n").getBytes());
         out.write((activity.getValueInClocks() + "\n").getBytes());
         out.write((activity.getImportance() + "\n").getBytes());
-        out.write((activity.getRepetitionLengthInSec() + "\n").getBytes());
+        out.write((activity.getActivityDurationInSec() + "\n").getBytes());
         out.write((activity.isDuty() + "\n").getBytes());
     }
 }

@@ -3,24 +3,24 @@ package ApplicationLogic;
 public class ActivitySegment {
 
     private String parentName;
-    private int lengthInSec;
+    private int durationInSec;
     private int valueInClocks;
     private int occurrenceTime;
 
-    public ActivitySegment(String parentName, int lengthInSec, int valueInClocks, int occurrenceTime) {
+    public ActivitySegment(String parentName, int durationInSec, int valueInClocks, int occurrenceTime) {
         this.parentName = parentName;
-        this.lengthInSec = lengthInSec;
+        this.durationInSec = durationInSec;
         this.valueInClocks = valueInClocks;
         this.occurrenceTime = occurrenceTime;
     }
 
     //getters & setters
-    public int getLengthInSec() {
-        return lengthInSec;
+    public int getDurationInSec() {
+        return durationInSec;
     }
 
-    public void setLengthInSec(int lengthInSec) {
-        this.lengthInSec = lengthInSec;
+    public void setDurationInSec(int durationInSec) {
+        this.durationInSec = durationInSec;
     }
 
     public int getValueInClocks() {
@@ -44,7 +44,7 @@ public class ActivitySegment {
     }
 
     public int getEndTime() {
-        return occurrenceTime + lengthInSec;
+        return occurrenceTime + durationInSec;
     }
 }
 

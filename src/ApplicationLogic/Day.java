@@ -34,7 +34,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
                 } else if (now.equals(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()))) {
                     Notification.show(segments.get(0).getParentName() + " started", "Time Manager", 1);
                 }
-                if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getLengthInSec()))) {
+                if (LocalTime.now().isAfter(LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime() + segments.get(0).getDurationInSec()))) {
                     this.doneSegment = segments.get(0);
                     Notification.show(doneSegment.getParentName() + " finished, good job!", "Time Manager", 1);
                     notifyObserver();
@@ -53,13 +53,13 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     public void print(){
         System.out.println("00:00:00 - " + LocalTime.ofSecondOfDay(segments.get(0).getOccurrenceTime()) + " - free time");
         for (int i = 0; i < segments.size() - 1; i++) {
-            System.out.println(LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime()) + " - " + LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec()) + " - " + segments.get(i).getParentName());
-            if (segments.get(i+1).getOccurrenceTime() - segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec() >= 60){ // break prints only if is longer than 1min
-                System.out.println(LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime() + segments.get(i).getLengthInSec()) + " - " + LocalTime.ofSecondOfDay(segments.get(i+1).getOccurrenceTime()) + " - break");
+            System.out.println(LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime()) + " - " + LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime() + segments.get(i).getDurationInSec()) + " - " + segments.get(i).getParentName());
+            if (segments.get(i+1).getOccurrenceTime() - segments.get(i).getOccurrenceTime() + segments.get(i).getDurationInSec() >= 60){ // break prints only if is longer than 1min
+                System.out.println(LocalTime.ofSecondOfDay(segments.get(i).getOccurrenceTime() + segments.get(i).getDurationInSec()) + " - " + LocalTime.ofSecondOfDay(segments.get(i+1).getOccurrenceTime()) + " - break");
             }
         }
-        System.out.println(LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime()) + " - " + LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - " + segments.get(segments.size() - 1).getParentName());
-        System.out.println(LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getLengthInSec()) + " - 24:00:00 - free time");
+        System.out.println(LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime()) + " - " + LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getDurationInSec()) + " - " + segments.get(segments.size() - 1).getParentName());
+        System.out.println(LocalTime.ofSecondOfDay(segments.get(segments.size() - 1).getOccurrenceTime() + segments.get(segments.size() - 1).getDurationInSec()) + " - 24:00:00 - free time");
 }
 
     public void addObserver(IObserver iObserver){
@@ -89,7 +89,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
     }
 
     public boolean putSegment(ActivitySegment activitySegment) {
-        if (_isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getLengthInSec())){
+        if (_isSpaceFor(activitySegment.getOccurrenceTime(), activitySegment.getDurationInSec())){
             segments.add(activitySegment);
             _quicksortSegments(segments, 0, segments.size() - 1);
             return true;

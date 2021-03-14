@@ -6,15 +6,15 @@ public abstract class Activity {
     private String description;
     private int valueInClocks;
     private int importance;
-    private int repetitionLengthInSec;
+    private int activityDurationInSec;
     private boolean duty;
 
-    public Activity(String name, String description, int valueInClocks, int importance, int repetitionLengthInSec, boolean duty) {
+    public Activity(String name, String description, int valueInClocks, int importance, int activityDurationInSec, boolean duty) {
         this.name = name;
         this.description = description;
         this.valueInClocks = valueInClocks;
         this.importance = importance;
-        this.repetitionLengthInSec = repetitionLengthInSec;
+        this.activityDurationInSec = activityDurationInSec;
         this.duty = duty;
     }
 
@@ -45,12 +45,12 @@ public abstract class Activity {
         this.description = description;
     }
 
-    public int getRepetitionLengthInSec() {
-        return repetitionLengthInSec;
+    public int getActivityDurationInSec() {
+        return activityDurationInSec;
     }
 
-    public void setRepetitionLengthInSec(int repetitionLengthInSec) {
-        this.repetitionLengthInSec = repetitionLengthInSec;
+    public void setActivityDurationInSec(int activityDurationInSec) {
+        this.activityDurationInSec = activityDurationInSec;
     }
 
     public int getImportance() {

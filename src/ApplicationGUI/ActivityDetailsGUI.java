@@ -40,7 +40,7 @@ public class ActivityDetailsGUI extends Application {
         Label descriptionTextLabel = new Label(activity.getDescription());
         Label valueTextLabel = new Label(activity.getValueInClocks() + " clocks");
         Label importanceTextLabel = new Label(Integer.toString(activity.getImportance()));
-        Label lengthTextLabel = new Label(Integer.toString(activity.getRepetitionLengthInSec()));
+        Label lengthTextLabel = new Label(Integer.toString(activity.getActivityDurationInSec()));
         Label totalLengthTextLabel = new Label();
         Label deadlineTextLabel = new Label();
         Label isDutyTextLabel = new Label(Boolean.toString(activity.isDuty()));
@@ -52,7 +52,7 @@ public class ActivityDetailsGUI extends Application {
             activityLabels.getChildren().addAll(typeOfActivityLabel, nameLabel, descriptionLabel, valueLabel,
                     importanceLabel, lengthLabel, totalLengthLabel, deadlineLabel, isDutyLabel);
             typeOfActivityTextField.setText("Project");
-            totalLengthTextLabel.setText(Integer.toString(((ProjectActivity)activity).getTotalLengthInSec()));
+            totalLengthTextLabel.setText(Integer.toString(((ProjectActivity)activity).getTotalDurationInSec()));
             deadlineTextLabel.setText(((ProjectActivity)activity).getDeadline().format(DateTimeFormatter.ofPattern("dd-MM-uuuu")));
             activityTextLabels.getChildren().addAll(typeOfActivityTextField, nameTextLabel, descriptionTextLabel,
                     valueTextLabel, importanceTextLabel, lengthTextLabel, totalLengthTextLabel, deadlineTextLabel, isDutyTextLabel);
