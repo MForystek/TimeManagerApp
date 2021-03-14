@@ -10,7 +10,7 @@ public class OneTimeActivity extends Activity {
             String description,
             int valueInClocks,
             int importance,
-            int activityDurationInSec,
+            int segmentDurationInSec,
             boolean isDuty, LocalDate deadline
     ) {
         super(
@@ -18,7 +18,7 @@ public class OneTimeActivity extends Activity {
                 description,
                 valueInClocks,
                 importance,
-                activityDurationInSec,
+                segmentDurationInSec,
                 isDuty
         );
         this.deadline = deadline;
@@ -28,7 +28,7 @@ public class OneTimeActivity extends Activity {
     public ActivitySegment getNextSegment(int occurrenceTime){
         return new ActivitySegment(
                 getName(),
-                getActivityDurationInSec(),
+                getSegmentDurationInSec(),
                 getValueInClocks(),
                 occurrenceTime
         );

@@ -127,7 +127,7 @@ public class ActivityListInCalendarGUI extends Application implements IObserver,
             if (activity instanceof OneTimeActivity && calendar.howMuchSegments(activity) >= 1) {
                 scheduleButton.setDisable(true);
             } else if (activity instanceof ProjectActivity
-                    && calendar.howMuchSegments(activity) * activity.getActivityDurationInSec() >= ((ProjectActivity) activity).getTotalDurationInSec()
+                    && calendar.howMuchSegments(activity) * activity.getSegmentDurationInSec() >= ((ProjectActivity) activity).getTotalDurationInSec()
             ) {
                 scheduleButton.setDisable(true);
             }

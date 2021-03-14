@@ -6,15 +6,22 @@ public abstract class Activity {
     private String description;
     private int valueInClocks;
     private int importance;
-    private int activityDurationInSec;
+    private int segmentDurationInSec;
     private boolean duty;
 
-    public Activity(String name, String description, int valueInClocks, int importance, int activityDurationInSec, boolean duty) {
+    public Activity(
+            String name,
+            String description,
+            int valueInClocks,
+            int importance,
+            int segmentDurationInSec,
+            boolean duty
+    ) {
         this.name = name;
         this.description = description;
         this.valueInClocks = valueInClocks;
         this.importance = importance;
-        this.activityDurationInSec = activityDurationInSec;
+        this.segmentDurationInSec = segmentDurationInSec;
         this.duty = duty;
     }
 
@@ -45,12 +52,12 @@ public abstract class Activity {
         this.description = description;
     }
 
-    public int getActivityDurationInSec() {
-        return activityDurationInSec;
+    public int getSegmentDurationInSec() {
+        return segmentDurationInSec;
     }
 
-    public void setActivityDurationInSec(int activityDurationInSec) {
-        this.activityDurationInSec = activityDurationInSec;
+    public void setSegmentDurationInSec(int segmentDurationInSec) {
+        this.segmentDurationInSec = segmentDurationInSec;
     }
 
     public int getImportance() {
@@ -63,5 +70,9 @@ public abstract class Activity {
 
     public boolean isDuty() {
         return duty;
+    }
+
+    public void setDuty(boolean duty) {
+        this.duty = duty;
     }
 }

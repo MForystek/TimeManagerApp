@@ -12,7 +12,7 @@ public class ProjectActivity extends Activity {
             String description,
             int valueInClocks,
             int importance,
-            int activityDurationInSec,
+            int segmentDurationInSec,
             boolean isDuty,
             int totalDurationInSec,
             LocalDate deadline
@@ -22,7 +22,7 @@ public class ProjectActivity extends Activity {
                 description,
                 valueInClocks,
                 importance,
-                activityDurationInSec,
+                segmentDurationInSec,
                 isDuty
         );
         this.totalDurationInSec = totalDurationInSec;
@@ -31,11 +31,12 @@ public class ProjectActivity extends Activity {
 
     @Override
     public ActivitySegment getNextSegment(int occurrenceTime){
-        double valueInClocksCoefficient =  ((double) getActivityDurationInSec()) / totalDurationInSec;
-        int segmentValueInClocks = (int)valueInClocksCoefficient * getValueInClocks();
+        //The way of calculating a value of segments needs to be improved and repaired
+        //Now it doesn't work and user can get less clocks than the activity is worth!!!
+        int segmentValueInClocks = getSegmentDurationInSec() * getValueInClocks() / totalDurationInSec;
         return new ActivitySegment(
                 getName(),
-                getActivityDurationInSec(),
+                getSegmentDurationInSec(),
                 segmentValueInClocks,
                 occurrenceTime);
     }

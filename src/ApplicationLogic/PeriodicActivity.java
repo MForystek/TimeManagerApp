@@ -7,7 +7,7 @@ public class PeriodicActivity extends Activity {
             String description,
             int valueInClocks,
             int importance,
-            int activityDurationInSec,
+            int segmentDurationInSec,
             boolean isDuty
     ) {
         super(
@@ -15,7 +15,7 @@ public class PeriodicActivity extends Activity {
                 description,
                 valueInClocks,
                 importance,
-                activityDurationInSec,
+                segmentDurationInSec,
                 isDuty
         );
     }
@@ -24,7 +24,7 @@ public class PeriodicActivity extends Activity {
     public ActivitySegment getNextSegment(int occurrenceTime){
         return new ActivitySegment(
                 getName(),
-                getActivityDurationInSec(),
+                getSegmentDurationInSec(),
                 getValueInClocks(),
                 occurrenceTime
         );

@@ -40,7 +40,7 @@ public class ActivityDetailsGUI extends Application {
         Label descriptionTextLabel = new Label(activity.getDescription());
         Label valueTextLabel = new Label(activity.getValueInClocks() + " clocks");
         Label importanceTextLabel = new Label(Integer.toString(activity.getImportance()));
-        Label lengthTextLabel = new Label(Integer.toString(activity.getActivityDurationInSec()));
+        Label lengthTextLabel = new Label(Integer.toString(activity.getSegmentDurationInSec()));
         Label totalLengthTextLabel = new Label();
         Label deadlineTextLabel = new Label();
         Label isDutyTextLabel = new Label(Boolean.toString(activity.isDuty()));

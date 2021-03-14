@@ -262,7 +262,7 @@ public class UsersManager {
         out.write((activity.getDescription() + "\n").getBytes());
         out.write((activity.getValueInClocks() + "\n").getBytes());
         out.write((activity.getImportance() + "\n").getBytes());
-        out.write((activity.getActivityDurationInSec() + "\n").getBytes());
+        out.write((activity.getSegmentDurationInSec() + "\n").getBytes());
         out.write((activity.isDuty() + "\n").getBytes());
     }
 }
