@@ -3,11 +3,32 @@ package ApplicationLogic;
 import java.time.LocalDate;
 
 public class ProjectActivity extends Activity {
-
     private int totalDurationInSec;
     LocalDate deadline;
 
-    public ProjectActivity(
+    public static Activity makeProjectActivity(
+            String name,
+            String description,
+            String valueInClocks,
+            String importance,
+            String repetitionLengthInSec,
+            String isDuty,
+            String totalLengthInSec,
+            LocalDate date
+    ) {
+        return new ProjectActivity(
+                name,
+                description,
+                Integer.parseInt(valueInClocks),
+                Integer.parseInt(importance),
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty),
+                Integer.parseInt(totalLengthInSec),
+                date
+        );
+    }
+
+    private ProjectActivity(
             String name,
             String description,
             int valueInClocks,

@@ -17,13 +17,13 @@ public class UsersManager {
         try (Stream<String> stream = Files.lines(Paths.get(username + password + ".txt"))) {
             stream.forEach(config::add);
             //reading basic user configuration
-            var user = UserFactory.createUser(config.get(1), config.get(2), config.get(3), config.get(4), config.get(5));
+            var user = User.makeUser(config.get(1), config.get(2), config.get(3), config.get(4), config.get(5));
             int i = 7;
 
             //reading Activities in Shop
             while ((i < config.size()) && (!config.get(i).equals("ActivitiesInCalendar"))) {
                 if (config.get(i).equals("OneTimeActivity")) {
-                    var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
+                    var oneTimeActivity = OneTimeActivity.makeOneTimeActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -35,7 +35,7 @@ public class UsersManager {
                     user.getActivitiesInShop().put(oneTimeActivity.getName(), oneTimeActivity);
                     i += 8;
                 } else if (config.get(i).equals("ProjectActivity")) {
-                    var projectActivity = ActivityFactory.makeProjectActivity(
+                    var projectActivity = ProjectActivity.makeProjectActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -48,7 +48,7 @@ public class UsersManager {
                     user.getActivitiesInShop().put(projectActivity.getName(), projectActivity);
                     i += 9;
                 } else if (config.get(i).equals("PeriodicActivity")) {
-                    var periodicActivity = ActivityFactory.makePeriodicActivity(
+                    var periodicActivity = PeriodicActivity.makePeriodicActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -66,7 +66,7 @@ public class UsersManager {
             //reading Activities in Calendar
             while ((i < config.size()) && (!config.get(i).equals("Days"))) {
                 if (config.get(i).equals("OneTimeActivity")) {
-                    var oneTimeActivity = ActivityFactory.makeOneTimeActivity(
+                    var oneTimeActivity = OneTimeActivity.makeOneTimeActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -78,7 +78,7 @@ public class UsersManager {
                     user.getActivitiesInCalendar().put(oneTimeActivity.getName(), oneTimeActivity);
                     i += 8;
                 } else if (config.get(i).equals("ProjectActivity")) {
-                    var projectActivity = ActivityFactory.makeProjectActivity(
+                    var projectActivity = ProjectActivity.makeProjectActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -91,7 +91,7 @@ public class UsersManager {
                     user.getActivitiesInCalendar().put(projectActivity.getName(), projectActivity);
                     i += 9;
                 } else if (config.get(i).equals("PeriodicActivity")) {
-                    var periodicActivity = ActivityFactory.makePeriodicActivity(
+                    var periodicActivity = PeriodicActivity.makePeriodicActivity(
                             config.get(i + 1),
                             config.get(i + 2),
                             config.get(i + 3),
@@ -157,7 +157,7 @@ public class UsersManager {
                     //reading Segments in Day
                     while ((i < config.size()) && (!config.get(i).equals("Day"))) {
                         if (config.get(i).equals("Segment")) {
-                            var segment = ActivitySegmentFactory.makeActivitySegment(
+                            var segment = ActivitySegment.makeActivitySegment(
                                     config.get(i + 1),
                                     config.get(i + 2),
                                     config.get(i + 3),
@@ -180,7 +180,7 @@ public class UsersManager {
 
         } catch (IOException e) {
             System.out.println(e);
-            return UserFactory.createUser("error", "error", "0", "1", "false");
+            return User.makeUser("error", "error", "0", "1", "false");
         }
 
     }
@@ -242,22 +242,24 @@ public class UsersManager {
     private void _writeActivities(Activity activity, OutputStream out) throws IOException {
         if (activity instanceof OneTimeActivity) {
             out.write(("OneTimeActivity\n").getBytes());
-            _writeCommonThingsInActivity(activity, out);
+            _writeCommonThingsFromActivity(activity, out);
             out.write((((OneTimeActivity) activity).getDeadline() + "\n").getBytes());
         } else if (activity instanceof ProjectActivity) {
             out.write(("ProjectActivity\n").getBytes());
-            _writeCommonThingsInActivity(activity, out);
+            _writeCommonThingsFromActivity(activity, out);
             out.write((((ProjectActivity) activity).getTotalDurationInSec() + "\n").getBytes());
             out.write((((ProjectActivity) activity).getDeadline() + "\n").getBytes());
         } else if (activity instanceof PeriodicActivity) {
             out.write(("PeriodicActivity\n").getBytes());
-            _writeCommonThingsInActivity(activity, out);
+            _writeCommonThingsFromActivity(activity, out);
         } else {
             System.out.println("ERROR during configuration saving in activity: " + activity.getName());
         }
     }
 
-    private void _writeCommonThingsInActivity(Activity activity, OutputStream out) throws IOException {
+
+
+    private void _writeCommonThingsFromActivity(Activity activity, OutputStream out) throws IOException {
         out.write((activity.getName() + "\n").getBytes());
         out.write((activity.getDescription() + "\n").getBytes());
         out.write((activity.getValueInClocks() + "\n").getBytes());

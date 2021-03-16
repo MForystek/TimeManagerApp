@@ -7,6 +7,20 @@ public class ActivitySegment {
     private int valueInClocks;
     private int occurrenceTime;
 
+    public static ActivitySegment makeActivitySegment(
+            String parentName,
+            String lengthInSec,
+            String valueInClocks,
+            String occurrenceTime
+    ) {
+        return new ActivitySegment(
+                parentName,
+                Integer.parseInt(lengthInSec),
+                Integer.parseInt(valueInClocks),
+                Integer.parseInt(occurrenceTime)
+        );
+    }
+
     public ActivitySegment(String parentName, int durationInSec, int valueInClocks, int occurrenceTime) {
         this.parentName = parentName;
         this.durationInSec = durationInSec;

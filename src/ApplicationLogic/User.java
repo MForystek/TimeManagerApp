@@ -13,6 +13,23 @@ public class User {
     private Map<String, Activity> activitiesInCalendar;
     private Map<String, Activity> activitiesInShop;
 
+    public static User makeUser(
+            String username,
+            String password,
+            String amountOfClocks,
+            String calendarLength,
+            String notifications
+    ) {
+        return new User(
+                "english",
+                username,
+                password,
+                Integer.parseInt(amountOfClocks),
+                Integer.parseInt(calendarLength),
+                Boolean.parseBoolean(notifications)
+        );
+    }
+
     public User(
             String language,
             String username,
@@ -60,13 +77,13 @@ public class User {
         }
     }
 
-    public void removeClocks(int clocks) {
+    public void subtractClocks(int clocks) {
         if (clocks >= 0 && this.amountOfClocks + clocks >= 0) {
             this.amountOfClocks -= clocks;
         }
     }
 
-    public void sortDays() {
+    public void sortDaysFromTheEarliest() {
         Collections.sort(days);
     }
 

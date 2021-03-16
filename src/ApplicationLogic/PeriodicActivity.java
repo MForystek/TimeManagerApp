@@ -2,7 +2,25 @@ package ApplicationLogic;
 
 public class PeriodicActivity extends Activity {
 
-    public PeriodicActivity(
+    public static Activity makePeriodicActivity(
+            String name,
+            String description,
+            String valueInClocks,
+            String importance,
+            String repetitionLengthInSec,
+            String isDuty
+    ) {
+        return new PeriodicActivity(
+                name,
+                description,
+                Integer.parseInt(valueInClocks),
+                Integer.parseInt(importance),
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty)
+        );
+    }
+
+    private PeriodicActivity(
             String name,
             String description,
             int valueInClocks,

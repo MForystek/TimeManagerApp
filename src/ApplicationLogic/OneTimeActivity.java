@@ -5,7 +5,27 @@ import java.time.LocalDate;
 public class OneTimeActivity extends Activity {
     LocalDate deadline;
 
-    public OneTimeActivity(
+    public static Activity makeOneTimeActivity(
+            String name,
+            String description,
+            String valueInClocks,
+            String importance,
+            String repetitionLengthInSec,
+            String isDuty,
+            LocalDate date
+    ) {
+        return new OneTimeActivity(
+                name,
+                description,
+                Integer.parseInt(valueInClocks),
+                Integer.parseInt(importance),
+                Integer.parseInt(repetitionLengthInSec),
+                Boolean.parseBoolean(isDuty),
+                date
+        );
+    }
+
+    private OneTimeActivity(
             String name,
             String description,
             int valueInClocks,

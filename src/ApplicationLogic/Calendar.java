@@ -9,7 +9,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     private UsersManager usersManager = new UsersManager();
 
     public Calendar() {
-        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        user = User.makeUser("notNull", "notNull", "0", "1", "false");
         _updateDays();
         startToday();
     }
@@ -48,7 +48,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             for (var day : user.getDays()) {
                 day.interrupt();
             }
-            user = UserFactory.createUser(username, password, "0", "30", "false");
+            user = User.makeUser(username, password, "0", "30", "false");
             for (int i = 0; i < user.getCalendarLength(); i++) {
                 addDay(LocalDate.now().plusDays(i));
             }
@@ -80,12 +80,12 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     }
 
     public void logout() {
-        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        user = User.makeUser("notNull", "notNull", "0", "1", "false");
     }
 
     public boolean delAccount(String username, String password) {
         var result = new File(username + password + ".txt").delete();
-        user = UserFactory.createUser("notNull", "notNull", "0", "1", "false");
+        user = User.makeUser("notNull", "notNull", "0", "1", "false");
         return result;
     }
 
@@ -121,7 +121,7 @@ public class Calendar implements IObserver, IActivityShopAddDel {
             System.out.println("You don't have enough clocks for it!");
             return 2;
         } else {
-            user.removeClocks(activity.getValueInClocks());
+            user.subtractClocks(activity.getValueInClocks());
             user.getActivitiesInCalendar().put(activity.getName(), activity);
             System.out.println("Pleasure bought successfully");
             return 0;

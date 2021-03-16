@@ -82,7 +82,7 @@ public class AddActivityGUI extends Application implements IObservable {
             ) {
                 PeriodicActivity newPeriodicActivity;
                 if (periodicDutyRadioButton.isSelected()) {
-                    newPeriodicActivity = (PeriodicActivity) ActivityFactory.makePeriodicActivity(
+                    newPeriodicActivity = (PeriodicActivity) PeriodicActivity.makePeriodicActivity(
                             periodicNameTextField.getText(),
                             periodicDescriptionTextField.getText(),
                             periodicValueTextField.getText(),
@@ -91,7 +91,7 @@ public class AddActivityGUI extends Application implements IObservable {
                             "true"
                     );
                 } else {
-                    newPeriodicActivity = (PeriodicActivity) ActivityFactory.makePeriodicActivity(
+                    newPeriodicActivity = (PeriodicActivity) PeriodicActivity.makePeriodicActivity(
                             periodicNameTextField.getText(),
                             periodicDescriptionTextField.getText(),
                             periodicValueTextField.getText(),
@@ -182,7 +182,7 @@ public class AddActivityGUI extends Application implements IObservable {
             ) {
                 ProjectActivity newProjectActivity;
                 if (projectDutyRadioButton.isSelected()) {
-                    newProjectActivity = (ProjectActivity) ActivityFactory.makeProjectActivity(
+                    newProjectActivity = (ProjectActivity) ProjectActivity.makeProjectActivity(
                             projectNameTextField.getText(),
                             projectDescriptionTextField.getText(),
                             projectValueTextField.getText(),
@@ -193,7 +193,7 @@ public class AddActivityGUI extends Application implements IObservable {
                             projectDeadlinePicker.getValue()
                     );
                 } else {
-                    newProjectActivity = (ProjectActivity) ActivityFactory.makeProjectActivity(
+                    newProjectActivity = (ProjectActivity) ProjectActivity.makeProjectActivity(
                             projectNameTextField.getText(),
                             projectDescriptionTextField.getText(),
                             projectValueTextField.getText(),
@@ -288,7 +288,7 @@ public class AddActivityGUI extends Application implements IObservable {
             ) {
                 OneTimeActivity newOneTimeActivity;
                 if (oneTimeDutyRadioButton.isSelected()) {
-                    newOneTimeActivity = (OneTimeActivity) ActivityFactory.makeOneTimeActivity(
+                    newOneTimeActivity = (OneTimeActivity) OneTimeActivity.makeOneTimeActivity(
                             oneTimeNameTextField.getText(),
                             oneTimeDescriptionTextField.getText(),
                             oneTimeValueTextField.getText(),
@@ -298,7 +298,7 @@ public class AddActivityGUI extends Application implements IObservable {
                             oneTimeDeadlinePicker.getValue()
                     );
                 } else {
-                    newOneTimeActivity = (OneTimeActivity) ActivityFactory.makeOneTimeActivity(
+                    newOneTimeActivity = (OneTimeActivity) OneTimeActivity.makeOneTimeActivity(
                             oneTimeNameTextField.getText(),
                             oneTimeDescriptionTextField.getText(),
                             oneTimeValueTextField.getText(),
