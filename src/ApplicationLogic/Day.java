@@ -158,6 +158,7 @@ public class Day extends Thread implements Comparable<Day>, IObservable {
             _quicksortSegments(list, p + 1, end);
         }
     }
+
     private int _partition(List<ActivitySegment> list, int start, int end) {
         ActivitySegment pivot = list.get(end);
         int i = start;

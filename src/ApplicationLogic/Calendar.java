@@ -101,7 +101,6 @@ public class Calendar implements IObserver, IActivityShopAddDel {
     @Override
     public int delActivityFromShop(String activityName) {
         if (!user.getActivitiesInShop().containsKey(activityName)) {
-
             return 1;
         } else {
             user.getActivitiesInShop().remove(activityName);

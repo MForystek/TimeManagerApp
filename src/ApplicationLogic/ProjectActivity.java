@@ -52,8 +52,8 @@ public class ProjectActivity extends Activity {
 
     @Override
     public ActivitySegment getNextSegment(int occurrenceTime){
-        //The way of calculating a value of segments needs to be improved and repaired
-        //Now it doesn't work and user can get less clocks than the activity is worth!!!
+        //TODO The way of calculating a value of segments needs to be improved and repaired
+        //TODO Now it doesn't work and user can get less clocks than the activity is worth!!!
         int segmentValueInClocks = getSegmentDurationInSec() * getValueInClocks() / totalDurationInSec;
         return new ActivitySegment(
                 getName(),

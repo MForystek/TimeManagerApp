@@ -201,14 +201,14 @@ public class UsersManager {
             out.write(("ActivitiesInShop\n").getBytes());
             for (Map.Entry<String, Activity> activityEntry : user.getActivitiesInShop().entrySet()) {
                 var activity = activityEntry.getValue();
-                _writeActivities(activity, out);
+                _writeFromActivity(activity, out);
             }
 
             //writing Activities in Calendar
             out.write(("ActivitiesInCalendar\n").getBytes());
             for (Map.Entry<String, Activity> activityEntry : user.getActivitiesInCalendar().entrySet()) {
                 var activity = activityEntry.getValue();
-                _writeActivities(activity, out);
+                _writeFromActivity(activity, out);
             }
 
             //writing Days
@@ -239,7 +239,7 @@ public class UsersManager {
         }
     }
 
-    private void _writeActivities(Activity activity, OutputStream out) throws IOException {
+    private void _writeFromActivity(Activity activity, OutputStream out) throws IOException {
         if (activity instanceof OneTimeActivity) {
             out.write(("OneTimeActivity\n").getBytes());
             _writeCommonThingsFromActivity(activity, out);
